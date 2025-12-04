@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Administrativa del Comercio Internacional: Unidad 4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- MathJax para fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .tech-font { font-family: 'JetBrains Mono', monospace; }
+        .modal { opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content { transform: scale(0.95); transition: transform 0.3s ease; }
+        .modal.active .modal-content { transform: scale(1); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- Navegación -->
+    <nav class="bg-slate-900 text-white sticky top-0 z-40 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-globe text-blue-400 text-xl"></i>
+                    <span class="font-bold text-xl tracking-tight">Trade & Customs Hub</span>
+                </div>
+                <div class="hidden md:block text-sm text-slate-400">
+                    Unidad 4: Procedimientos Administrativos Import/Export
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Hero -->
+    <header class="bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Gestión Aduanera y Fiscalidad Internacional</h1>
+            <p class="text-lg text-slate-600 max-w-3xl">
+                Plataforma interactiva para el estudio de procedimientos aduaneros, valoración de mercancías, Incoterms 2020 y fiscalidad (IVA/Aranceles).
+                <span class="font-semibold text-blue-600">Haz clic en los conceptos</span> para acceder a la normativa técnica, ejemplos de cálculo y documentación oficial.
+            </p>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- Sección 1: Conceptos Core (Grid Interactivo) -->
+        <section>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-8 w-1 bg-blue-600 rounded-full"></div>
+                <h2 class="text-2xl font-bold text-slate-800">Conceptos Fundamentales y Aduanas</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="concepts-grid"></div>
+        </section>
+
+        <!-- Sección 2: Documentación (Lista Detallada) -->
+        <section>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-8 w-1 bg-indigo-600 rounded-full"></div>
+                <h2 class="text-2xl font-bold text-slate-800">Documentación Comercial y Aduanera</h2>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 divide-y divide-slate-100" id="docs-list"></div>
+        </section>
+
+        <!-- Sección 3: Biblioteca de Recursos Oficiales -->
+        <section class="bg-slate-50 rounded-xl p-8 border border-slate-200">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-8 w-1 bg-teal-500 rounded-full"></div>
+                <h2 class="text-2xl font-bold text-slate-800">Fuentes Oficiales y Herramientas</h2>
+            </div>
+            <p class="text-slate-600 mb-6">Acceso directo a bases de datos y organismos reguladores mencionados en el temario para consultas en tiempo real.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="https://ec.europa.eu/taxation_customs/dds2/taric/taric_consultation.jsp?Lang=es" target="_blank" class="group block p-5 bg-white rounded-lg border border-slate-200 hover:border-blue-400 transition-colors">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">Consulta TARIC (Comisión Europea)</h3>
+                            <p class="text-sm text-slate-500 mt-1">Base de datos oficial para consultar aranceles, medidas y códigos TARIC integrados.</p>
+                        </div>
+                        <i class="fa-solid fa-search text-slate-300 group-hover:text-blue-500"></i>
+                    </div>
+                </a>
+                
+                <a href="https://sede.agenciatributaria.gob.es/Sede/aduanas.html" target="_blank" class="group block p-5 bg-white rounded-lg border border-slate-200 hover:border-orange-400 transition-colors">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-slate-900 group-hover:text-orange-600 transition-colors">Agencia Tributaria (Aduanas)</h3>
+                            <p class="text-sm text-slate-500 mt-1">Sede electrónica para presentar DUA, Intrastat y consultar normativa nacional.</p>
+                        </div>
+                        <i class="fa-solid fa-building-columns text-slate-300 group-hover:text-orange-500"></i>
+                    </div>
+                </a>
+
+                <a href="https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/" target="_blank" class="group block p-5 bg-white rounded-lg border border-slate-200 hover:border-green-400 transition-colors">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-slate-900 group-hover:text-green-600 transition-colors">ICC Incoterms® 2020</h3>
+                            <p class="text-sm text-slate-500 mt-1">Reglas oficiales de la Cámara de Comercio Internacional sobre entrega y riesgos.</p>
+                        </div>
+                        <i class="fa-solid fa-book-open text-slate-300 group-hover:text-green-500"></i>
+                    </div>
+                </a>
+
+                <a href="https://www.wcoomd.org/" target="_blank" class="group block p-5 bg-white rounded-lg border border-slate-200 hover:border-purple-400 transition-colors">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-semibold text-slate-900 group-hover:text-purple-600 transition-colors">Organización Mundial de Aduanas (WCO)</h3>
+                            <p class="text-sm text-slate-500 mt-1">Fuente del Sistema Armonizado (HS) y normativa global.</p>
+                        </div>
+                        <i class="fa-solid fa-globe text-slate-300 group-hover:text-purple-500"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-500 text-sm">
+            <p>&copy; 2025 Trade Education Hub. Basado en el material docente AMIT Unit 4.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE DETALLE TÉCNICO -->
+    <div id="tech-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
+        <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
+            
+            <!-- Header Modal -->
+            <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center sticky top-0">
+                <div>
+                    <span id="modal-tag" class="text-xs font-bold tracking-wider text-blue-600 uppercase mb-1 block">Concepto</span>
+                    <h3 id="modal-title" class="text-2xl font-bold text-slate-900">Título</h3>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-red-500 transition-colors p-2">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Body Modal (Scrollable) -->
+            <div class="p-8 overflow-y-auto custom-scrollbar text-slate-700 space-y-8">
+                
+                <!-- Resumen -->
+                <div>
+                    <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Definición General</h4>
+                    <p id="modal-summary" class="text-lg leading-relaxed text-slate-800"></p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- Sección Técnica -->
+                <div class="bg-slate-50 rounded-lg p-6 border border-slate-200">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-scale-balanced text-indigo-600"></i>
+                        <h4 class="text-lg font-bold text-slate-900">Análisis Técnico y Normativa</h4>
+                    </div>
+                    <div id="modal-technical" class="prose prose-slate max-w-none text-sm"></div>
+                </div>
+
+                <!-- Sección Datos/Cálculos -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Estructura / Fórmula</h4>
+                        <div id="modal-math" class="bg-slate-900 text-slate-50 p-4 rounded-lg tech-font text-xs overflow-x-auto shadow-inner"></div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Ejemplo Práctico / Código</h4>
+                        <div id="modal-code" class="bg-slate-100 text-slate-800 p-4 rounded-lg tech-font text-xs border border-slate-200 overflow-x-auto"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 text-right">
+                <button onclick="closeModal()" class="px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium">
+                    Cerrar Referencia
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & DATA -->
+    <script>
+        // --- BASE DE DATOS DE CONOCIMIENTO (Extraída del PDF AMIT Unit 4) ---
+        const knowledgeBase = [
+            // --- CONCEPTOS CORE ---
+            {
+                id: 'c1',
+                type: 'concept',
+                title: 'Operaciones Intra-UE vs Import/Export',
+                icon: 'fa-truck-plane',
+                summary: 'Diferenciación clave entre el comercio con Terceros Países (sujeto a aduanas) y el comercio intracomunitario (libre circulación).',
+                technical: `
+                    <p><strong>Diferencias Clave:</strong></p>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li><strong>Importación/Exportación:</strong> Movimiento de mercancías entre la UE y un país No-UE. Sujeto a formalidades aduaneras, aranceles y liquidación de IVA en aduana. Autoridad: Aduanas.</li>
+                        <li><strong>Introducción/Expedición (Intra-UE):</strong> Movimiento entre Estados Miembros. No hay aduanas ni aranceles (libre circulación). El IVA se gestiona en destino (inversión del sujeto pasivo). Documento clave: Intrastat (estadístico).</li>
+                    </ul>
+                    <p class="mt-2"><strong>Declaración Intrastat:</strong> Obligatoria si las operaciones superan el umbral de exención (400.000€ anuales en España) para flujos de introducción o expedición independientemente.</p>
+                `,
+                math: 'Umbral Intrastat > 400.000€ (Introducción/Expedición separadas)',
+                code: 'Operación: Venta España -> Francia\nTipo: Expedición Intracomunitaria\nIVA: Exento (Inversión sujeto pasivo)\nDoc: Factura sin IVA + Intrastat'
+            },
+            {
+                id: 'c2',
+                type: 'concept',
+                title: 'Incoterms 2020',
+                icon: 'fa-handshake',
+                summary: 'Términos de comercio internacional (ICC) que definen la entrega, la transmisión de riesgos y la asignación de costes entre comprador y vendedor.',
+                technical: `
+                    <p><strong>Clasificación por Grupos:</strong></p>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li><strong>Grupo E (Salida):</strong> EXW (Ex Works). Mínima obligación para el vendedor.</li>
+                        <li><strong>Grupo F (Transporte principal NO pagado):</strong> FCA, FAS, FOB. El vendedor entrega al transportista del comprador.</li>
+                        <li><strong>Grupo C (Transporte principal pagado):</strong> CFR, CIF, CPT, CIP. El vendedor paga el transporte, pero el riesgo se transmite en origen.</li>
+                        <li><strong>Grupo D (Llegada):</strong> DAP, DPU (descargado), DDP (derechos pagados). Máxima responsabilidad del vendedor.</li>
+                    </ul>
+                    <p class="mt-2"><strong>Dato Crítico:</strong> En CIF y CIP, el vendedor debe contratar un seguro obligatorio. En DDP, el vendedor asume los trámites de importación e impuestos en destino.</p>
+                `,
+                math: 'CIF = Coste Mercancía + Seguro + Flete',
+                code: 'EXW: Comprador recoge en fábrica.\nFOB: Vendedor carga en buque (riesgo transmite a bordo).\nDDP: Vendedor entrega en destino con impuestos pagados.'
+            },
+            {
+                id: 'c3',
+                type: 'concept',
+                title: 'Origen de las Mercancías',
+                icon: 'fa-passport',
+                summary: 'Determina el tratamiento arancelario (preferencial o no). No confundir con la procedencia. Se basa en dónde se produjo sustancialmente el bien.',
+                technical: `
+                    <p><strong>Criterios de Determinación (Convenio de Kioto Revisado):</strong></p>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li><strong>Productos enteramente obtenidos:</strong> Animales nacidos y criados, minerales extraídos en el país.</li>
+                        <li><strong>Transformación Sustancial:</strong> Cuando intervienen varios países. Métodos:
+                            <ul class="ml-5 list-circle">
+                                <li>Cambio de partida arancelaria (4 dígitos).</li>
+                                <li>Valor añadido (ej. valor ex-works > 40%).</li>
+                                <li>Etapa de producción específica (ej. confección en textiles).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="mt-2"><strong>Acumulación:</strong> Permite usar materiales de países socios (bilateral, diagonal) como si fueran originarios para mantener la preferencia.</p>
+                `,
+                math: 'Valor Añadido % = \frac{Precio ExWorks - Materiales No Originarios}{Precio ExWorks} \times 100',
+                code: 'Certificados:\n- No Preferencial: Certificado de Origen (Cámara Comercio)\n- Preferencial: EUR-1, Form A (GSP), Declaración en Factura'
+            },
+            {
+                id: 'c4',
+                type: 'concept',
+                title: 'Arancel y Valoración (TARIC)',
+                icon: 'fa-barcode',
+                summary: 'Sistema de clasificación de mercancías (10 dígitos) y cálculo de la deuda aduanera basándose en el Valor en Aduana.',
+                technical: `
+                    <p><strong>Estructura del Código TARIC (10 dígitos):</strong></p>
+                    <ol class="list-decimal ml-5 space-y-1">
+                        <li>Capítulo (2 dígitos) + Partida (2 dígitos) = <strong>Partida SA</strong> (Sistema Armonizado, Mundial).</li>
+                        <li>Subpartida SA (2 dígitos) = 6 dígitos totales.</li>
+                        <li>Nomenclatura Combinada (2 dígitos, UE) = 8 dígitos. Define el arancel común.</li>
+                        <li>Código TARIC (2 dígitos, UE) = 10 dígitos. Define medidas de política comercial (antidumping, suspensiones).</li>
+                    </ol>
+                    <p class="mt-2"><strong>Valor en Aduana (Base Imponible Arancel):</strong> Generalmente es el Valor de Transacción (CIF) + Ajustes (Cánones, comisiones venta, envases) - Deducciones (Transporte post-llegada).</p>
+                `,
+                math: 'Valor Aduana \approx Valor CIF (Cost + Insurance + Freight)\nDeuda = (Valor Aduana \times % Arancel) + IVA',
+                code: 'Ejemplo Estructura:\n07 (Capítulo) 02 (Tomates)\n0702.00 (Subpartida SA)\n0702.00.00 (NC)\n0702.00.00.10 (TARIC)'
+            },
+            {
+                id: 'c5',
+                type: 'concept',
+                title: 'Fiscalidad (IVA y Aranceles)',
+                icon: 'fa-calculator',
+                summary: 'Tipos de derechos arancelarios y gestión del IVA en operaciones internacionales.',
+                technical: `
+                    <p><strong>Tipos de Aranceles:</strong></p>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li><strong>Ad Valorem:</strong> % sobre el valor en aduana.</li>
+                        <li><strong>Específicos:</strong> Importe fijo por unidad física (ej. €/kg, €/hl).</li>
+                        <li><strong>Mixtos/Compuestos:</strong> Combinación (ej. 10% + 2€/kg).</li>
+                    </ul>
+                    <p class="mt-2"><strong>IVA Importación:</strong> Se liquida junto con el arancel en el DUA. Base Imponible IVA = Valor en Aduana + Aranceles + Otros Impuestos + Gastos accesorios hasta primer destino interior.</p>
+                    <p><strong>Anti-Dumping:</strong> Derecho adicional para combatir precios desleales (inferiores al coste). Puede superar el 40-50%.</p>
+                `,
+                math: 'Total a Pagar = Arancel + AntiDumping + IVA\nIVA = (Valor Aduana + Arancel + AD) \times 21\%',
+                code: 'Cálculo Anti-Dumping (Ejemplo PDF):\nImporte: 26.300€ | Arancel: 6.5% | AD: 49.1%\nArancel = 1.709,5€\nAD = 12.913,3€\nTotal Deuda (sin IVA) = 14.622,8€'
+            },
+            // --- DOCUMENTOS ---
+            {
+                id: 'd1',
+                type: 'doc',
+                title: 'DUA (Documento Único Administrativo)',
+                icon: 'fa-file-contract',
+                summary: 'Declaración fiscal obligatoria ante la aduana para importaciones y exportaciones con terceros países.',
+                technical: `
+                    <p>Contiene la información crítica: Exportador, Importador, Declarante, Código TARIC, Valor, Origen, Procedimiento aduanero (ej. 4000 para despacho a libre práctica).</p>
+                    <p>Es la base para la liquidación de impuestos. Se presenta telemáticamente a la AEAT.</p>
+                `,
+                math: 'Casilla 47: Cálculo de tributos',
+                code: 'Procedimiento 40: Despacho a consumo.\nProcedimiento 10: Exportación definitiva.'
+            },
+            {
+                id: 'd2',
+                type: 'doc',
+                title: 'DV1 (Declaración de Valor)',
+                icon: 'fa-coins',
+                summary: 'Documento adjunto al DUA de importación cuando el valor supera cierto umbral, detallando la relación entre comprador y vendedor.',
+                technical: `
+                    <p>Desglosa cómo se llega al Valor en Aduana. Es crítico para declarar "Adiciones" (royalties, comisiones, transporte hasta frontera) y "Deducciones" (transporte interior UE).</p>
+                    <p>Si hay vinculación entre comprador y vendedor que afecte al precio, debe declararse aquí.</p>
+                `,
+                math: 'Valor Aduana = Precio Factura + Adiciones - Deducciones',
+                code: 'Formulario DV1:\nCasilla 11a: Precio Neto\nCasilla 13: Costes a cargo comprador\nCasilla 19: Gastos transporte post-llegada (Deducción)'
+            },
+            {
+                id: 'd3',
+                type: 'doc',
+                title: 'Bill of Lading (B/L) / CRM',
+                icon: 'fa-ship',
+                summary: 'Documento de transporte principal. Prueba la recepción de la mercancía, el contrato de transporte y, en el caso del B/L, la propiedad (título valor).',
+                technical: `
+                    <p><strong>B/L (Marítimo):</strong> Es un título de propiedad negociable. Tipos: "Clean on board" (sin daños), "To order" (endosable).</p>
+                    <p><strong>CMR (Carretera):</strong> Carta de porte internacional. Prueba el contrato de transporte por carretera según el convenio CMR. No es título de propiedad.</p>
+                    <p><strong>Air Waybill (Aéreo):</strong> No negociable.</p>
+                `,
+                math: 'B/L = Recibo + Contrato + Título de Propiedad',
+                code: 'Campos clave:\nShipper (Expedidor)\nConsignee (Destinatario)\nNotify Party\nPort of Loading/Discharge'
+            },
+            {
+                id: 'd4',
+                type: 'doc',
+                title: 'Factura Comercial y Packing List',
+                icon: 'fa-list-check',
+                summary: 'Documentos comerciales básicos emitidos por el vendedor. La factura establece el precio y el Packing List el contenido físico.',
+                technical: `
+                    <p><strong>Factura Comercial:</strong> Debe incluir Incoterm, desglose de precio, moneda, origen. Para aduanas, si > 6000€ puede requerir ser "Exportador Autorizado" para declarar origen en factura.</p>
+                    <p><strong>Packing List:</strong> Detalla bultos, pesos brutos/netos, marcas. Vital para la inspección física en aduana (circuito rojo).</p>
+                `,
+                math: 'Factura < 6000€ -> Declaración origen en factura permitida sin autorización',
+                code: 'Factura:\nNº Factura, Fecha, Incoterm\nPacking List:\nBulto 1: 50kg, Pallet, Dimensiones'
+            },
+            {
+                id: 'd5',
+                type: 'doc',
+                title: 'Certificados de Origen (Form A, EUR-1)',
+                icon: 'fa-certificate',
+                summary: 'Acreditan el origen de la mercancía para aplicar reducciones arancelarias (Preferencias).',
+                technical: `
+                    <p><strong>EUR-1:</strong> Para acuerdos preferenciales bilaterales (ej. UE-Suiza, UE-México).</p>
+                    <p><strong>Form A:</strong> Para países del Sistema de Preferencias Generalizadas (SPG) (Países en desarrollo exportando a UE). Gradualmente reemplazado por el sistema REX.</p>
+                    <p><strong>Certificado No Preferencial:</strong> Emitido por Cámaras de Comercio, solo acredita origen sin beneficio fiscal.</p>
+                `,
+                math: 'EUR-1 = Arancel 0% o reducido',
+                code: 'Validez EUR-1: 4 meses.\nSistema REX: Auto-certificación por exportadores registrados.'
+            }
+        ];
+
+        // --- RENDERIZADO DEL DOM ---
+        const conceptsGrid = document.getElementById('concepts-grid');
+        const docsList = document.getElementById('docs-list');
+
+        function renderContent() {
+            // Filtrar y renderizar Conceptos
+            const concepts = knowledgeBase.filter(item => item.type === 'concept');
+            concepts.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl p-6 border border-slate-200 shadow-sm card-hover cursor-pointer group transition-all duration-300';
+                card.onclick = () => openModal(item.id);
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xl">
+                            <i class="fa-solid ${item.icon}"></i>
+                        </div>
+                        <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-blue-500 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">${item.title}</h3>
+                    <p class="text-slate-600 text-sm line-clamp-3">${item.summary}</p>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center text-xs font-semibold text-blue-600 uppercase tracking-wide">
+                        <span>Ver Análisis Técnico</span>
+                    </div>
+                `;
+                conceptsGrid.appendChild(card);
+            });
+
+            // Filtrar y renderizar Documentación
+            const docs = knowledgeBase.filter(item => item.type === 'doc');
+            docs.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'p-5 flex items-start md:items-center gap-4 hover:bg-slate-50 cursor-pointer transition-colors group';
+                row.onclick = () => openModal(item.id);
+                row.innerHTML = `
+                    <div class="flex-shrink-0 w-10 h-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center">
+                        <i class="fa-solid ${item.icon}"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="text-lg font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">${item.title}</h4>
+                        <p class="text-slate-500 text-sm mt-1">${item.summary}</p>
+                    </div>
+                    <div class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="px-3 py-1 bg-white border border-slate-200 text-xs font-medium rounded-full text-slate-600 shadow-sm">Ver Detalle</span>
+                    </div>
+                `;
+                docsList.appendChild(row);
+            });
+        }
+
+        // --- LÓGICA DEL MODAL ---
+        const modal = document.getElementById('tech-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalSummary = document.getElementById('modal-summary');
+        const modalTechnical = document.getElementById('modal-technical');
+        const modalMath = document.getElementById('modal-math');
+        const modalCode = document.getElementById('modal-code');
+        const modalTag = document.getElementById('modal-tag');
+
+        function openModal(id) {
+            const data = knowledgeBase.find(item => item.id === id);
+            if (!data) return;
+
+            modalTag.textContent = data.type === 'concept' ? 'Concepto Fundamental' : 'Documento Oficial';
+            modalTitle.textContent = data.title;
+            modalSummary.textContent = data.summary;
+            modalTechnical.innerHTML = data.technical;
+            
+            // Renderizado condicional de MathJax
+            modalMath.textContent = data.math;
+            modalCode.textContent = data.code;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Refrescar MathJax si es necesario
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Inicializar
+        renderContent();
+    </script>
+</body>
+</html>
