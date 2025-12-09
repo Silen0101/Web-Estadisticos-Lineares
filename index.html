@@ -44,7 +44,7 @@
             <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Gestión Aduanera y Fiscalidad Internacional</h1>
             <p class="text-lg text-slate-600 max-w-3xl">
                 Plataforma interactiva para el estudio de procedimientos aduaneros, valoración de mercancías, Incoterms 2020 y fiscalidad (IVA/Aranceles).
-                <span class="font-semibold text-blue-600">Haz clic en los conceptos</span> para acceder a la normativa técnica, ejemplos de cálculo y documentación oficial.
+                <span class="font-semibold text-blue-600">Haz clic en los conceptos</span> para acceder a la normativa técnica y documentación oficial.
             </p>
         </div>
     </header>
@@ -165,17 +165,6 @@
                     <div id="modal-technical" class="prose prose-slate max-w-none text-sm"></div>
                 </div>
 
-                <!-- Sección Datos/Cálculos -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Estructura / Fórmula</h4>
-                        <div id="modal-math" class="bg-slate-900 text-slate-50 p-4 rounded-lg tech-font text-xs overflow-x-auto shadow-inner"></div>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Ejemplo Práctico / Código</h4>
-                        <div id="modal-code" class="bg-slate-100 text-slate-800 p-4 rounded-lg tech-font text-xs border border-slate-200 overflow-x-auto"></div>
-                    </div>
-                </div>
             </div>
 
             <!-- Footer Modal -->
@@ -205,9 +194,7 @@
                         <li><strong>Introducción/Expedición (Intra-UE):</strong> Movimiento entre Estados Miembros. No hay aduanas ni aranceles (libre circulación). El IVA se gestiona en destino (inversión del sujeto pasivo). Documento clave: Intrastat (estadístico).</li>
                     </ul>
                     <p class="mt-2"><strong>Declaración Intrastat:</strong> Obligatoria si las operaciones superan el umbral de exención (400.000€ anuales en España) para flujos de introducción o expedición independientemente.</p>
-                `,
-                math: 'Umbral Intrastat > 400.000€ (Introducción/Expedición separadas)',
-                code: 'Operación: Venta España -> Francia\nTipo: Expedición Intracomunitaria\nIVA: Exento (Inversión sujeto pasivo)\nDoc: Factura sin IVA + Intrastat'
+                `
             },
             {
                 id: 'c2',
@@ -224,9 +211,7 @@
                         <li><strong>Grupo D (Llegada):</strong> DAP, DPU (descargado), DDP (derechos pagados). Máxima responsabilidad del vendedor.</li>
                     </ul>
                     <p class="mt-2"><strong>Dato Crítico:</strong> En CIF y CIP, el vendedor debe contratar un seguro obligatorio. En DDP, el vendedor asume los trámites de importación e impuestos en destino.</p>
-                `,
-                math: 'CIF = Coste Mercancía + Seguro + Flete',
-                code: 'EXW: Comprador recoge en fábrica.\nFOB: Vendedor carga en buque (riesgo transmite a bordo).\nDDP: Vendedor entrega en destino con impuestos pagados.'
+                `
             },
             {
                 id: 'c3',
@@ -247,9 +232,7 @@
                         </li>
                     </ul>
                     <p class="mt-2"><strong>Acumulación:</strong> Permite usar materiales de países socios (bilateral, diagonal) como si fueran originarios para mantener la preferencia.</p>
-                `,
-                math: 'Valor Añadido % = \frac{Precio ExWorks - Materiales No Originarios}{Precio ExWorks} \times 100',
-                code: 'Certificados:\n- No Preferencial: Certificado de Origen (Cámara Comercio)\n- Preferencial: EUR-1, Form A (GSP), Declaración en Factura'
+                `
             },
             {
                 id: 'c4',
@@ -266,9 +249,7 @@
                         <li>Código TARIC (2 dígitos, UE) = 10 dígitos. Define medidas de política comercial (antidumping, suspensiones).</li>
                     </ol>
                     <p class="mt-2"><strong>Valor en Aduana (Base Imponible Arancel):</strong> Generalmente es el Valor de Transacción (CIF) + Ajustes (Cánones, comisiones venta, envases) - Deducciones (Transporte post-llegada).</p>
-                `,
-                math: 'Valor Aduana \approx Valor CIF (Cost + Insurance + Freight)\nDeuda = (Valor Aduana \times % Arancel) + IVA',
-                code: 'Ejemplo Estructura:\n07 (Capítulo) 02 (Tomates)\n0702.00 (Subpartida SA)\n0702.00.00 (NC)\n0702.00.00.10 (TARIC)'
+                `
             },
             {
                 id: 'c5',
@@ -285,9 +266,7 @@
                     </ul>
                     <p class="mt-2"><strong>IVA Importación:</strong> Se liquida junto con el arancel en el DUA. Base Imponible IVA = Valor en Aduana + Aranceles + Otros Impuestos + Gastos accesorios hasta primer destino interior.</p>
                     <p><strong>Anti-Dumping:</strong> Derecho adicional para combatir precios desleales (inferiores al coste). Puede superar el 40-50%.</p>
-                `,
-                math: 'Total a Pagar = Arancel + AntiDumping + IVA\nIVA = (Valor Aduana + Arancel + AD) \times 21\%',
-                code: 'Cálculo Anti-Dumping (Ejemplo PDF):\nImporte: 26.300€ | Arancel: 6.5% | AD: 49.1%\nArancel = 1.709,5€\nAD = 12.913,3€\nTotal Deuda (sin IVA) = 14.622,8€'
+                `
             },
             // --- DOCUMENTOS ---
             {
@@ -299,9 +278,7 @@
                 technical: `
                     <p>Contiene la información crítica: Exportador, Importador, Declarante, Código TARIC, Valor, Origen, Procedimiento aduanero (ej. 4000 para despacho a libre práctica).</p>
                     <p>Es la base para la liquidación de impuestos. Se presenta telemáticamente a la AEAT.</p>
-                `,
-                math: 'Casilla 47: Cálculo de tributos',
-                code: 'Procedimiento 40: Despacho a consumo.\nProcedimiento 10: Exportación definitiva.'
+                `
             },
             {
                 id: 'd2',
@@ -312,9 +289,7 @@
                 technical: `
                     <p>Desglosa cómo se llega al Valor en Aduana. Es crítico para declarar "Adiciones" (royalties, comisiones, transporte hasta frontera) y "Deducciones" (transporte interior UE).</p>
                     <p>Si hay vinculación entre comprador y vendedor que afecte al precio, debe declararse aquí.</p>
-                `,
-                math: 'Valor Aduana = Precio Factura + Adiciones - Deducciones',
-                code: 'Formulario DV1:\nCasilla 11a: Precio Neto\nCasilla 13: Costes a cargo comprador\nCasilla 19: Gastos transporte post-llegada (Deducción)'
+                `
             },
             {
                 id: 'd3',
@@ -326,9 +301,7 @@
                     <p><strong>B/L (Marítimo):</strong> Es un título de propiedad negociable. Tipos: "Clean on board" (sin daños), "To order" (endosable).</p>
                     <p><strong>CMR (Carretera):</strong> Carta de porte internacional. Prueba el contrato de transporte por carretera según el convenio CMR. No es título de propiedad.</p>
                     <p><strong>Air Waybill (Aéreo):</strong> No negociable.</p>
-                `,
-                math: 'B/L = Recibo + Contrato + Título de Propiedad',
-                code: 'Campos clave:\nShipper (Expedidor)\nConsignee (Destinatario)\nNotify Party\nPort of Loading/Discharge'
+                `
             },
             {
                 id: 'd4',
@@ -339,9 +312,7 @@
                 technical: `
                     <p><strong>Factura Comercial:</strong> Debe incluir Incoterm, desglose de precio, moneda, origen. Para aduanas, si > 6000€ puede requerir ser "Exportador Autorizado" para declarar origen en factura.</p>
                     <p><strong>Packing List:</strong> Detalla bultos, pesos brutos/netos, marcas. Vital para la inspección física en aduana (circuito rojo).</p>
-                `,
-                math: 'Factura < 6000€ -> Declaración origen en factura permitida sin autorización',
-                code: 'Factura:\nNº Factura, Fecha, Incoterm\nPacking List:\nBulto 1: 50kg, Pallet, Dimensiones'
+                `
             },
             {
                 id: 'd5',
@@ -353,9 +324,7 @@
                     <p><strong>EUR-1:</strong> Para acuerdos preferenciales bilaterales (ej. UE-Suiza, UE-México).</p>
                     <p><strong>Form A:</strong> Para países del Sistema de Preferencias Generalizadas (SPG) (Países en desarrollo exportando a UE). Gradualmente reemplazado por el sistema REX.</p>
                     <p><strong>Certificado No Preferencial:</strong> Emitido por Cámaras de Comercio, solo acredita origen sin beneficio fiscal.</p>
-                `,
-                math: 'EUR-1 = Arancel 0% o reducido',
-                code: 'Validez EUR-1: 4 meses.\nSistema REX: Auto-certificación por exportadores registrados.'
+                `
             }
         ];
 
@@ -413,8 +382,6 @@
         const modalTitle = document.getElementById('modal-title');
         const modalSummary = document.getElementById('modal-summary');
         const modalTechnical = document.getElementById('modal-technical');
-        const modalMath = document.getElementById('modal-math');
-        const modalCode = document.getElementById('modal-code');
         const modalTag = document.getElementById('modal-tag');
 
         function openModal(id) {
@@ -425,10 +392,6 @@
             modalTitle.textContent = data.title;
             modalSummary.textContent = data.summary;
             modalTechnical.innerHTML = data.technical;
-            
-            // Renderizado condicional de MathJax
-            modalMath.textContent = data.math;
-            modalCode.textContent = data.code;
             
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
