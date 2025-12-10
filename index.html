@@ -775,46 +775,45 @@
             const baseCost = costs.exw + costs.certs;
             const exwPriceWithMargin = baseCost * (1 + (costs.margin / 100));
             
-            // 2. Definir cadena logística (sin el coste base, que ya está calculado)
+            // 2. Definir cadena logística
             const logisticCostsList = [
                 { id: 'load', name: 'Carga en Origen' },
                 { id: 'inland_org', name: 'Transporte Interior (Origen)' },
                 { id: 'customs_exp', name: 'Despacho Exportación' },
                 { id: 'thc_org', name: 'Gastos Terminal Origen' },
                 { id: 'freight', name: 'Flete Internacional' },
-                { id: 'insurance', name: 'Seguro' },
+                { id: 'insurance', name: 'Seguro de Transporte' },
                 { id: 'thc_dst', name: 'Gastos Terminal Destino' },
                 { id: 'customs_imp', name: 'Despacho Importación + Imptos' },
                 { id: 'inland_dst', name: 'Transporte Interior (Destino)' }
             ];
 
-            // 3. Determinar punto de corte según Incoterm (para logística)
-            // Indices en logisticCostsList: 0=load, 1=inland, 2=exp, 3=thc, 4=freight, 5=ins, 6=thc_d, 7=imp, 8=inland_d
-            let cutoffIndex = -1; // EXW por defecto no incluye nada de la lista logística
-            
-            switch(selected) {
-                case 'EXW': cutoffIndex = -1; break; 
-                case 'FCA': cutoffIndex = 2; break; // Incluye hasta despacho exp (aprox)
-                case 'FAS': cutoffIndex = 2; break;
-                case 'FOB': cutoffIndex = 3; break; // Incluye THC origen
-                case 'CPT': cutoffIndex = 4; break; // Incluye flete
-                case 'CFR': cutoffIndex = 4; break;
-                case 'CIP': cutoffIndex = 5; break; // Incluye seguro
-                case 'CIF': cutoffIndex = 5; break;
-                case 'DAP': cutoffIndex = 6; break; // Incluye THC destino (simple)
-                case 'DPU': cutoffIndex = 6; break; // (Igual que DAP en costes listados aqui)
-                case 'DDP': cutoffIndex = 8; break; // Todo
-            }
+            // 3. Configuración de Costes a Cargo del Vendedor por Incoterm
+            // Permite saltar pasos (ej. DAP paga transporte interior pero NO aduana importación)
+            const sellerObligations = {
+                'EXW': [],
+                'FCA': ['load', 'inland_org', 'customs_exp'],
+                'FAS': ['load', 'inland_org', 'customs_exp'],
+                'FOB': ['load', 'inland_org', 'customs_exp', 'thc_org'],
+                'CPT': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'thc_dst'], // Incluye THC destino a veces, simplificado
+                'CFR': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'thc_dst'],
+                'CIP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst'],
+                'CIF': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst'],
+                'DAP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'inland_dst'], // DAP: Todo MENOS Customs Imp
+                'DPU': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'inland_dst'], // Similar a DAP en costes, difiere en descarga
+                'DDP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'customs_imp', 'inland_dst'] // DDP: Todo incluido
+            };
+
+            const includedCosts = sellerObligations[selected] || [];
 
             // 4. Calcular Total y Listas
-            // Siempre añadimos EXW y Certs a la lista del Vendedor (porque están en el precio)
             sellerResp.push(`Mercancía + Embalaje`);
             sellerResp.push(`Certificados y Otros`);
             
             total = exwPriceWithMargin; // Empezamos con el precio base marginado
 
-            logisticCostsList.forEach((item, index) => {
-                if (index <= cutoffIndex) {
+            logisticCostsList.forEach(item => {
+                if (includedCosts.includes(item.id)) {
                     total += costs[item.id];
                     sellerResp.push(item.name);
                 } else {
