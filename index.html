@@ -327,6 +327,7 @@
                             <div><label class="text-xs font-bold text-slate-500">Gastos Terminal Destino (THC)</label><input type="number" id="i_thc_dst" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
                             <div><label class="text-xs font-bold text-slate-500">Aduana Importación + Impuestos</label><input type="number" id="i_customs_imp" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
                             <div><label class="text-xs font-bold text-slate-500">Transporte Interior (Destino)</label><input type="number" id="i_inland_dst" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
+                            <div><label class="text-xs font-bold text-slate-500">Gastos de Descarga en Destino</label><input type="number" id="i_unload" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
                         </div>
                     </div>
 
@@ -763,7 +764,8 @@
                 insurance: parseFloat(document.getElementById('i_insurance').value) || 0,
                 thc_dst: parseFloat(document.getElementById('i_thc_dst').value) || 0,
                 customs_imp: parseFloat(document.getElementById('i_customs_imp').value) || 0,
-                inland_dst: parseFloat(document.getElementById('i_inland_dst').value) || 0
+                inland_dst: parseFloat(document.getElementById('i_inland_dst').value) || 0,
+                unload: parseFloat(document.getElementById('i_unload').value) || 0
             };
 
             const selected = document.getElementById('incoterm_selector').value;
@@ -785,7 +787,8 @@
                 { id: 'insurance', name: 'Seguro de Transporte' },
                 { id: 'thc_dst', name: 'Gastos Terminal Destino' },
                 { id: 'customs_imp', name: 'Despacho Importación + Imptos' },
-                { id: 'inland_dst', name: 'Transporte Interior (Destino)' }
+                { id: 'inland_dst', name: 'Transporte Interior (Destino)' },
+                { id: 'unload', name: 'Descarga en Destino' }
             ];
 
             // 3. Configuración de Costes a Cargo del Vendedor por Incoterm
@@ -800,8 +803,8 @@
                 'CIP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst'],
                 'CIF': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst'],
                 'DAP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'inland_dst'], // DAP: Todo MENOS Customs Imp
-                'DPU': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'inland_dst'], // Similar a DAP en costes, difiere en descarga
-                'DDP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'customs_imp', 'inland_dst'] // DDP: Todo incluido
+                'DPU': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'inland_dst', 'unload'], // DPU: Incluye descarga
+                'DDP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'customs_imp', 'inland_dst'] // DDP: Todo incluido (salvo descarga habitualmente)
             };
 
             const includedCosts = sellerObligations[selected] || [];
