@@ -6,7 +6,6 @@
     <title>Gestión Administrativa del Comercio Internacional: Unidad 4</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- MathJax para fórmulas matemáticas -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
@@ -35,23 +34,31 @@
 </head>
 <body class="text-slate-800 antialiased">
 
-    <!-- Navegación -->
     <nav class="bg-slate-900 text-white sticky top-0 z-40 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-globe text-blue-400 text-xl"></i>
-                    <span class="font-bold text-xl tracking-tight">GACI TEMARIO</span>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-globe text-blue-400 text-xl"></i>
+                        <span class="font-bold text-xl tracking-tight hidden sm:inline-block">GACI TEMARIO</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-800 p-1 rounded-lg">
+                        <button onclick="switchView('temario')" id="tab-temario" class="px-4 py-1.5 rounded-md text-sm font-bold bg-slate-700 text-white transition-all shadow-sm">
+                            <i class="fa-solid fa-book-open mr-2"></i>Temario
+                        </button>
+                        <button onclick="switchView('contrato')" id="tab-contrato" class="px-4 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700 transition-all">
+                            <i class="fa-solid fa-file-signature mr-2"></i>Contrato ICC
+                        </button>
+                    </div>
                 </div>
                 <div class="hidden md:block text-sm text-slate-400">
-                    Unidad 4: Procedimientos Administrativos Import/Export
+                    Unidad 4: Procedimientos
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Header Hero -->
-    <header class="bg-white border-b border-slate-200">
+    <header id="vista-temario-header" class="bg-white border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Gestión Aduanera y Fiscalidad Internacional</h1>
             <p class="text-lg text-slate-600 max-w-3xl">
@@ -61,10 +68,8 @@
         </div>
     </header>
 
-    <!-- Contenido Principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+    <main id="vista-temario-main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
 
-        <!-- Sección 1: Conceptos Core (Grid Interactivo) -->
         <section>
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-8 w-1 bg-blue-600 rounded-full"></div>
@@ -73,7 +78,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="concepts-grid"></div>
         </section>
 
-        <!-- Sección 2: Documentación (Lista Detallada) -->
         <section>
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-8 w-1 bg-indigo-600 rounded-full"></div>
@@ -82,7 +86,6 @@
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 divide-y divide-slate-100" id="docs-list"></div>
         </section>
 
-        <!-- Sección 3: Conceptos Adicionales Críticos -->
         <section>
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-8 w-1 bg-rose-500 rounded-full"></div>
@@ -91,7 +94,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="extra-grid"></div>
         </section>
 
-        <!-- Sección 4: Herramientas Interactivas y Recursos -->
         <section class="bg-slate-50 rounded-xl p-8 border border-slate-200">
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-8 w-1 bg-teal-500 rounded-full"></div>
@@ -101,7 +103,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 
-                <!-- Herramienta 1: Calculadora Fiscal -->
                 <div onclick="openTool('fiscal')" class="group cursor-pointer p-5 bg-white rounded-lg border border-slate-200 hover:border-teal-500 hover:shadow-md transition-all">
                     <div class="flex justify-between items-start">
                         <div>
@@ -115,7 +116,6 @@
                     </div>
                 </div>
 
-                <!-- Herramienta 2: Calculadora Incoterms -->
                 <div onclick="openTool('incoterm')" class="group cursor-pointer p-5 bg-white rounded-lg border border-slate-200 hover:border-purple-500 hover:shadow-md transition-all">
                     <div class="flex justify-between items-start">
                         <div>
@@ -129,7 +129,6 @@
                     </div>
                 </div>
 
-                <!-- Enlace 1: Access2Markets -->
                 <a href="https://trade.ec.europa.eu/access-to-markets/es/home" target="_blank" class="group block p-5 bg-slate-100 rounded-lg border border-slate-200 hover:border-blue-400 transition-colors opacity-90">
                     <div class="flex justify-between items-start">
                         <div>
@@ -140,7 +139,6 @@
                     </div>
                 </a>
                 
-                <!-- Enlace 2: AEAT -->
                 <a href="https://sede.agenciatributaria.gob.es/Sede/aduanas.html" target="_blank" class="group block p-5 bg-slate-100 rounded-lg border border-slate-200 hover:border-orange-400 transition-colors opacity-90">
                     <div class="flex justify-between items-start">
                         <div>
@@ -156,14 +154,16 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+    <footer id="vista-temario-footer" class="bg-white border-t border-slate-200 mt-12 py-8">
         <div class="max-w-7xl mx-auto px-4 text-center text-slate-500 text-sm">
             <p>&copy; 2025 CREADO POR MARCO</p>
         </div>
     </footer>
 
-    <!-- MODAL DE CONTENIDO TÉCNICO (CONCEPTOS/DOCS) -->
+    <section id="vista-contrato" class="hidden w-full" style="height: calc(100vh - 64px);">
+        <iframe src="contrato_icc.html" class="w-full h-full border-none"></iframe>
+    </section>
+
     <div id="tech-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
         <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
             <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center sticky top-0">
@@ -195,7 +195,6 @@
         </div>
     </div>
 
-    <!-- MODAL CALCULADORA FISCAL -->
     <div id="fiscal-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
         <div class="modal-content bg-white w-full max-w-2xl max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
             <div class="bg-teal-600 px-6 py-4 flex justify-between items-center text-white">
@@ -205,7 +204,6 @@
             
             <div class="p-6 overflow-y-auto custom-scrollbar">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Inputs -->
                     <div class="space-y-4">
                         <h4 class="font-bold text-slate-800 border-b pb-2">1. Datos de la Operación</h4>
                         <div>
@@ -242,7 +240,6 @@
                         </div>
                     </div>
 
-                    <!-- Outputs -->
                     <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-4">
                         <h4 class="font-bold text-slate-800 border-b pb-2">3. Resultados (Liquidación)</h4>
                         
@@ -292,7 +289,6 @@
         </div>
     </div>
 
-    <!-- MODAL CALCULADORA INCOTERMS -->
     <div id="incoterm-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
         <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
             <div class="bg-purple-700 px-6 py-4 flex justify-between items-center text-white">
@@ -303,7 +299,6 @@
             <div class="p-6 overflow-y-auto custom-scrollbar">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     
-                    <!-- Columna 1: Costes -->
                     <div class="space-y-3 lg:col-span-1">
                         <h4 class="font-bold text-purple-900 border-b pb-2 mb-3">1. Cadena de Costes</h4>
                         
@@ -330,10 +325,8 @@
                         </div>
                     </div>
 
-                    <!-- Columna 2: Selector y Resultado -->
                     <div class="lg:col-span-2 flex flex-col gap-6">
                         
-                        <!-- Selector -->
                         <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
                             <label class="block font-bold text-slate-800 mb-2">2. Selecciona el Incoterm Objetivo</label>
                             <select id="incoterm_selector" class="w-full p-3 border border-slate-300 rounded-lg text-lg font-bold text-purple-800 focus:ring-2 focus:ring-purple-500" onchange="calcIncoterm()">
@@ -351,7 +344,6 @@
                             </select>
                         </div>
 
-                        <!-- Panel de Resultado -->
                         <div class="flex-grow bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden flex flex-col">
                             <div class="bg-slate-900 text-white p-6 text-center">
                                 <div class="text-sm font-light text-slate-400 uppercase tracking-widest mb-1">Precio de Venta Estimado</div>
@@ -360,23 +352,19 @@
                             </div>
                             
                             <div class="p-6 grid grid-cols-2 gap-6 h-full">
-                                <!-- Vendedor -->
                                 <div>
                                     <h5 class="text-xs font-bold text-green-600 uppercase mb-3 flex items-center gap-2">
                                         <i class="fa-solid fa-check-circle"></i> Paga Vendedor
                                     </h5>
                                     <ul id="seller_responsibilities" class="text-sm space-y-2 text-slate-600">
-                                        <!-- JS Fill -->
-                                    </ul>
+                                        </ul>
                                 </div>
-                                <!-- Comprador -->
                                 <div class="border-l border-slate-100 pl-6">
                                     <h5 class="text-xs font-bold text-orange-600 uppercase mb-3 flex items-center gap-2">
                                         <i class="fa-solid fa-user-tag"></i> Paga Comprador
                                     </h5>
                                     <ul id="buyer_responsibilities" class="text-sm space-y-2 text-slate-600">
-                                        <!-- JS Fill -->
-                                    </ul>
+                                        </ul>
                                 </div>
                             </div>
                         </div>
@@ -387,8 +375,38 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC & DATA -->
     <script>
+        // --- LÓGICA DE NAVEGACIÓN (TEMARIO VS CONTRATO) ---
+        function switchView(view) {
+            const header = document.getElementById('vista-temario-header');
+            const main = document.getElementById('vista-temario-main');
+            const footer = document.getElementById('vista-temario-footer');
+            const contrato = document.getElementById('vista-contrato');
+            
+            const tabTemario = document.getElementById('tab-temario');
+            const tabContrato = document.getElementById('tab-contrato');
+
+            if (view === 'temario') {
+                header.classList.remove('hidden');
+                main.classList.remove('hidden');
+                footer.classList.remove('hidden');
+                contrato.classList.add('hidden');
+                
+                // Estilos del botón
+                tabTemario.className = "px-4 py-1.5 rounded-md text-sm font-bold bg-slate-700 text-white transition-all shadow-sm";
+                tabContrato.className = "px-4 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700 transition-all";
+            } else {
+                header.classList.add('hidden');
+                main.classList.add('hidden');
+                footer.classList.add('hidden');
+                contrato.classList.remove('hidden');
+                
+                // Estilos del botón
+                tabContrato.className = "px-4 py-1.5 rounded-md text-sm font-bold bg-slate-700 text-white transition-all shadow-sm";
+                tabTemario.className = "px-4 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700 transition-all";
+            }
+        }
+
         // --- BASE DE DATOS DE CONOCIMIENTO ---
         const knowledgeBase = [
             // --- CONCEPTOS CORE (Sección 1) ---
