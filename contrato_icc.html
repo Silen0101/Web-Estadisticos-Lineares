@@ -1,0 +1,2484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICC Model International Sale Contract — Manufactured Goods (2020)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Merriweather:wght@400;700&display=swap');
+
+        :root {
+            --icc-blue: #003366;
+            --icc-dark: #001a33;
+            --icc-light-blue: #e8f0fe;
+            --icc-gold: #c8a951;
+            --icc-red: #8b0000;
+            --icc-gray: #f5f5f5;
+            --icc-border: #ccd6e0;
+            --icc-text: #222;
+            --icc-medium-gray: #666;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', 'Segoe UI', Arial, sans-serif;
+            font-size: 14px;
+            color: var(--icc-text);
+            background: #e9ecef;
+            line-height: 1.5;
+        }
+
+        .contract-wrapper {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* HEADER */
+        .contract-header {
+            background: linear-gradient(135deg, var(--icc-dark) 0%, var(--icc-blue) 100%);
+            color: #fff;
+            padding: 40px 50px 30px;
+            position: relative;
+        }
+
+        .contract-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--icc-gold), #e8c84a, var(--icc-gold));
+        }
+
+        .icc-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .icc-emblem {
+            width: 70px;
+            height: 70px;
+            border: 3px solid var(--icc-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Merriweather', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--icc-gold);
+            flex-shrink: 0;
+        }
+
+        .icc-title-block h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        .icc-title-block .subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 4px;
+            font-weight: 300;
+        }
+
+        .pub-ref {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* MAIN CONTENT */
+        .contract-body {
+            padding: 40px 50px;
+        }
+
+        /* PREAMBLE */
+        .preamble {
+            background: var(--icc-light-blue);
+            border-left: 4px solid var(--icc-blue);
+            padding: 20px 25px;
+            margin-bottom: 35px;
+            border-radius: 0 4px 4px 0;
+            font-size: 13px;
+            color: var(--icc-medium-gray);
+            line-height: 1.7;
+        }
+
+        .preamble strong {
+            color: var(--icc-blue);
+        }
+
+        /* SECTION HEADERS */
+        .part-header {
+            background: var(--icc-blue);
+            color: #fff;
+            padding: 14px 25px;
+            font-family: 'Merriweather', serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 35px -50px 30px;
+            letter-spacing: 0.5px;
+        }
+
+        .part-header:first-of-type {
+            margin-top: 0;
+        }
+
+        /* ARTICLE SECTIONS */
+        .article {
+            margin-bottom: 30px;
+            border: 1px solid var(--icc-border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8ecf0 100%);
+            padding: 12px 20px;
+            border-bottom: 2px solid var(--icc-gold);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .article-number {
+            background: var(--icc-blue);
+            color: #fff;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-family: 'Merriweather', serif;
+            white-space: nowrap;
+        }
+
+        .article-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--icc-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .article-body {
+            padding: 20px;
+        }
+
+        /* FORM ELEMENTS */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--icc-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .form-sublabel {
+            font-size: 12px;
+            color: var(--icc-medium-gray);
+            margin-bottom: 6px;
+            font-style: italic;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--icc-border);
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--icc-text);
+            background: #fafbfc;
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--icc-blue);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--icc-border);
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--icc-text);
+            background: #fafbfc;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--icc-blue);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
+        }
+
+        .inline-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .inline-fields-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* CHECKBOX / RADIO STYLING */
+        .option-group {
+            margin: 8px 0;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 14px;
+            margin-bottom: 6px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            background: var(--icc-light-blue);
+            border-color: var(--icc-border);
+        }
+
+        .option-item.has-sub {
+            flex-wrap: wrap;
+        }
+
+        .option-item input[type="checkbox"],
+        .option-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: var(--icc-blue);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .option-label {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .option-label strong {
+            color: var(--icc-dark);
+        }
+
+        .option-label .opt-desc {
+            font-size: 12px;
+            color: var(--icc-medium-gray);
+            margin-top: 2px;
+        }
+
+        .sub-options {
+            width: 100%;
+            padding-left: 28px;
+            margin-top: 8px;
+        }
+
+        .sub-field {
+            margin-top: 8px;
+            padding-left: 28px;
+            width: 100%;
+        }
+
+        .sub-field input[type="text"],
+        .sub-field input[type="number"],
+        .sub-field input[type="date"],
+        .sub-field textarea {
+            margin-top: 4px;
+        }
+
+        /* INCOTERMS TABLE */
+        .incoterms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin: 10px 0;
+        }
+
+        .incoterms-grid .option-item {
+            margin-bottom: 0;
+            padding: 8px 12px;
+            border: 1px solid #eee;
+            border-radius: 3px;
+        }
+
+        .incoterms-grid .option-item:hover {
+            border-color: var(--icc-blue);
+        }
+
+        .incoterms-code {
+            font-weight: 700;
+            color: var(--icc-blue);
+            font-family: 'Merriweather', serif;
+            font-size: 13px;
+        }
+
+        .incoterms-desc {
+            font-size: 12px;
+            color: var(--icc-medium-gray);
+        }
+
+        /* DIVIDERS */
+        .divider {
+            height: 1px;
+            background: var(--icc-border);
+            margin: 20px 0;
+        }
+
+        .divider-dashed {
+            border: none;
+            border-top: 1px dashed var(--icc-border);
+            margin: 16px 0;
+        }
+
+        /* NOTES */
+        .note {
+            font-size: 12px;
+            color: var(--icc-medium-gray);
+            background: #fffbe6;
+            border: 1px solid #f0e6b0;
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .note::before {
+            content: "⚠ ";
+        }
+
+        .info-note {
+            font-size: 12px;
+            color: var(--icc-medium-gray);
+            background: var(--icc-light-blue);
+            border: 1px solid var(--icc-border);
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .info-note::before {
+            content: "ℹ ";
+        }
+
+        /* PAYMENT TABLE */
+        .payment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+
+        .payment-table th {
+            background: var(--icc-blue);
+            color: #fff;
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .payment-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--icc-border);
+            vertical-align: top;
+        }
+
+        .payment-table tr:nth-child(even) {
+            background: #fafbfc;
+        }
+
+        .payment-table input[type="text"],
+        .payment-table input[type="number"] {
+            background: #fff;
+            padding: 6px 10px;
+        }
+
+        /* SIGNATURE SECTION */
+        .signature-section {
+            margin-top: 40px;
+            border-top: 3px solid var(--icc-blue);
+            padding-top: 30px;
+        }
+
+        .sig-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .sig-block {
+            border: 1px solid var(--icc-border);
+            border-radius: 6px;
+            padding: 25px;
+        }
+
+        .sig-block h4 {
+            color: var(--icc-blue);
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sig-line {
+            border-bottom: 1px solid var(--icc-text);
+            height: 60px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .sig-line-label {
+            font-size: 11px;
+            color: var(--icc-medium-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 15px;
+        }
+
+        /* FOOTER */
+        .contract-footer {
+            background: var(--icc-dark);
+            color: rgba(255,255,255,0.6);
+            padding: 20px 50px;
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .contract-footer strong {
+            color: var(--icc-gold);
+        }
+
+        /* PRINT */
+        @media print {
+            body {
+                background: #fff;
+            }
+            .contract-wrapper {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+            }
+            .contract-body {
+                padding: 30px;
+            }
+            .part-header {
+                margin-left: -30px;
+                margin-right: -30px;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+
+        /* TOOLBAR */
+        .toolbar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .toolbar button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-print {
+            background: var(--icc-blue);
+            color: #fff;
+        }
+
+        .btn-print:hover {
+            background: var(--icc-dark);
+        }
+
+        .btn-clear {
+            background: #fff;
+            color: var(--icc-red);
+            border: 1px solid var(--icc-red) !important;
+        }
+
+        .btn-clear:hover {
+            background: var(--icc-red);
+            color: #fff;
+        }
+
+        .btn-save {
+            background: var(--icc-gold);
+            color: var(--icc-dark);
+        }
+
+        .btn-save:hover {
+            background: #b8993f;
+        }
+
+        /* CONDITIONAL FIELDS */
+        .conditional-field {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .conditional-field.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contract-body {
+                padding: 20px;
+            }
+            .contract-header {
+                padding: 25px 20px 20px;
+            }
+            .part-header {
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+            .inline-fields,
+            .inline-fields-3 {
+                grid-template-columns: 1fr;
+            }
+            .incoterms-grid {
+                grid-template-columns: 1fr;
+            }
+            .sig-grid {
+                grid-template-columns: 1fr;
+            }
+            .toolbar {
+                position: static;
+                flex-direction: row;
+                justify-content: center;
+                padding: 15px;
+                background: var(--icc-gray);
+            }
+            .icc-title-block h1 {
+                font-size: 18px;
+            }
+        }
+
+        /* Section numbering label */
+        .clause-ref {
+            font-size: 11px;
+            color: var(--icc-medium-gray);
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        /* Percentage / amount inline */
+        .amount-inline {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .amount-inline input {
+            width: 120px !important;
+        }
+
+        .amount-inline span {
+            font-size: 13px;
+            color: var(--icc-medium-gray);
+            white-space: nowrap;
+        }
+
+        .general-conditions-toc {
+            column-count: 2;
+            column-gap: 30px;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .general-conditions-toc .toc-item {
+            break-inside: avoid;
+        }
+
+        .gc-article {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: #fafbfc;
+            border-left: 3px solid var(--icc-border);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .gc-article h4 {
+            color: var(--icc-blue);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .gc-article p, .gc-article ol {
+            font-size: 13px;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .gc-article ol {
+            padding-left: 20px;
+        }
+
+        .gc-article ol li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOOLBAR -->
+<div class="toolbar no-print">
+    <button class="btn-print" onclick="window.print()">🖨 Print / PDF</button>
+    <button class="btn-save" onclick="saveForm()">💾 Save Data</button>
+    <button class="btn-clear" onclick="clearForm()">✕ Clear All</button>
+</div>
+
+<div class="contract-wrapper" id="contractForm">
+
+    <!-- HEADER -->
+    <div class="contract-header">
+        <div class="icc-logo-area">
+            <div class="icc-emblem">ICC</div>
+            <div class="icc-title-block">
+                <h1>ICC Model International Sale Contract</h1>
+                <div class="subtitle">Manufactured Goods — 2020 Edition</div>
+            </div>
+        </div>
+        <div class="pub-ref">ICC Publication No. 738E &nbsp;|&nbsp; © International Chamber of Commerce</div>
+    </div>
+
+    <!-- BODY -->
+    <div class="contract-body">
+
+        <!-- PREAMBLE -->
+        <div class="preamble">
+            <strong>Important Notice:</strong> This contract form is designed for use in international sales of manufactured goods. 
+            The <strong>Special Conditions</strong> (Part A) prevail over the <strong>General Conditions</strong> (Part B) in case of conflict. 
+            Parties should complete all relevant fields below. Any box left unchecked or field left blank will be governed by the applicable General Condition. 
+            This contract is governed by the provisions of the United Nations Convention on Contracts for the International Sale of Goods (CISG), 
+            supplemented where necessary by the law chosen by the parties or, absent such choice, by the rules of private international law.
+        </div>
+
+        <!-- ==================== PART A: SPECIAL CONDITIONS ==================== -->
+        <div class="part-header">PART A — SPECIAL CONDITIONS</div>
+
+        <!-- A-1: CONTRACT REFERENCE -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-1</span>
+                <span class="article-title">Contract Reference &amp; Date</span>
+            </div>
+            <div class="article-body">
+                <div class="inline-fields">
+                    <div class="form-group">
+                        <label class="form-label">Contract Number / Reference</label>
+                        <input type="text" id="contract_ref" placeholder="e.g. ISC-2024-00123">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date of Contract</label>
+                        <input type="date" id="contract_date">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-2: SELLER -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-2</span>
+                <span class="article-title">The Seller</span>
+            </div>
+            <div class="article-body">
+                <div class="form-group">
+                    <label class="form-label">Company / Legal Name</label>
+                    <input type="text" id="seller_name" placeholder="Full legal name of Seller">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Registered Address</label>
+                    <textarea id="seller_address" rows="2" placeholder="Street address, City, State/Province, Postal Code"></textarea>
+                </div>
+                <div class="inline-fields-3">
+                    <div class="form-group">
+                        <label class="form-label">Country</label>
+                        <input type="text" id="seller_country" placeholder="Country">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Telephone</label>
+                        <input type="tel" id="seller_phone" placeholder="+00 000 000 0000">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="seller_email" placeholder="email@company.com">
+                    </div>
+                </div>
+                <div class="inline-fields">
+                    <div class="form-group">
+                        <label class="form-label">Registration / Tax ID Number</label>
+                        <input type="text" id="seller_taxid" placeholder="VAT / Tax ID">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Person</label>
+                        <input type="text" id="seller_contact" placeholder="Name and title">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-3: BUYER -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-3</span>
+                <span class="article-title">The Buyer</span>
+            </div>
+            <div class="article-body">
+                <div class="form-group">
+                    <label class="form-label">Company / Legal Name</label>
+                    <input type="text" id="buyer_name" placeholder="Full legal name of Buyer">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Registered Address</label>
+                    <textarea id="buyer_address" rows="2" placeholder="Street address, City, State/Province, Postal Code"></textarea>
+                </div>
+                <div class="inline-fields-3">
+                    <div class="form-group">
+                        <label class="form-label">Country</label>
+                        <input type="text" id="buyer_country" placeholder="Country">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Telephone</label>
+                        <input type="tel" id="buyer_phone" placeholder="+00 000 000 0000">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="buyer_email" placeholder="email@company.com">
+                    </div>
+                </div>
+                <div class="inline-fields">
+                    <div class="form-group">
+                        <label class="form-label">Registration / Tax ID Number</label>
+                        <input type="text" id="buyer_taxid" placeholder="VAT / Tax ID">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Person</label>
+                        <input type="text" id="buyer_contact" placeholder="Name and title">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-4: GOODS -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-4</span>
+                <span class="article-title">Description of Goods</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 1</div>
+                <div class="form-group">
+                    <label class="form-label">Description of Goods (including quantity)</label>
+                    <textarea id="goods_description" rows="4" placeholder="Provide a detailed description of the goods, including type, model, quality standards, quantity, weight, dimensions, etc."></textarea>
+                </div>
+                <div class="inline-fields">
+                    <div class="form-group">
+                        <label class="form-label">HS / Commodity Code (if applicable)</label>
+                        <input type="text" id="goods_hs_code" placeholder="e.g. 8471.30.0000">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Country of Origin / Manufacture</label>
+                        <input type="text" id="goods_origin" placeholder="Country of origin">
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Specifications / Standards Compliance</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="checkbox" id="spec_attached" onchange="toggleConditional('spec_attached_detail', this)">
+                            <span class="option-label">
+                                <strong>Detailed specifications are attached as an annex</strong>
+                                <div class="opt-desc">Annex reference to be specified below</div>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="spec_attached_detail">
+                            <input type="text" placeholder="Annex reference (e.g., Annex 1 — Technical Specifications)">
+                        </div>
+
+                        <label class="option-item">
+                            <input type="checkbox" id="spec_sample">
+                            <span class="option-label">
+                                <strong>Goods must conform to sample/model provided</strong>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="spec_standards" onchange="toggleConditional('spec_standards_detail', this)">
+                            <span class="option-label">
+                                <strong>Goods must comply with the following standards</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="spec_standards_detail">
+                            <input type="text" placeholder="e.g., ISO 9001, CE marking, UL certification, etc.">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Packaging Requirements</label>
+                    <textarea id="goods_packaging" rows="2" placeholder="Specify packaging requirements, if any (e.g., export-standard packaging, palletized, etc.)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-5: CONTRACT PRICE -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-5</span>
+                <span class="article-title">Contract Price</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 2</div>
+
+                <div class="inline-fields-3">
+                    <div class="form-group">
+                        <label class="form-label">Total Contract Price</label>
+                        <input type="text" id="price_total" placeholder="e.g. 250,000.00">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Currency</label>
+                        <select id="price_currency">
+                            <option value="">— Select Currency —</option>
+                            <option value="USD">USD — US Dollar</option>
+                            <option value="EUR">EUR — Euro</option>
+                            <option value="GBP">GBP — British Pound</option>
+                            <option value="CHF">CHF — Swiss Franc</option>
+                            <option value="JPY">JPY — Japanese Yen</option>
+                            <option value="CNY">CNY — Chinese Yuan</option>
+                            <option value="AED">AED — UAE Dirham</option>
+                            <option value="CAD">CAD — Canadian Dollar</option>
+                            <option value="AUD">AUD — Australian Dollar</option>
+                            <option value="SGD">SGD — Singapore Dollar</option>
+                            <option value="HKD">HKD — Hong Kong Dollar</option>
+                            <option value="INR">INR — Indian Rupee</option>
+                            <option value="BRL">BRL — Brazilian Real</option>
+                            <option value="MXN">MXN — Mexican Peso</option>
+                            <option value="other">Other (specify below)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Other Currency (if applicable)</label>
+                        <input type="text" id="price_currency_other" placeholder="ISO currency code">
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Price Determination</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="price_type" value="fixed">
+                            <span class="option-label">
+                                <strong>Fixed price</strong>
+                                <div class="opt-desc">The price stated above is firm and not subject to adjustment</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="price_type" value="fixed_revision" onchange="toggleConditional('price_revision_detail', this)">
+                            <span class="option-label">
+                                <strong>Fixed price subject to revision</strong>
+                                <div class="opt-desc">As per the following formula or conditions</div>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="price_revision_detail">
+                            <textarea rows="2" placeholder="Describe the price revision formula or conditions..."></textarea>
+                        </div>
+                        <label class="option-item">
+                            <input type="radio" name="price_type" value="unit">
+                            <span class="option-label">
+                                <strong>Unit price</strong>
+                                <div class="opt-desc">Price per unit of goods; total to be determined by final quantity delivered</div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="note">The contract price is understood to include the costs relating to the goods as imposed by the chosen Incoterms® rule (see A-6).</div>
+            </div>
+        </div>
+
+        <!-- A-6: DELIVERY TERMS -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-6</span>
+                <span class="article-title">Delivery Terms</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 3 — Incoterms® 2020 rules apply unless otherwise agreed</div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Incoterms® 2020 Rule</label>
+                    <p class="form-sublabel">Choose one rule applicable to this contract. Specify the named place/port after selection.</p>
+
+                    <div style="margin-top:8px; margin-bottom:6px; font-weight:600; font-size:12px; color:var(--icc-blue); text-transform:uppercase; letter-spacing:1px;">Rules for Any Mode(s) of Transport</div>
+                    <div class="incoterms-grid">
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="EXW">
+                            <span class="option-label">
+                                <span class="incoterms-code">EXW</span>
+                                <span class="incoterms-desc">Ex Works</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="FCA">
+                            <span class="option-label">
+                                <span class="incoterms-code">FCA</span>
+                                <span class="incoterms-desc">Free Carrier</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="CPT">
+                            <span class="option-label">
+                                <span class="incoterms-code">CPT</span>
+                                <span class="incoterms-desc">Carriage Paid To</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="CIP">
+                            <span class="option-label">
+                                <span class="incoterms-code">CIP</span>
+                                <span class="incoterms-desc">Carriage &amp; Insurance Paid To</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="DAP">
+                            <span class="option-label">
+                                <span class="incoterms-code">DAP</span>
+                                <span class="incoterms-desc">Delivered at Place</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="DPU">
+                            <span class="option-label">
+                                <span class="incoterms-code">DPU</span>
+                                <span class="incoterms-desc">Delivered at Place Unloaded</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="DDP">
+                            <span class="option-label">
+                                <span class="incoterms-code">DDP</span>
+                                <span class="incoterms-desc">Delivered Duty Paid</span>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div style="margin-top:14px; margin-bottom:6px; font-weight:600; font-size:12px; color:var(--icc-blue); text-transform:uppercase; letter-spacing:1px;">Rules for Sea and Inland Waterway Transport</div>
+                    <div class="incoterms-grid">
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="FAS">
+                            <span class="option-label">
+                                <span class="incoterms-code">FAS</span>
+                                <span class="incoterms-desc">Free Alongside Ship</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="FOB">
+                            <span class="option-label">
+                                <span class="incoterms-code">FOB</span>
+                                <span class="incoterms-desc">Free on Board</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="CFR">
+                            <span class="option-label">
+                                <span class="incoterms-code">CFR</span>
+                                <span class="incoterms-desc">Cost and Freight</span>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="incoterm" value="CIF">
+                            <span class="option-label">
+                                <span class="incoterms-code">CIF</span>
+                                <span class="incoterms-desc">Cost, Insurance &amp; Freight</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <div class="inline-fields">
+                    <div class="form-group">
+                        <label class="form-label">Named Place / Port of Destination</label>
+                        <input type="text" id="incoterm_place" placeholder="e.g. Port of Rotterdam, Netherlands">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Named Place / Port of Shipment (if applicable)</label>
+                        <input type="text" id="incoterm_shipment_place" placeholder="e.g. Port of Shanghai, China">
+                    </div>
+                </div>
+
+                <div class="info-note">
+                    Under FCA rule with transport by sea, if the buyer requires the seller to instruct the carrier to issue a bill of lading with an on-board notation, check below.
+                </div>
+                <div class="option-group" style="margin-top:8px;">
+                    <label class="option-item">
+                        <input type="checkbox" id="fca_bl">
+                        <span class="option-label">
+                            <strong>FCA with Bill of Lading:</strong> The buyer and seller agree that the buyer will instruct the carrier to issue a bill of lading with an on-board notation to the seller (FCA A6/B6 Incoterms® 2020).
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-7: TIME OF DELIVERY -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-7</span>
+                <span class="article-title">Time of Delivery</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 3.1</div>
+
+                <div class="form-group">
+                    <label class="form-label">Delivery Date / Period</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="delivery_time" value="specific_date" onchange="showDeliveryFields('specific')">
+                            <span class="option-label">
+                                <strong>Specific date</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="delivery_specific">
+                            <input type="date" id="delivery_date">
+                        </div>
+
+                        <label class="option-item">
+                            <input type="radio" name="delivery_time" value="period" onchange="showDeliveryFields('period')">
+                            <span class="option-label">
+                                <strong>Within a specified period</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="delivery_period">
+                            <div class="inline-fields">
+                                <div class="form-group">
+                                    <label class="form-label">From</label>
+                                    <input type="date" id="delivery_from">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">To</label>
+                                    <input type="date" id="delivery_to">
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="option-item">
+                            <input type="radio" name="delivery_time" value="days_after" onchange="showDeliveryFields('days')">
+                            <span class="option-label">
+                                <strong>Within a specified number of days after a defined event</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="delivery_days">
+                            <div class="inline-fields">
+                                <div class="form-group">
+                                    <label class="form-label">Number of Days</label>
+                                    <input type="number" id="delivery_num_days" placeholder="e.g. 60">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">After (event)</label>
+                                    <input type="text" id="delivery_event" placeholder="e.g. date of contract / receipt of advance payment">
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="option-item">
+                            <input type="radio" name="delivery_time" value="installments" onchange="showDeliveryFields('installments')">
+                            <span class="option-label">
+                                <strong>Delivery by installments</strong>
+                                <div class="opt-desc">Specify schedule below</div>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="delivery_installments">
+                            <textarea rows="3" placeholder="Installment 1: [qty] by [date]&#10;Installment 2: [qty] by [date]&#10;Installment 3: [qty] by [date]"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-8: INSPECTION OF GOODS -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-8</span>
+                <span class="article-title">Inspection of Goods</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 3.3</div>
+
+                <div class="form-group">
+                    <label class="form-label">Pre-Shipment Inspection</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="inspection" value="no">
+                            <span class="option-label">
+                                <strong>No pre-shipment inspection required</strong>
+                                <div class="opt-desc">Standard inspection on arrival per General Conditions shall apply</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="inspection" value="yes_buyer" onchange="toggleConditional('inspection_detail', this)">
+                            <span class="option-label">
+                                <strong>Pre-shipment inspection required — at Buyer's cost</strong>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="inspection" value="yes_seller" onchange="toggleConditional('inspection_detail', this)">
+                            <span class="option-label">
+                                <strong>Pre-shipment inspection required — at Seller's cost</strong>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="inspection" value="yes_shared" onchange="toggleConditional('inspection_detail', this)">
+                            <span class="option-label">
+                                <strong>Pre-shipment inspection required — costs shared equally</strong>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="conditional-field" id="inspection_detail">
+                    <div class="divider-dashed"></div>
+                    <div class="inline-fields">
+                        <div class="form-group">
+                            <label class="form-label">Inspection Company / Body</label>
+                            <input type="text" placeholder="Name of inspection company">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Place of Inspection</label>
+                            <input type="text" placeholder="e.g. Seller's premises, port of shipment">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Scope / Method of Inspection</label>
+                        <textarea rows="2" placeholder="Describe the scope of inspection (e.g., visual, functional testing, sampling method, etc.)"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-9: RETENTION OF TITLE -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-9</span>
+                <span class="article-title">Retention of Title</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 7</div>
+
+                <div class="form-group">
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="retention" value="no">
+                            <span class="option-label">
+                                <strong>No retention of title clause applies</strong>
+                                <div class="opt-desc">Title passes to the Buyer upon delivery in accordance with the agreed Incoterms® rule</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="retention" value="yes">
+                            <span class="option-label">
+                                <strong>Retention of title applies</strong>
+                                <div class="opt-desc">The Seller retains title to the goods until full payment of the price. The Buyer shall cooperate in any measures necessary to protect the Seller's title, including registration where applicable under the law of the country where the goods are located.</div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-10: PAYMENT CONDITIONS -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-10</span>
+                <span class="article-title">Payment Conditions</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 4</div>
+
+                <!-- Payment Method -->
+                <div class="form-group">
+                    <label class="form-label">Method of Payment</label>
+                    <p class="form-sublabel">Select one or more methods of payment as applicable. If payment is to be made in installments or stages, specify below.</p>
+
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="checkbox" name="payment_method" value="wire" onchange="toggleConditional('payment_wire_detail', this)">
+                            <span class="option-label">
+                                <strong>Payment by wire transfer (bank transfer)</strong>
+                                <div class="opt-desc">To the Seller's bank account specified below</div>
+                            </span>
+                        </label>
+                        <div class="conditional-field" id="payment_wire_detail">
+                            <div style="padding-left:28px;">
+                                <div class="inline-fields">
+                                    <div class="form-group">
+                                        <label class="form-label">Bank Name</label>
+                                        <input type="text" placeholder="Name of Seller's bank">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Bank Address / SWIFT/BIC</label>
+                                        <input type="text" placeholder="SWIFT/BIC code">
+                                    </div>
+                                </div>
+                                <div class="inline-fields">
+                                    <div class="form-group">
+                                        <label class="form-label">Account Number / IBAN</label>
+                                        <input type="text" placeholder="IBAN or Account number">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Account Holder Name</label>
+                                        <input type="text" placeholder="Name as registered">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="option-item">
+                            <input type="checkbox" name="payment_method" value="lc" onchange="toggleConditional('payment_lc_detail', this)">
+                            <span class="option-label">
+                                <strong>Documentary credit (Letter of Credit)</strong>
+                                <div class="opt-desc">Irrevocable documentary credit subject to UCP 600</div>
+                            </span>
+                        </label>
+                        <div class="conditional-field" id="payment_lc_detail">
+                            <div style="padding-left:28px;">
+                                <div class="inline-fields">
+                                    <div class="form-group">
+                                        <label class="form-label">Issuing Bank</label>
+                                        <input type="text" placeholder="Name of issuing bank">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Confirming Bank (if required)</label>
+                                        <input type="text" placeholder="Name of confirming bank (optional)">
+                                    </div>
+                                </div>
+                                <div class="inline-fields">
+                                    <div class="form-group">
+                                        <label class="form-label">L/C to be issued no later than</label>
+                                        <input type="text" placeholder="e.g. 30 days before shipment date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">L/C Type</label>
+                                        <select>
+                                            <option value="">— Select —</option>
+                                            <option value="sight">At Sight</option>
+                                            <option value="deferred">Deferred Payment</option>
+                                            <option value="acceptance">Acceptance</option>
+                                            <option value="negotiation">Negotiation</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="option-group">
+                                    <label class="option-item">
+                                        <input type="checkbox">
+                                        <span class="option-label">Confirmed L/C required</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="checkbox">
+                                        <span class="option-label">Transferable L/C required</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="option-item">
+                            <input type="checkbox" name="payment_method" value="collection" onchange="toggleConditional('payment_collection_detail', this)">
+                            <span class="option-label">
+                                <strong>Documentary collection</strong>
+                                <div class="opt-desc">Subject to ICC Uniform Rules for Collections (URC 522)</div>
+                            </span>
+                        </label>
+                        <div class="conditional-field" id="payment_collection_detail">
+                            <div style="padding-left:28px;">
+                                <div class="option-group">
+                                    <label class="option-item">
+                                        <input type="radio" name="collection_type" value="dp">
+                                        <span class="option-label"><strong>D/P</strong> — Documents against Payment</span>
+                                    </label>
+                                    <label class="option-item">
+                                        <input type="radio" name="collection_type" value="da">
+                                        <span class="option-label"><strong>D/A</strong> — Documents against Acceptance</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="option-item">
+                            <input type="checkbox" name="payment_method" value="open_account">
+                            <span class="option-label">
+                                <strong>Open account</strong>
+                                <div class="opt-desc">Payment due within the period specified below after invoice date</div>
+                            </span>
+                        </label>
+
+                        <label class="option-item">
+                            <input type="checkbox" name="payment_method" value="standby_lc" onchange="toggleConditional('payment_standby_detail', this)">
+                            <span class="option-label">
+                                <strong>Payment secured by standby letter of credit or bank guarantee</strong>
+                            </span>
+                        </label>
+                        <div class="conditional-field" id="payment_standby_detail">
+                            <div style="padding-left:28px;">
+                                <div class="form-group">
+                                    <label class="form-label">Details of standby L/C or bank guarantee</label>
+                                    <textarea rows="2" placeholder="Specify issuing bank, amount, validity period, applicable rules (e.g. ISP98, URDG 758)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="option-item">
+                            <input type="checkbox" name="payment_method" value="other_method" onchange="toggleConditional('payment_other_detail', this)">
+                            <span class="option-label">
+                                <strong>Other method of payment</strong>
+                            </span>
+                        </label>
+                        <div class="conditional-field" id="payment_other_detail">
+                            <div class="sub-field">
+                                <textarea rows="2" placeholder="Describe other payment method..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <!-- Payment Timing -->
+                <div class="form-group">
+                    <label class="form-label">Time of Payment</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="payment_time" value="advance">
+                            <span class="option-label">
+                                <strong>Payment in advance</strong> — Full price to be paid before shipment
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="payment_time" value="on_shipment">
+                            <span class="option-label">
+                                <strong>Payment on shipment</strong>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="payment_time" value="after_delivery" onchange="toggleConditional('payment_days_detail', this)">
+                            <span class="option-label">
+                                <strong>Payment after delivery</strong> — within a specified number of days
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="payment_days_detail">
+                            <div class="amount-inline">
+                                <input type="number" placeholder="e.g. 30">
+                                <span>days after</span>
+                                <select style="width:200px">
+                                    <option value="">— event —</option>
+                                    <option value="invoice">date of invoice</option>
+                                    <option value="bl">date of bill of lading</option>
+                                    <option value="delivery">date of delivery</option>
+                                    <option value="acceptance">date of acceptance of goods</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label class="option-item">
+                            <input type="radio" name="payment_time" value="installments_pay" onchange="toggleConditional('payment_installments_detail', this)">
+                            <span class="option-label">
+                                <strong>Payment by installments</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="payment_installments_detail">
+                            <table class="payment-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:60px;">#</th>
+                                        <th>% of Price</th>
+                                        <th>Amount</th>
+                                        <th>Due Date / Event</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><input type="text" placeholder="%"></td>
+                                        <td><input type="text" placeholder="Amount"></td>
+                                        <td><input type="text" placeholder="e.g. On signing / Advance payment"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><input type="text" placeholder="%"></td>
+                                        <td><input type="text" placeholder="Amount"></td>
+                                        <td><input type="text" placeholder="e.g. On shipment / Against documents"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><input type="text" placeholder="%"></td>
+                                        <td><input type="text" placeholder="Amount"></td>
+                                        <td><input type="text" placeholder="e.g. 30 days after delivery"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td><input type="text" placeholder="%"></td>
+                                        <td><input type="text" placeholder="Amount"></td>
+                                        <td><input type="text" placeholder="e.g. On final acceptance"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <!-- Late Payment Interest -->
+                <div class="form-group">
+                    <label class="form-label">Interest in Case of Late Payment</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="late_interest" value="default">
+                            <span class="option-label">
+                                <strong>As per General Conditions</strong>
+                                <div class="opt-desc">Interest at 2% above the average short-term lending rate of the currency of payment at the Seller's place of business</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="late_interest" value="custom" onchange="toggleConditional('late_interest_detail', this)">
+                            <span class="option-label">
+                                <strong>Agreed rate</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="late_interest_detail">
+                            <div class="amount-inline">
+                                <input type="text" placeholder="e.g. 1.5">
+                                <span>% per</span>
+                                <select style="width:120px">
+                                    <option value="month">month</option>
+                                    <option value="annum">annum</option>
+                                </select>
+                                <span>above</span>
+                                <input type="text" placeholder="e.g. EURIBOR / SOFR" style="width:180px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-11: DOCUMENTS -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-11</span>
+                <span class="article-title">Documents</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 3.2</div>
+
+                <div class="form-group">
+                    <label class="form-label">Documents to be provided by the Seller</label>
+                    <p class="form-sublabel">Check all documents that the Seller is required to provide</p>
+
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="checkbox" checked>
+                            <span class="option-label"><strong>Commercial invoice</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Packing list</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Transport document</strong> (bill of lading / air waybill / CMR / rail consignment note)</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Insurance document / certificate</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Certificate of origin</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Certificate of quality / analysis</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Certificate of conformity</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Inspection certificate</strong> (pre-shipment inspection report)</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Phytosanitary / Health certificate</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Weight / measurement certificate</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Export licence</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" onchange="toggleConditional('docs_other_detail', this)">
+                            <span class="option-label"><strong>Other documents</strong> (specify below)</span>
+                        </label>
+                    </div>
+                    <div class="conditional-field" id="docs_other_detail">
+                        <div class="sub-field">
+                            <textarea rows="2" placeholder="List other documents required..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-12: NON-PERFORMANCE / TERMINATION -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-12</span>
+                <span class="article-title">Late-Delivery, Non-Performance &amp; Termination</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 10, 11</div>
+
+                <div class="form-group">
+                    <label class="form-label">Liquidated Damages for Late Delivery</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="late_delivery" value="no_ld">
+                            <span class="option-label">
+                                <strong>No liquidated damages clause applies</strong>
+                                <div class="opt-desc">General Conditions on non-performance shall apply</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="late_delivery" value="yes_ld" onchange="toggleConditional('ld_detail', this)">
+                            <span class="option-label">
+                                <strong>Liquidated damages apply as specified below</strong>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="conditional-field" id="ld_detail">
+                    <div style="padding-left:28px;">
+                        <div class="inline-fields-3">
+                            <div class="form-group">
+                                <label class="form-label">Rate per week of delay</label>
+                                <div class="amount-inline">
+                                    <input type="text" placeholder="e.g. 0.5">
+                                    <span>% of price</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Maximum total LD</label>
+                                <div class="amount-inline">
+                                    <input type="text" placeholder="e.g. 5">
+                                    <span>% of price</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Grace period before LD applies</label>
+                                <div class="amount-inline">
+                                    <input type="text" placeholder="e.g. 14">
+                                    <span>days</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Termination for Excessive Delay</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="termination_delay" value="gc_default">
+                            <span class="option-label">
+                                <strong>As per General Conditions</strong> (Art. 10.3 — Buyer may terminate by notice after an additional reasonable period)
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="termination_delay" value="custom_period" onchange="toggleConditional('term_delay_custom', this)">
+                            <span class="option-label">
+                                <strong>Buyer may terminate if delivery is not made within:</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="term_delay_custom">
+                            <div class="amount-inline">
+                                <input type="number" placeholder="e.g. 30">
+                                <span>days after the agreed delivery date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-13: LIMITATION OF LIABILITY -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-13</span>
+                <span class="article-title">Limitation of Liability &amp; Exclusions</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 11</div>
+
+                <div class="form-group">
+                    <label class="form-label">Limitation on Seller's Total Liability for Damages</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="liability_cap" value="gc_default">
+                            <span class="option-label">
+                                <strong>As per General Conditions</strong>
+                                <div class="opt-desc">Seller's total liability shall not exceed the contract price (Art. 11)</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="liability_cap" value="custom" onchange="toggleConditional('liability_cap_custom', this)">
+                            <span class="option-label">
+                                <strong>Seller's total liability capped at:</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="liability_cap_custom">
+                            <div class="amount-inline">
+                                <input type="text" placeholder="Amount or %">
+                                <span>of the contract price</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Exclusion of Liability</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="checkbox" checked>
+                            <span class="option-label">
+                                <strong>Indirect and consequential damages are excluded</strong>
+                                <div class="opt-desc">Including but not limited to loss of profit, loss of business, loss of goodwill (as per Art. 11.5 General Conditions)</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" onchange="toggleConditional('exclusion_additional', this)">
+                            <span class="option-label">
+                                <strong>Additional exclusions or modifications</strong>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="conditional-field" id="exclusion_additional">
+                        <div class="sub-field">
+                            <textarea rows="3" placeholder="Specify additional exclusions or modifications to the limitation of liability..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-14: APPLICABLE LAW -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-14</span>
+                <span class="article-title">Applicable Law</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 1.2</div>
+
+                <div class="form-group">
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="applicable_law" value="cisg" checked>
+                            <span class="option-label">
+                                <strong>United Nations Convention on Contracts for the International Sale of Goods (CISG)</strong>
+                                <div class="opt-desc">Supplemented by the law of the Seller's country where necessary (default under General Conditions)</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="applicable_law" value="cisg_plus" onchange="toggleConditional('law_supplement', this)">
+                            <span class="option-label">
+                                <strong>CISG, supplemented by the following domestic law:</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="law_supplement">
+                            <input type="text" placeholder="e.g. the laws of Switzerland / England and Wales / New York, USA">
+                        </div>
+                        <label class="option-item">
+                            <input type="radio" name="applicable_law" value="domestic_only" onchange="toggleConditional('law_domestic', this)">
+                            <span class="option-label">
+                                <strong>Domestic law only (CISG excluded):</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="law_domestic">
+                            <input type="text" placeholder="e.g. the laws of Germany / Singapore / State of New York, USA">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note">If no choice of law is made, the contract is governed by CISG, supplemented by the domestic law of the country where the Seller has its place of business (Art. 1.2 General Conditions).</div>
+            </div>
+        </div>
+
+        <!-- A-15: DISPUTE RESOLUTION -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-15</span>
+                <span class="article-title">Dispute Resolution</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 14</div>
+
+                <div class="form-group">
+                    <label class="form-label">Method of Dispute Resolution</label>
+                    <div class="option-group">
+
+                        <!-- Option 1: ICC Arbitration -->
+                        <label class="option-item">
+                            <input type="radio" name="dispute" value="icc_arbitration" checked>
+                            <span class="option-label">
+                                <strong>Option A — ICC Arbitration (Recommended)</strong>
+                                <div class="opt-desc">All disputes arising out of or in connection with the present contract shall be finally settled under the Rules of Arbitration of the International Chamber of Commerce by one or more arbitrators appointed in accordance with the said Rules.</div>
+                            </span>
+                        </label>
+
+                        <!-- Option 2: ICC Arbitration with ICC Mediation -->
+                        <label class="option-item">
+                            <input type="radio" name="dispute" value="icc_mediation_arbitration">
+                            <span class="option-label">
+                                <strong>Option B — ICC Mediation followed by ICC Arbitration</strong>
+                                <div class="opt-desc">In the event of any dispute, the parties shall first seek to settle the dispute by mediation under the ICC Mediation Rules. If the dispute has not been settled within 45 days (or such other period as agreed), it shall be finally settled by ICC Arbitration.</div>
+                            </span>
+                        </label>
+
+                        <!-- Option 3: Other arbitration -->
+                        <label class="option-item">
+                            <input type="radio" name="dispute" value="other_arbitration" onchange="toggleConditional('dispute_other_arb', this)">
+                            <span class="option-label">
+                                <strong>Option C — Other arbitration</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="dispute_other_arb">
+                            <textarea rows="2" placeholder="Specify arbitration institution and rules..."></textarea>
+                        </div>
+
+                        <!-- Option 4: Court jurisdiction -->
+                        <label class="option-item">
+                            <input type="radio" name="dispute" value="court" onchange="toggleConditional('dispute_court', this)">
+                            <span class="option-label">
+                                <strong>Option D — Court jurisdiction</strong>
+                                <div class="opt-desc">Disputes shall be submitted to the courts of the following jurisdiction</div>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="dispute_court">
+                            <input type="text" placeholder="e.g. the courts of Paris, France / London, England / Zurich, Switzerland">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <!-- Arbitration details -->
+                <div class="form-group">
+                    <label class="form-label">Arbitration Details (if arbitration selected above)</label>
+                    <div class="inline-fields">
+                        <div class="form-group">
+                            <label class="form-label">Seat / Place of Arbitration</label>
+                            <input type="text" id="arb_seat" placeholder="e.g. Paris, France / Geneva, Switzerland">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Language of Arbitration</label>
+                            <input type="text" id="arb_language" placeholder="e.g. English / French">
+                        </div>
+                    </div>
+                    <div class="inline-fields">
+                        <div class="form-group">
+                            <label class="form-label">Number of Arbitrators</label>
+                            <div class="option-group">
+                                <label class="option-item" style="display:inline-flex; margin-right:20px;">
+                                    <input type="radio" name="num_arbitrators" value="1">
+                                    <span class="option-label"><strong>One (sole arbitrator)</strong></span>
+                                </label>
+                                <label class="option-item" style="display:inline-flex;">
+                                    <input type="radio" name="num_arbitrators" value="3">
+                                    <span class="option-label"><strong>Three</strong></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-16: FORCE MAJEURE -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-16</span>
+                <span class="article-title">Force Majeure &amp; Hardship</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 12, 13</div>
+
+                <div class="form-group">
+                    <label class="form-label">Force Majeure</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="force_majeure" value="icc_default" checked>
+                            <span class="option-label">
+                                <strong>ICC Force Majeure Clause 2020 applies</strong>
+                                <div class="opt-desc">As incorporated in the General Conditions (Art. 12)</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="force_majeure" value="custom" onchange="toggleConditional('fm_custom', this)">
+                            <span class="option-label">
+                                <strong>Modified force majeure clause (specify below)</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="fm_custom">
+                            <textarea rows="3" placeholder="Specify modifications to the force majeure clause..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Hardship</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="hardship" value="icc_default" checked>
+                            <span class="option-label">
+                                <strong>ICC Hardship Clause 2020 applies</strong>
+                                <div class="opt-desc">As incorporated in the General Conditions (Art. 13)</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="hardship" value="excluded">
+                            <span class="option-label">
+                                <strong>Hardship clause excluded</strong>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="hardship" value="custom" onchange="toggleConditional('hardship_custom', this)">
+                            <span class="option-label">
+                                <strong>Modified hardship clause (specify below)</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="hardship_custom">
+                            <textarea rows="3" placeholder="Specify modifications to the hardship clause..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-17: WARRANTIES -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-17</span>
+                <span class="article-title">Warranties &amp; Liability for Defects</span>
+            </div>
+            <div class="article-body">
+                <div class="clause-ref">Reference to General Conditions Art. 8, 9</div>
+
+                <div class="form-group">
+                    <label class="form-label">Warranty Period for Defects (Conformity of Goods)</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="radio" name="warranty" value="gc_default">
+                            <span class="option-label">
+                                <strong>As per General Conditions</strong>
+                                <div class="opt-desc">Buyer must notify Seller of any lack of conformity within 24 months from delivery (Art. 9)</div>
+                            </span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="warranty" value="custom" onchange="toggleConditional('warranty_custom', this)">
+                            <span class="option-label">
+                                <strong>Agreed warranty period:</strong>
+                            </span>
+                        </label>
+                        <div class="sub-field conditional-field" id="warranty_custom">
+                            <div class="amount-inline">
+                                <input type="number" placeholder="e.g. 12">
+                                <span>months from</span>
+                                <select style="width:200px">
+                                    <option value="">— Select —</option>
+                                    <option value="delivery">date of delivery</option>
+                                    <option value="acceptance">date of acceptance</option>
+                                    <option value="commissioning">date of commissioning</option>
+                                    <option value="installation">date of installation</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Seller's Obligations in Case of Defective Goods</label>
+                    <p class="form-sublabel">In the event of non-conformity notified within the warranty period, the Seller shall at its option (check all that apply or leave as default):</p>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="checkbox" checked>
+                            <span class="option-label"><strong>Repair the defective goods</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" checked>
+                            <span class="option-label"><strong>Replace the defective goods</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Grant a price reduction</strong></span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox">
+                            <span class="option-label"><strong>Reimburse the price paid (upon return of defective goods)</strong></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- A-18: OTHER CONDITIONS -->
+        <div class="article">
+            <div class="article-header">
+                <span class="article-number">A-18</span>
+                <span class="article-title">Other Conditions</span>
+            </div>
+            <div class="article-body">
+                <div class="form-group">
+                    <label class="form-label">Additional Clauses / Special Stipulations</label>
+                    <p class="form-sublabel">Any additional terms agreed by the parties may be set out here. These Special Conditions prevail over the General Conditions in case of conflict.</p>
+                    <textarea id="other_conditions" rows="6" placeholder="Enter any additional terms, special stipulations, or amendments to the General Conditions here...&#10;&#10;e.g.&#10;- Confidentiality obligations&#10;- Intellectual property provisions&#10;- Compliance with sanctions / anti-corruption laws&#10;- Sub-contracting restrictions&#10;- Insurance requirements beyond Incoterms&#10;- Special packaging or labeling requirements"></textarea>
+                </div>
+
+                <div class="divider-dashed"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Annexes forming part of this Contract</label>
+                    <div class="option-group">
+                        <label class="option-item">
+                            <input type="checkbox" onchange="toggleConditional('annex1_name', this)">
+                            <span class="option-label"><strong>Annex 1:</strong></span>
+                        </label>
+                        <div class="sub-field conditional-field" id="annex1_name">
+                            <input type="text" placeholder="Title / description of Annex 1">
+                        </div>
+
+                        <label class="option-item">
+                            <input type="checkbox" onchange="toggleConditional('annex2_name', this)">
+                            <span class="option-label"><strong>Annex 2:</strong></span>
+                        </label>
+                        <div class="sub-field conditional-field" id="annex2_name">
+                            <input type="text" placeholder="Title / description of Annex 2">
+                        </div>
+
+                        <label class="option-item">
+                            <input type="checkbox" onchange="toggleConditional('annex3_name', this)">
+                            <span class="option-label"><strong>Annex 3:</strong></span>
+                        </label>
+                        <div class="sub-field conditional-field" id="annex3_name">
+                            <input type="text" placeholder="Title / description of Annex 3">
+                        </div>
+
+                        <label class="option-item">
+                            <input type="checkbox" onchange="toggleConditional('annex4_name', this)">
+                            <span class="option-label"><strong>Annex 4:</strong></span>
+                        </label>
+                        <div class="sub-field conditional-field" id="annex4_name">
+                            <input type="text" placeholder="Title / description of Annex 4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ==================== PART B: GENERAL CONDITIONS ==================== -->
+        <div class="part-header">PART B — GENERAL CONDITIONS</div>
+
+        <div class="preamble">
+            <strong>Note:</strong> The following General Conditions form an integral part of this contract. They are intended to be read together with the Special Conditions (Part A). 
+            In the event of any inconsistency between the Special Conditions and the General Conditions, the <strong>Special Conditions shall prevail</strong>. 
+            These General Conditions reflect the standard provisions of the ICC Model International Sale Contract (Manufactured Goods) — 2020 Edition.
+        </div>
+
+        <!-- GC Article 1 -->
+        <div class="gc-article">
+            <h4>Article 1 — General</h4>
+            <ol>
+                <li><strong>1.1</strong> These General Conditions are intended to be applied together with the Special Conditions (Part A) of the ICC Model International Sale Contract for Manufactured Goods. In the event of any contradiction between these General Conditions and the Special Conditions, the Special Conditions shall prevail.</li>
+                <li><strong>1.2</strong> Any questions relating to this contract which are not expressly or impliedly settled by the provisions contained in the contract itself (i.e. these General Conditions and the Special Conditions) shall be governed:
+                    <br>(a) by the United Nations Convention on Contracts for the International Sale of Goods (Vienna Convention of 1980, hereinafter referred to as "CISG"), and
+                    <br>(b) to the extent not covered by CISG, by reference to the law applicable at the Seller's place of business, unless otherwise agreed in Special Condition A-14.
+                </li>
+                <li><strong>1.3</strong> Any reference to trade terms (such as EXW, FCA, etc.) is understood as a reference to the relevant Incoterms® 2020 rule.</li>
+                <li><strong>1.4</strong> Any reference to a publication of the International Chamber of Commerce is to the version current at the date of conclusion of the contract.</li>
+                <li><strong>1.5</strong> No modification of this contract is valid unless agreed or evidenced in writing. "Writing" includes authenticated electronic communications.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 2 -->
+        <div class="gc-article">
+            <h4>Article 2 — Characteristics of the Goods</h4>
+            <ol>
+                <li><strong>2.1</strong> It is agreed that the Seller shall deliver goods which conform with the description in Special Condition A-4, and that the goods must possess the qualities that the Seller has held out to the Buyer as a sample or model.</li>
+                <li><strong>2.2</strong> Unless otherwise agreed, the goods must also be fit for the purposes for which goods of the same description would ordinarily be used, be contained or packaged in the manner usual for such goods, and possess the qualities necessary for any particular purpose expressly or impliedly made known to the Seller.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 3 -->
+        <div class="gc-article">
+            <h4>Article 3 — Delivery</h4>
+            <ol>
+                <li><strong>3.1</strong> Unless otherwise agreed in Special Condition A-7, delivery shall be made within 30 days from the date of conclusion of the contract or within 30 days of the Seller's receipt of notice that an agreed documentary credit or other payment security has been issued in Seller's favour.</li>
+                <li><strong>3.2</strong> The Seller shall provide the documents specified in Special Condition A-11 (or if none are specified, those required by the applicable Incoterms® rule).</li>
+                <li><strong>3.3</strong> If pre-shipment inspection has been agreed upon (Special Condition A-8), the Seller shall notify the Buyer in due time that the goods are ready for inspection.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 4 -->
+        <div class="gc-article">
+            <h4>Article 4 — Price and Payment</h4>
+            <ol>
+                <li><strong>4.1</strong> Unless otherwise agreed in Special Condition A-10, the Buyer shall pay the price by placing an irrevocable payment order with the Buyer's bank, within 30 days of the date of invoice, by electronic transfer to the Seller's bank account specified in the invoice or in Special Condition A-10.</li>
+                <li><strong>4.2</strong> If the parties have agreed on payment by documentary credit and unless otherwise agreed, the Buyer shall arrange for an irrevocable documentary credit in favour of the Seller, subject to the ICC Uniform Customs and Practice for Documentary Credits (UCP 600), to be issued at least 30 days before the agreed date of delivery or the earliest date within the agreed delivery period.</li>
+                <li><strong>4.3</strong> If the Buyer fails to pay any amount due under the contract by the due date, the Seller shall be entitled to charge interest on the outstanding amount from the due date until payment at a rate of 2% above the average short-term lending rate for the currency of payment at the place of Seller's business, or if no such rate is available, at the appropriate rate in the country of the Seller's currency of payment.</li>
+                <li><strong>4.4</strong> The Buyer shall not be entitled to set-off or make deductions from the price without the Seller's written consent, unless the Buyer's right to set-off or deduction has been established by a final court award or arbitral award or has been acknowledged by the Seller.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 5 -->
+        <div class="gc-article">
+            <h4>Article 5 — Contractual Non-Conformity</h4>
+            <ol>
+                <li><strong>5.1</strong> The Buyer shall examine the goods, or cause them to be examined, within as short a period as is practicable after arrival at destination.</li>
+                <li><strong>5.2</strong> The Buyer shall notify the Seller specifying the nature of the non-conformity within a reasonable time after the Buyer has discovered or ought to have discovered the non-conformity, but in any event not later than 14 days from arrival of the goods at destination.</li>
+                <li><strong>5.3</strong> In any case, the Buyer loses the right to rely on a lack of conformity if the Buyer fails to notify the Seller within 24 months of the date of arrival of the goods at destination, unless modified in Special Condition A-17.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 6 -->
+        <div class="gc-article">
+            <h4>Article 6 — Remedies for Non-Conformity</h4>
+            <ol>
+                <li><strong>6.1</strong> Unless the non-conformity is such that it would be unreasonable to expect the Buyer to accept the goods, the Seller shall, at its option and without undue delay, repair or replace the defective goods free of charge or grant a reduction in price.</li>
+                <li><strong>6.2</strong> If the non-conformity is fundamental, the Buyer may claim damages, or, alternatively, declare the contract avoided with respect to the defective goods.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 7 -->
+        <div class="gc-article">
+            <h4>Article 7 — Transfer of Property / Retention of Title</h4>
+            <ol>
+                <li><strong>7.1</strong> Unless retention of title has been agreed in Special Condition A-9, property in the goods shall pass to the Buyer at the time of delivery, as determined by the applicable Incoterms® rule.</li>
+                <li><strong>7.2</strong> Where retention of title has been agreed, the goods remain the property of the Seller until complete payment of the price or as otherwise agreed.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 8 -->
+        <div class="gc-article">
+            <h4>Article 8 — Seller's Liability for Damage Caused by the Goods</h4>
+            <p>The Seller shall be liable for damage caused by the goods to persons or property after delivery, only if the damage is due to the Seller's fault. The Seller's liability for such damage shall not exceed the contract price, unless otherwise agreed in Special Condition A-13.</p>
+        </div>
+
+        <!-- GC Article 9 -->
+        <div class="gc-article">
+            <h4>Article 9 — Warranty Period</h4>
+            <p>The Seller's obligations under these General Conditions in respect of lack of conformity of the goods (including latent defects) are limited to defects which are notified to the Seller within 24 months from delivery, or such other period as may be agreed in Special Condition A-17.</p>
+        </div>
+
+        <!-- GC Article 10 -->
+        <div class="gc-article">
+            <h4>Article 10 — Late Performance and Non-Performance</h4>
+            <ol>
+                <li><strong>10.1</strong> Where there is delay in delivery that does not amount to non-performance under Art. 10.3, the Buyer is entitled to claim liquidated damages as agreed in Special Condition A-12, or, if no liquidated damages have been agreed, to claim proven damages.</li>
+                <li><strong>10.2</strong> Liquidated damages for delay, if agreed, shall accrue for each complete week of delay from the delivery date specified in the contract. They shall not exceed the maximum stated in Special Condition A-12.</li>
+                <li><strong>10.3</strong> If a party fails to perform any of its obligations and does not cure its failure within a reasonable additional period granted by the other party, the aggrieved party may terminate the contract by notice.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 11 -->
+        <div class="gc-article">
+            <h4>Article 11 — Limitation of Liability</h4>
+            <ol>
+                <li><strong>11.1</strong> Except as otherwise provided in these General Conditions, the Seller's liability for any breach of contract shall be limited to the foreseeable loss and shall not exceed the total contract price.</li>
+                <li><strong>11.2</strong> Except in cases of gross negligence or wilful misconduct, the Seller shall in no event be liable for any indirect, consequential, or incidental damages, including but not limited to loss of profit, loss of business, or loss of goodwill.</li>
+                <li><strong>11.3</strong> These limitations apply to the Seller's liability in contract, tort, or otherwise.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 12 -->
+        <div class="gc-article">
+            <h4>Article 12 — Force Majeure</h4>
+            <ol>
+                <li><strong>12.1</strong> A party is not liable for a failure to perform any of its obligations insofar as it proves that the failure was due to an impediment beyond its reasonable control, that it could not reasonably have been expected to take the impediment into account at the time of the conclusion of the contract, and that it could not reasonably have avoided or overcome the impediment or its effects.</li>
+                <li><strong>12.2</strong> A party seeking relief shall notify the other party of the impediment and its effect on its ability to perform without delay. The parties shall use reasonable endeavours to mitigate the effects of the force majeure event.</li>
+                <li><strong>12.3</strong> If the impediment or its effects last for more than 6 months (or such other period agreed by the parties), either party may terminate the contract by notice.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 13 -->
+        <div class="gc-article">
+            <h4>Article 13 — Hardship</h4>
+            <ol>
+                <li><strong>13.1</strong> Where the performance of the contract becomes substantially more onerous for one of the parties due to an event beyond its reasonable control which it could not reasonably have been expected to have taken into account at the time of conclusion of the contract, and where that party has not assumed the risk of such changed circumstances, the parties are bound to negotiate alternative contractual terms which reasonably allow for the consequences of the event.</li>
+                <li><strong>13.2</strong> If the parties fail to reach agreement within a reasonable time, either party may resort to the dispute resolution mechanism agreed in Special Condition A-15.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 14 -->
+        <div class="gc-article">
+            <h4>Article 14 — Dispute Resolution</h4>
+            <ol>
+                <li><strong>14.1</strong> Unless otherwise agreed in Special Condition A-15, all disputes arising out of or in connection with this contract shall be finally settled under the Rules of Arbitration of the International Chamber of Commerce by one or more arbitrators appointed in accordance with the said Rules.</li>
+                <li><strong>14.2</strong> Nothing in this article shall prevent either party from seeking interim or conservatory measures from any court of competent jurisdiction.</li>
+            </ol>
+        </div>
+
+        <!-- GC Article 15 -->
+        <div class="gc-article">
+            <h4>Article 15 — Miscellaneous</h4>
+            <ol>
+                <li><strong>15.1 Entire Agreement:</strong> This contract (Special Conditions, General Conditions, and Annexes) constitutes the entire agreement between the parties and supersedes all prior negotiations, representations, and agreements relating to the subject matter of this contract.</li>
+                <li><strong>15.2 Severability:</strong> If any provision of this contract is found to be invalid or unenforceable, the remaining provisions shall continue in full force and effect.</li>
+                <li><strong>15.3 Assignment:</strong> Neither party may assign its rights or obligations under this contract without the prior written consent of the other party, except that the Seller may assign its right to receive payment.</li>
+                <li><strong>15.4 Notices:</strong> All notices and communications under this contract shall be in writing and sent to the addresses specified in Special Conditions A-2 and A-3, or to such other address as a party may designate by notice.</li>
+                <li><strong>15.5 Waiver:</strong> No failure or delay by either party in exercising any right under this contract shall operate as a waiver thereof.</li>
+            </ol>
+        </div>
+
+
+        <!-- ==================== SIGNATURES ==================== -->
+        <div class="signature-section">
+            <h3 style="color:var(--icc-blue); font-family:'Merriweather',serif; font-size:18px; margin-bottom:8px;">Execution</h3>
+            <p style="font-size:13px; color:var(--icc-medium-gray); margin-bottom:25px;">
+                The parties have caused this contract to be executed by their duly authorised representatives on the date(s) indicated below.
+                By signing, each party acknowledges that it has read, understood, and agrees to be bound by all Special Conditions (Part A), 
+                General Conditions (Part B), and all Annexes forming part of this contract.
+            </p>
+
+            <div class="sig-grid">
+                <!-- Seller Signature -->
+                <div class="sig-block">
+                    <h4>For and on behalf of the SELLER</h4>
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" placeholder="Full name of signatory">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Title / Position</label>
+                        <input type="text" placeholder="e.g. Managing Director">
+                    </div>
+                    <div class="sig-line"></div>
+                    <div class="sig-line-label">Signature</div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Place</label>
+                        <input type="text" placeholder="City, Country">
+                    </div>
+                </div>
+
+                <!-- Buyer Signature -->
+                <div class="sig-block">
+                    <h4>For and on behalf of the BUYER</h4>
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" placeholder="Full name of signatory">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Title / Position</label>
+                        <input type="text" placeholder="e.g. Procurement Director">
+                    </div>
+                    <div class="sig-line"></div>
+                    <div class="sig-line-label">Signature</div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Place</label>
+                        <input type="text" placeholder="City, Country">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end contract-body -->
+
+    <!-- FOOTER -->
+    <div class="contract-footer">
+        <strong>ICC Model International Sale Contract — Manufactured Goods</strong><br>
+        2020 Edition &nbsp;|&nbsp; ICC Publication No. 738E &nbsp;|&nbsp; © International Chamber of Commerce<br>
+        This model contract is provided as a template and does not constitute legal advice. Parties are advised to seek independent legal counsel.
+    </div>
+
+</div><!-- end contract-wrapper -->
+
+<script>
+    // Toggle conditional fields
+    function toggleConditional(targetId, trigger) {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+
+        if (trigger.type === 'checkbox') {
+            target.classList.toggle('active', trigger.checked);
+        } else if (trigger.type === 'radio') {
+            // For radio, show if this radio is checked
+            target.classList.add('active');
+        }
+    }
+
+    // Delivery fields toggling
+    function showDeliveryFields(type) {
+        const fields = ['delivery_specific', 'delivery_period', 'delivery_days', 'delivery_installments'];
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('active');
+        });
+
+        const map = {
+            'specific': 'delivery_specific',
+            'period': 'delivery_period',
+            'days': 'delivery_days',
+            'installments': 'delivery_installments'
+        };
+
+        if (map[type]) {
+            const el = document.getElementById(map[type]);
+            if (el) el.classList.add('active');
+        }
+    }
+
+    // Handle radio button groups hiding other conditional fields
+    document.addEventListener('change', function(e) {
+        if (e.target.type === 'radio') {
+            const name = e.target.name;
+            const allRadios = document.querySelectorAll(`input[type="radio"][name="${name}"]`);
+            allRadios.forEach(radio => {
+                const onchange = radio.getAttribute('onchange');
+                if (onchange) {
+                    const match = onchange.match(/toggleConditional\('([^']+)'/);
+                    if (match) {
+                        const targetEl = document.getElementById(match[1]);
+                        if (targetEl) {
+                            if (radio === e.target && radio.checked) {
+                                targetEl.classList.add('active');
+                            } else {
+                                targetEl.classList.remove('active');
+                            }
+                        }
+                    }
+                    const matchDelivery = onchange.match(/showDeliveryFields\('([^']+)'/);
+                    if (matchDelivery) {
+                        // handled by showDeliveryFields
+                    }
+                }
+            });
+        }
+    });
+
+    // Save form data to localStorage
+    function saveForm() {
+        const form = document.getElementById('contractForm');
+        const inputs = form.querySelectorAll('input, textarea, select');
+        const data = {};
+
+        inputs.forEach((input, index) => {
+            const key = input.id || input.name || `field_${index}`;
+            if (input.type === 'checkbox') {
+                data[`${key}_${index}`] = input.checked;
+            } else if (input.type === 'radio') {
+                if (input.checked) {
+                    data[input.name] = input.value;
+                }
+            } else {
+                data[`${key}_${index}`] = input.value;
+            }
+        });
+
+        localStorage.setItem('icc_contract_2020', JSON.stringify(data));
+        showNotification('Contract data saved successfully!');
+    }
+
+    // Load form data from localStorage
+    function loadForm() {
+        const saved = localStorage.getItem('icc_contract_2020');
+        if (!saved) return;
+
+        const data = JSON.parse(saved);
+        const form = document.getElementById('contractForm');
+        const inputs = form.querySelectorAll('input, textarea, select');
+
+        inputs.forEach((input, index) => {
+            const key = input.id || input.name || `field_${index}`;
+            if (input.type === 'checkbox') {
+                if (data[`${key}_${index}`] !== undefined) {
+                    input.checked = data[`${key}_${index}`];
+                    if (input.checked && input.hasAttribute('onchange')) {
+                        input.dispatchEvent(new Event('change'));
+                    }
+                }
+            } else if (input.type === 'radio') {
+                if (data[input.name] === input.value) {
+                    input.checked = true;
+                    if (input.hasAttribute('onchange')) {
+                        input.dispatchEvent(new Event('change'));
+                    }
+                }
+            } else {
+                if (data[`${key}_${index}`] !== undefined) {
+                    input.value = data[`${key}_${index}`];
+                }
+            }
+        });
+    }
+
+    // Clear form
+    function clearForm() {
+        if (!confirm('Are you sure you want to clear all form data? This cannot be undone.')) return;
+
+        const form = document.getElementById('contractForm');
+        const inputs = form.querySelectorAll('input, textarea, select');
+
+        inputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                input.checked = false;
+            } else if (input.type === 'radio') {
+                input.checked = false;
+            } else {
+                input.value = '';
+            }
+        });
+
+        // Hide all conditional fields
+        document.querySelectorAll('.conditional-field').forEach(el => {
+            el.classList.remove('active');
+        });
+
+        localStorage.removeItem('icc_contract_2020');
+        showNotification('All form data cleared.');
+    }
+
+    // Simple notification
+    function showNotification(message) {
+        const notif = document.createElement('div');
+        notif.textContent = message;
+        notif.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--icc-blue, #003366);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 14px;
+            z-index: 10000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        `;
+        document.body.appendChild(notif);
+        setTimeout(() => {
+            notif.style.opacity = '0';
+            notif.style.transition = 'opacity 0.3s';
+            setTimeout(() => notif.remove(), 300);
+        }, 2500);
+    }
+
+    // Auto-load saved data on page load
+    window.addEventListener('DOMContentLoaded', loadForm);
+</script>
+
+</body>
+</html>
