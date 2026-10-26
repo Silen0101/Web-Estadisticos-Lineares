@@ -1,864 +1,3074 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión Administrativa del Comercio Internacional: Unidad 4</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-        
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .tech-font { font-family: 'JetBrains Mono', monospace; }
-        
-        /* Modal Styles */
-        .modal { opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-        .modal.active { opacity: 1; visibility: visible; }
-        .modal-content { transform: scale(0.95); transition: transform 0.3s ease; }
-        .modal.active .modal-content { transform: scale(1); }
-        
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Covarianza y Regresión — Cuaderno de Estadística Bidimensional</title>
 
-        /* Custom Input Styles for Calculators */
-        .calc-input {
-            @apply w-full px-3 py-2 border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-            focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500;
-        }
-        .calc-label {
-            @apply block text-sm font-medium text-slate-700 mb-1;
-        }
-    </style>
+  <!-- Tipografías editoriales: Fraunces (serif) e IBM Plex Mono (monoespaciada tabular) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <!-- KaTeX (versión fija desde cdnjs) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Chart.js (versión fija desde cdnjs) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <style>
+    :root {
+      --bg-paper: #F6F3EA;
+      --bg-card: #FAF8F2;
+      --bg-elevated: #EFECE1;
+      --grid-minor: rgba(25, 24, 22, 0.045);
+      --grid-major: rgba(25, 24, 22, 0.09);
+      --ink: #181715;
+      --ink-muted: #57534C;
+      --ink-faint: #8A8479;
+      --border-ink: #181715;
+      --border-subtle: #C9C3B4;
+      --accent: #B83A24;        /* Rojo tinta / terracota */
+      --accent-soft: rgba(184, 58, 36, 0.12);
+      --secondary: #3B5956;     /* Azul pizarra / oliva apagado */
+      --secondary-soft: rgba(59, 89, 86, 0.14);
+      --olive: #5A6B47;
+      --error-bg: #F9E3DF;
+      --error-border: #B83A24;
+      --highlight-flash: rgba(184, 58, 36, 0.22);
+      --font-serif: 'Fraunces', 'Georgia', 'Times New Roman', serif;
+      --font-mono: 'IBM Plex Mono', 'Consolas', 'Courier New', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-paper);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    body {
+      min-height: 100vh;
+      /* Papel milimetrado técnico muy sutil */
+      background-color: var(--bg-paper);
+      background-image:
+        linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px),
+        linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px);
+      background-size: 16px 16px, 16px 16px, 80px 80px, 80px 80px;
+      padding: 0 1.5rem 3.5rem;
+    }
+
+    /* Accesibilidad: foco visible y nítido */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Cabecera mínima editorial */
+    .lab-header {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 1.75rem 0 1.1rem;
+      border-bottom: 2px solid var(--border-ink);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+
+    .lab-header__titles {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .lab-meta-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .lab-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .lab-subtitle {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--ink-muted);
+    }
+
+    .lab-index {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+      padding: 0.4rem 0.75rem;
+    }
+
+    .lab-index a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.1rem 0.25rem;
+      border-bottom: 1px solid transparent;
+      transition: border-color 120ms ease, color 120ms ease;
+    }
+
+    .lab-index a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .lab-index span.sep {
+      color: var(--ink-faint);
+      user-select: none;
+    }
+
+    /* Maquetación asimétrica en 2 columnas */
+    .lab-workspace {
+      max-width: 1480px;
+      margin: 1.5rem auto 0;
+      display: grid;
+      grid-template-columns: 370px minmax(0, 1fr);
+      gap: 1.75rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1040px) {
+      .lab-workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Columna izquierda fija en escritorio */
+    .panel-datos {
+      position: sticky;
+      top: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 2rem);
+    }
+
+    @media (max-width: 1040px) {
+      .panel-datos {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    .section-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.65rem 0.9rem;
+      border-bottom: 1px solid var(--border-ink);
+      background: var(--bg-elevated);
+    }
+
+    .section-bar__title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .section-bar__code {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+    }
+
+    /* Botonera técnica */
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      padding: 0.65rem 0.9rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+    }
+
+    .btn {
+      appearance: none;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+      border-radius: 1px;
+      padding: 0.42rem 0.6rem;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 120ms ease, color 120ms ease;
+    }
+
+    .btn:hover {
+      background: var(--ink);
+      color: var(--bg-card);
+    }
+
+    .btn--accent {
+      background: var(--accent);
+      color: #FAF8F2;
+      border-color: var(--border-ink);
+      font-weight: 600;
+    }
+
+    .btn--accent:hover {
+      background: #8F2B1A;
+      color: #FAF8F2;
+    }
+
+    .btn--full {
+      grid-column: 1 / -1;
+    }
+
+    /* Contenedor de tabla de entrada */
+    .data-table-wrap {
+      overflow-y: auto;
+      flex: 1 1 auto;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    table.data-entry-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .data-entry-table th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-ink);
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.45rem 0.5rem;
+      color: var(--ink);
+    }
+
+    .data-entry-table th.col-idx {
+      width: 44px;
+      text-align: center;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .data-entry-table th.col-var {
+      text-align: right;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .data-entry-table th.col-act {
+      width: 56px;
+      text-align: center;
+    }
+
+    .data-entry-table td {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0;
+      height: 34px;
+    }
+
+    .data-entry-table tr:hover td {
+      background: rgba(25, 24, 22, 0.025);
+    }
+
+    .data-entry-table tr.row-incomplete td.cell-idx {
+      color: var(--ink-faint);
+    }
+
+    .cell-idx {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      border-right: 1px solid var(--border-subtle);
+      user-select: none;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cell-input-wrap {
+      border-right: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .cell-input {
+      width: 100%;
+      height: 33px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      padding: 0.25rem 0.55rem;
+      color: var(--ink);
+      transition: background-color 150ms ease;
+    }
+
+    .cell-input:focus {
+      outline: none;
+      background: rgba(184, 58, 36, 0.08);
+      box-shadow: inset 0 -2px 0 var(--accent);
+    }
+
+    .cell-input.is-invalid {
+      background-color: var(--error-bg);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--error-border);
+    }
+
+    .cell-act {
+      text-align: center;
+    }
+
+    .btn-remove-row {
+      appearance: none;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      padding: 0.15rem 0.35rem;
+      cursor: pointer;
+      border-radius: 1px;
+    }
+
+    .btn-remove-row:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--error-bg);
+    }
+
+    .data-footer-note {
+      padding: 0.6rem 0.9rem;
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+      line-height: 1.4;
+      background: var(--bg-elevated);
+    }
+
+    .data-footer-note strong {
+      color: var(--ink);
+    }
+
+    /* Avisos de validación o error estadístico */
+    .alert-banner {
+      display: none;
+      margin-bottom: 1.25rem;
+      padding: 0.85rem 1rem;
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-left: 4px solid var(--accent);
+      color: var(--ink);
+      font-size: 0.86rem;
+    }
+
+    .alert-banner.is-visible {
+      display: block;
+    }
+
+    .alert-banner__title {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+
+    /* Barra de verificación interna de identidades algebraicas */
+    .verification-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.9rem;
+      margin-bottom: 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+      font-size: 0.76rem;
+      color: var(--ink-muted);
+    }
+
+    .verification-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .verification-badge.is-warn {
+      color: var(--accent);
+    }
+
+    /* Columna derecha: bloques de contenido */
+    .lab-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .block-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+    }
+
+    /* Cuadrícula de las 14 tarjetas de resultados */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--border-ink);
+    }
+
+    .result-card {
+      padding: 0.85rem 1rem;
+      border-right: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      position: relative;
+      transition: background-color 180ms ease;
+    }
+
+    .result-card--wide {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 720px) {
+      .result-card--wide {
+        grid-column: span 1;
+      }
+    }
+
+    .result-card__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .result-card__num {
+      font-size: 0.7rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .result-card__label {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      flex: 1;
+    }
+
+    .result-card__value-wrap {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 0.4rem;
+      margin: 0.15rem 0;
+    }
+
+    .result-card__value {
+      font-family: var(--font-mono);
+      font-size: 1.38rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      text-align: right;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: border-color 180ms ease, background-color 180ms ease;
+      padding: 0 0.15rem;
+    }
+
+    .result-card__value:hover {
+      border-bottom-color: var(--ink-muted);
+    }
+
+    /* Microinteracción sobria: breve resaltado subrayado (200 ms) al cambiar un dato */
+    .result-card__value.value-updated {
+      border-bottom-color: var(--accent);
+      background-color: var(--highlight-flash);
+    }
+
+    .result-card__precision {
+      display: none;
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      word-break: break-all;
+    }
+
+    .result-card.show-full-precision .result-card__precision {
+      display: block;
+    }
+
+    .result-card__formulas {
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 0.45rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.78rem;
+    }
+
+    .result-card__katex {
+      color: var(--ink);
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .result-card__subst {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--secondary);
+      font-variant-numeric: tabular-nums;
+      word-break: break-word;
+    }
+
+    .result-card__desc {
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+      line-height: 1.35;
+      border-top: 1px solid rgba(25, 24, 22, 0.06);
+      padding-top: 0.35rem;
+    }
+
+    /* Prontuario de fórmulas del temario */
+    .formulas-bar {
+      padding: 0.85rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.75rem;
+      background: var(--bg-card);
+    }
+
+    .formula-pill {
+      border: 1px solid var(--border-subtle);
+      padding: 0.55rem 0.75rem;
+      background: var(--bg-paper);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .formula-pill__title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      font-weight: 600;
+    }
+
+    /* Tabla desplegable paso a paso */
+    details.step-details summary {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0.95rem;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-ink);
+    }
+
+    details.step-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .step-toggle-indicator {
+      font-size: 0.76rem;
+      color: var(--accent);
+      font-weight: 600;
+      border: 1px solid var(--border-ink);
+      padding: 0.15rem 0.5rem;
+      background: var(--bg-card);
+    }
+
+    .step-table-scroll {
+      overflow-x: auto;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+
+    table.step-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+      min-width: 980px;
+    }
+
+    .step-table th,
+    .step-table td {
+      padding: 0.4rem 0.55rem;
+      border-bottom: 1px solid var(--border-subtle);
+      border-right: 1px solid var(--border-subtle);
+      text-align: right;
+    }
+
+    .step-table th {
+      position: sticky;
+      top: 0;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-ink);
+      color: var(--ink);
+      font-weight: 600;
+      z-index: 1;
+    }
+
+    .step-table th:first-child,
+    .step-table td:first-child {
+      text-align: center;
+      width: 42px;
+      color: var(--ink-muted);
+    }
+
+    .step-table tfoot td {
+      position: sticky;
+      bottom: 0;
+      background: #EAE5D7;
+      border-top: 2px solid var(--border-ink);
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* Cuadrícula de Láminas de Gráficos (Fig. 1 a Fig. 11) */
+    .plates-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 820px) {
+      .plates-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .plate-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .plate-card--wide {
+      grid-column: 1 / -1;
+    }
+
+    .plate-header {
+      padding: 0.6rem 0.85rem;
+      border-bottom: 1px solid var(--border-ink);
+      background: var(--bg-elevated);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .plate-header__info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .plate-fig-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .plate-title {
+      font-family: var(--font-serif);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .plate-caption {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      padding: 0.45rem 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+    }
+
+    .btn-dl-png {
+      appearance: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.22rem 0.45rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-shrink: 0;
+      border-radius: 1px;
+    }
+
+    .btn-dl-png:hover {
+      background: var(--ink);
+      color: var(--bg-card);
+    }
+
+    .btn-dl-png svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .plate-canvas-wrap {
+      position: relative;
+      padding: 0.75rem 0.85rem;
+      height: 295px;
+      width: 100%;
+    }
+
+    .plate-canvas-wrap--short {
+      height: 230px;
+    }
+
+    .plate-canvas-wrap canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    /* Histogramas dobles (Fig. 6) */
+    .dual-hist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      padding: 0.75rem 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      .dual-hist-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mini-canvas-box {
+      position: relative;
+      height: 230px;
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem;
+      background: var(--bg-paper);
+    }
+
+    .lab-footer {
+      max-width: 1480px;
+      margin: 2.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-ink);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+    }
+  </style>
 </head>
-<body class="text-slate-800 antialiased">
+<body>
 
-    <nav class="bg-slate-900 text-white sticky top-0 z-40 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-6">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-globe text-blue-400 text-xl"></i>
-                        <span class="font-bold text-xl tracking-tight hidden sm:inline-block">GACI TEMARIO</span>
-                    </div>
-                    <div class="flex items-center gap-2 bg-slate-800 p-1 rounded-lg">
-                        <button onclick="switchView('temario')" id="tab-temario" class="px-4 py-1.5 rounded-md text-sm font-bold bg-slate-700 text-white transition-all shadow-sm">
-                            <i class="fa-solid fa-book-open mr-2"></i>Temario
-                        </button>
-                        <button onclick="switchView('contrato')" id="tab-contrato" class="px-4 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700 transition-all">
-                            <i class="fa-solid fa-file-signature mr-2"></i>Contrato ICC
-                        </button>
-                    </div>
-                </div>
-                <div class="hidden md:block text-sm text-slate-400">
-                    Unidad 4: Procedimientos
-                </div>
-            </div>
-        </div>
+  <!-- CABECERA MÍNIMA -->
+  <header class="lab-header">
+    <div class="lab-header__titles">
+      <span class="lab-meta-tag">Cuaderno de Laboratorio · Estadística Bidimensional</span>
+      <h1 class="lab-title">Covarianza y regresión</h1>
+      <p class="lab-subtitle">Cálculo poblacional paso a paso, ajuste por mínimos cuadrados y diagnóstico gráfico interactivo.</p>
+    </div>
+    <nav class="lab-index" aria-label="Índice de secciones">
+      <a href="#datos">Datos</a>
+      <span class="sep">·</span>
+      <a href="#resultados">Resultados</a>
+      <span class="sep">·</span>
+      <a href="#formulas">Fórmulas</a>
+      <span class="sep">·</span>
+      <a href="#graficos">Gráficos</a>
+      <span class="sep">·</span>
+      <a href="#paso-a-paso">Paso a paso</a>
     </nav>
+  </header>
 
-    <header id="vista-temario-header" class="bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h1 class="text-4xl font-extrabold text-slate-900 mb-4">Gestión Aduanera y Fiscalidad Internacional</h1>
-            <p class="text-lg text-slate-600 max-w-3xl">
-                Plataforma interactiva para el estudio de procedimientos aduaneros, valoración de mercancías, Incoterms 2020 y fiscalidad.
-                <span class="font-semibold text-blue-600">Haz clic en los conceptos</span> para ver detalles técnicos o utiliza las <span class="font-semibold text-teal-600"> calculadoras</span> al final de la página.
-            </p>
+  <!-- MAQUETACIÓN ASIMÉTRICA EN 2 COLUMNAS -->
+  <div class="lab-workspace">
+
+    <!-- COLUMNA IZQUIERDA: ENTRADA DE DATOS -->
+    <aside id="datos" class="panel-datos" aria-labelledby="titulo-datos">
+      <div class="section-bar">
+        <h2 id="titulo-datos" class="section-bar__title">1. Registro de observaciones</h2>
+        <span class="section-bar__code" id="contador-pares-tag">n = 9 pares</span>
+      </div>
+
+      <div class="toolbar" role="group" aria-label="Acciones de la tabla de datos">
+        <button type="button" id="btn-add-row" class="btn" aria-label="Añadir una nueva fila al final">+ Añadir fila</button>
+        <button type="button" id="btn-calc" class="btn btn--accent" aria-label="Recalcular estadísticas ahora">Calcular</button>
+        <button type="button" id="btn-load-example" class="btn" aria-label="Cargar datos de ejemplo del temario">Cargar ejemplo</button>
+        <button type="button" id="btn-clear-table" class="btn" aria-label="Vaciar todas las filas de la tabla">Vaciar tabla</button>
+      </div>
+
+      <div class="data-table-wrap">
+        <table class="data-entry-table" aria-label="Tabla editable de variables X e Y">
+          <thead>
+            <tr>
+              <th scope="col" class="col-idx">#</th>
+              <th scope="col" class="col-var">Variable X</th>
+              <th scope="col" class="col-var">Variable Y</th>
+              <th scope="col" class="col-act">Quitar</th>
+            </tr>
+          </thead>
+          <tbody id="data-tbody">
+            <!-- Filas generadas dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="data-footer-note">
+        <strong>Entrada rápida:</strong> Acepta coma (<code>,</code>) o punto (<code>.</code>) decimal. Pulsa <kbd>Enter</kbd> en la última celda para crear fila. Puedes <strong>pegar bloques directamente desde Excel</strong> o Calc (columnas separadas por tabulador).
+      </div>
+    </aside>
+
+    <!-- COLUMNA DERECHA: RESULTADOS, FÓRMULAS, PASO A PASO Y LÁMINAS GRÁFICAS -->
+    <main class="lab-main">
+
+      <!-- AVISO DE DATOS INSUFICIENTES O VARIANZA CERO -->
+      <div id="alert-box" class="alert-banner" role="alert" aria-live="polite">
+        <div class="alert-banner__title" id="alert-title">Aviso de cálculo</div>
+        <div id="alert-msg">Se necesitan al menos 2 pares válidos (X, Y) con varianza de X distinta de cero.</div>
+      </div>
+
+      <!-- SECCIÓN DE RESULTADOS (14 CAMPOS EN ORDEN EXACTO) -->
+      <section id="resultados" class="block-container" aria-labelledby="titulo-resultados">
+        <div class="section-bar">
+          <h2 id="titulo-resultados" class="section-bar__title">2. Parámetros poblacionales y ajuste lineal</h2>
+          <span class="section-bar__code">Clic o cursor sobre un valor para precisión completa</span>
         </div>
-    </header>
 
-    <main id="vista-temario-main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+        <div id="results-grid" class="results-grid">
+          <!-- Tarjetas renderizadas dinámicamente -->
+        </div>
+      </section>
 
-        <section>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="h-8 w-1 bg-blue-600 rounded-full"></div>
-                <h2 class="text-2xl font-bold text-slate-800">Conceptos Fundamentales y Aduanas</h2>
+      <!-- BARRA DE COMPROBACIÓN INTERNA DE EQUIVALENCIA ALGEBRAICA -->
+      <div id="verification-strip" class="verification-strip" aria-live="polite">
+        <span id="verification-status" class="verification-badge">✓ Verificación algebraica exacta</span>
+        <span id="verification-detail">b = s_xy / s²x coincide con la fórmula de sumatorios · a = ȳ − b·x̄ coincide con (Σy − b·Σx)/n</span>
+      </div>
+
+      <!-- RESUMEN DE FÓRMULAS DEL TEMARIO -->
+      <section id="formulas" class="block-container" aria-labelledby="titulo-formulas">
+        <div class="section-bar">
+          <h2 id="titulo-formulas" class="section-bar__title">3. Formulario oficial del temario (estadística poblacional, divisor n)</h2>
+          <span class="section-bar__code">Referencia teórica</span>
+        </div>
+        <div class="formulas-bar" id="formulas-reference">
+          <div class="formula-pill">
+            <span class="formula-pill__title">Medias marginales</span>
+            <div class="katex-ref" data-tex="\bar{x} = \frac{\sum x_i}{n} \quad ; \quad \bar{y} = \frac{\sum y_i}{n}"></div>
+          </div>
+          <div class="formula-pill">
+            <span class="formula-pill__title">Covarianza poblacional</span>
+            <div class="katex-ref" data-tex="s_{xy} = \frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})"></div>
+          </div>
+          <div class="formula-pill">
+            <span class="formula-pill__title">Varianzas y desviaciones típicas</span>
+            <div class="katex-ref" data-tex="s_x^2 = \frac{1}{n}\sum(x_i - \bar{x})^2, \quad s_x = \sqrt{s_x^2}"></div>
+          </div>
+          <div class="formula-pill">
+            <span class="formula-pill__title">Correlación lineal de Pearson</span>
+            <div class="katex-ref" data-tex="r = \frac{s_{xy}}{s_x \cdot s_y} \quad ; \quad R^2 = r^2"></div>
+          </div>
+          <div class="formula-pill">
+            <span class="formula-pill__title">Pendiente y ordenada en el origen</span>
+            <div class="katex-ref" data-tex="b = \frac{n\sum x_i y_i - (\sum x_i)(\sum y_i)}{n\sum x_i^2 - (\sum x_i)^2}, \quad a = \frac{\sum y_i - b\sum x_i}{n}"></div>
+          </div>
+          <div class="formula-pill">
+            <span class="formula-pill__title">Recta de regresión de Y sobre X</span>
+            <div class="katex-ref" data-tex="y - \bar{y} = \frac{s_{xy}}{s_x^2}(x - \bar{x}) \iff \hat{y} = b\cdot x + a"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABLA DESPLEGABLE PASO A PASO -->
+      <section id="paso-a-paso" class="block-container" aria-labelledby="titulo-paso">
+        <details class="step-details" open>
+          <summary>
+            <div>
+              <span class="section-bar__title" id="titulo-paso">4. Tabla de desarrollo paso a paso y sumatorios (Σ)</span>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="concepts-grid"></div>
-        </section>
+            <span class="step-toggle-indicator">Mostrar / Ocultar tabla</span>
+          </summary>
+          <div class="step-table-scroll">
+            <table class="step-table" aria-label="Tabla de cálculos intermedios por observación y sumatorios">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">xᵢ</th>
+                  <th scope="col">yᵢ</th>
+                  <th scope="col">xᵢ − x̄</th>
+                  <th scope="col">yᵢ − ȳ</th>
+                  <th scope="col">(xᵢ − x̄)(yᵢ − ȳ)</th>
+                  <th scope="col">(xᵢ − x̄)²</th>
+                  <th scope="col">(yᵢ − ȳ)²</th>
+                  <th scope="col">xᵢ · yᵢ</th>
+                  <th scope="col">xᵢ²</th>
+                  <th scope="col">ŷᵢ (predicho)</th>
+                  <th scope="col">Residuo (yᵢ − ŷᵢ)</th>
+                </tr>
+              </thead>
+              <tbody id="step-tbody">
+                <!-- Filas paso a paso -->
+              </tbody>
+              <tfoot id="step-tfoot">
+                <!-- Fila de sumatorios Σ -->
+              </tfoot>
+            </table>
+          </div>
+        </details>
+      </section>
 
-        <section>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="h-8 w-1 bg-indigo-600 rounded-full"></div>
-                <h2 class="text-2xl font-bold text-slate-800">Documentación Comercial y Aduanera</h2>
+      <!-- LÁMINAS DE GRÁFICOS (11 FIGURAS NUMERADAS) -->
+      <section id="graficos" aria-labelledby="titulo-graficos">
+        <div class="block-container" style="margin-bottom: 1.25rem;">
+          <div class="section-bar">
+            <h2 id="titulo-graficos" class="section-bar__title">5. Láminas de análisis gráfico (Fig. 1 – Fig. 11)</h2>
+            <span class="section-bar__code">Actualización en tiempo real · Exportación PNG</span>
+          </div>
+        </div>
+
+        <div class="plates-grid">
+
+          <!-- FIG 1: Nube de puntos + recta de regresión + centro de gravedad -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 1 · Ajuste lineal</span>
+                <h3 class="plate-title">Nube de puntos, recta de regresión y centro de medias</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig1" data-filename="fig1-regresion.png" aria-label="Descargar Fig. 1 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
             </div>
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 divide-y divide-slate-100" id="docs-list"></div>
-        </section>
-
-        <section>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="h-8 w-1 bg-rose-500 rounded-full"></div>
-                <h2 class="text-2xl font-bold text-slate-800">Conceptos Adicionales Clave</h2>
+            <p class="plate-caption">Muestra las observaciones (xᵢ, yᵢ), la recta de mínimos cuadrados y el punto de gravedad (x̄, ȳ) por el que pasa siempre la recta.</p>
+            <div class="plate-canvas-wrap">
+              <canvas id="chart-fig1" role="img" aria-label="Gráfico de dispersión con recta de regresión y punto de medias"></canvas>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="extra-grid"></div>
-        </section>
+          </article>
 
-        <section class="bg-slate-50 rounded-xl p-8 border border-slate-200">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="h-8 w-1 bg-teal-500 rounded-full"></div>
-                <h2 class="text-2xl font-bold text-slate-800">Herramientas de Cálculo y Fuentes Oficiales</h2>
+          <!-- FIG 2: Cuadrantes de covarianza -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 2 · Signo de la covarianza</span>
+                <h3 class="plate-title">Cuadrantes centrados en (x̄, ȳ)</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig2" data-filename="fig2-cuadrantes.png" aria-label="Descargar Fig. 2 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
             </div>
-            <p class="text-slate-600 mb-6">Utiliza estas herramientas para simular costes de importación y formación de precios internacionales, o consulta las fuentes oficiales.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                
-                <div onclick="openTool('fiscal')" class="group cursor-pointer p-5 bg-white rounded-lg border border-slate-200 hover:border-teal-500 hover:shadow-md transition-all">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="font-bold text-slate-900 group-hover:text-teal-600 transition-colors">Calculadora Fiscal Aduanera</h3>
-                                <span class="px-2 py-0.5 bg-teal-100 text-teal-700 text-xs font-bold rounded-full">Interactiva</span>
-                            </div>
-                            <p class="text-sm text-slate-500">Calcula la Deuda Aduanera total: Valor en Aduana, Aranceles, Anti-dumping e IVA de Importación.</p>
-                        </div>
-                        <i class="fa-solid fa-calculator text-slate-300 group-hover:text-teal-500 text-xl"></i>
-                    </div>
-                </div>
-
-                <div onclick="openTool('incoterm')" class="group cursor-pointer p-5 bg-white rounded-lg border border-slate-200 hover:border-purple-500 hover:shadow-md transition-all">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <h3 class="font-bold text-slate-900 group-hover:text-purple-600 transition-colors">Generador de Precios Incoterms®</h3>
-                                <span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-bold rounded-full">Interactiva</span>
-                            </div>
-                            <p class="text-sm text-slate-500">Determina el precio de venta final aplicando margen de beneficio y responsabilidades según Incoterm.</p>
-                        </div>
-                        <i class="fa-solid fa-calculator text-slate-300 group-hover:text-teal-500 text-xl"></i>
-                    </div>
-                </div>
-
-                <a href="https://trade.ec.europa.eu/access-to-markets/es/home" target="_blank" class="group block p-5 bg-slate-100 rounded-lg border border-slate-200 hover:border-blue-400 transition-colors opacity-90">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-semibold text-slate-700 group-hover:text-blue-600 transition-colors">Access2Markets (UE)</h3>
-                            <p class="text-sm text-slate-500 mt-1">Portal oficial para consultar aranceles, impuestos, reglas de origen y requisitos de importación/exportación.</p>
-                        </div>
-                        <i class="fa-solid fa-globe text-slate-300 group-hover:text-blue-500"></i>
-                    </div>
-                </a>
-                
-                <a href="https://sede.agenciatributaria.gob.es/Sede/aduanas.html" target="_blank" class="group block p-5 bg-slate-100 rounded-lg border border-slate-200 hover:border-orange-400 transition-colors opacity-90">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-semibold text-slate-700 group-hover:text-orange-600 transition-colors">Agencia Tributaria (Aduanas)</h3>
-                            <p class="text-sm text-slate-500 mt-1">Sede electrónica para presentar DUA e Intrastat.</p>
-                        </div>
-                        <i class="fa-solid fa-building-columns text-slate-300 group-hover:text-orange-500"></i>
-                    </div>
-                </a>
-
+            <p class="plate-caption">Ejes cruzados en (x̄, ȳ): los puntos en cuadrantes I y III suman producto positivo (terracota); en II y IV restan (pizarra).</p>
+            <div class="plate-canvas-wrap">
+              <canvas id="chart-fig2" role="img" aria-label="Gráfico de cuadrantes de covarianza centrados en las medias"></canvas>
             </div>
-        </section>
+          </article>
+
+          <!-- FIG 3: Aportación individual a la covarianza -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 3 · Descomposición de s_xy</span>
+                <h3 class="plate-title">Aportación (xᵢ − x̄)(yᵢ − ȳ) por observación</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig3" data-filename="fig3-aportacion-covarianza.png" aria-label="Descargar Fig. 3 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
+            </div>
+            <p class="plate-caption">Cada barra representa el producto de desviaciones de una fila; su promedio exacto es la covarianza s_xy.</p>
+            <div class="plate-canvas-wrap">
+              <canvas id="chart-fig3" role="img" aria-label="Gráfico de barras de aportación a la covarianza por cada par de datos"></canvas>
+            </div>
+          </article>
+
+          <!-- FIG 4: Observados vs Predichos -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 4 · Calidad predictiva</span>
+                <h3 class="plate-title">Valores observados (yᵢ) frente a predichos (ŷᵢ)</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig4" data-filename="fig4-observados-vs-predichos.png" aria-label="Descargar Fig. 4 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
+            </div>
+            <p class="plate-caption">Cuanto más se aproximan los puntos a la diagonal ideal (y = ŷ), menor es el error de predicción del modelo.</p>
+            <div class="plate-canvas-wrap">
+              <canvas id="chart-fig4" role="img" aria-label="Gráfico de valores observados contra valores predichos con diagonal ideal"></canvas>
+            </div>
+          </article>
+
+          <!-- FIG 5: Residuos vs X -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 5 · Diagnóstico de errores</span>
+                <h3 class="plate-title">Dispersión de residuos (eᵢ = yᵢ − ŷᵢ) frente a X</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig5" data-filename="fig5-residuos.png" aria-label="Descargar Fig. 5 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
+            </div>
+            <p class="plate-caption">Un buen ajuste lineal muestra residuos repartidos al azar alrededor de 0 sin patrones curvos ni embudos.</p>
+            <div class="plate-canvas-wrap">
+              <canvas id="chart-fig5" role="img" aria-label="Gráfico de residuos frente a la variable X con línea base en cero"></canvas>
+            </div>
+          </article>
+
+          <!-- FIG 8: Burbujas por frecuencia de pares repetidos -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 6 · Multiplicidad de puntos</span>
+                <h3 class="plate-title">Mapa de burbujas por frecuencia de pares (x, y)</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig8" data-filename="fig6-burbujas-frecuencia.png" aria-label="Descargar Fig. 6 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
+            </div>
+            <p class="plate-caption">El área de cada círculo es proporcional a cuántas veces se repite exactamente el mismo par (x, y) en la tabla.</p>
+            <div class="plate-canvas-wrap">
+              <canvas id="chart-fig8" role="img" aria-label="Gráfico de burbujas donde el tamaño indica la frecuencia de pares repetidos"></canvas>
+            </div>
+          </article>
+
+          <!-- FIG 6: Histogramas marginales de X e Y con media y banda ±1 desviación típica -->
+          <article class="plate-card plate-card--wide">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 7 · Distribuciones marginales</span>
+                <h3 class="plate-title">Histogramas de X e Y con media (línea) y banda ±1 desviación típica</h3>
+              </div>
+              <div style="display:flex; gap:0.4rem;">
+                <button type="button" class="btn-dl-png" data-canvas="chart-fig6x" data-filename="fig7a-histograma-x.png" aria-label="Descargar Histograma de X como PNG">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG (X)
+                </button>
+                <button type="button" class="btn-dl-png" data-canvas="chart-fig6y" data-filename="fig7b-histograma-y.png" aria-label="Descargar Histograma de Y como PNG">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG (Y)
+                </button>
+              </div>
+            </div>
+            <p class="plate-caption">Frecuencia por intervalos de cada variable por separado, señalando su centro (media) y la dispersión habitual (±1σ).</p>
+            <div class="dual-hist-grid">
+              <div class="mini-canvas-box">
+                <canvas id="chart-fig6x" role="img" aria-label="Histograma de la variable X con media y banda de desviación típica"></canvas>
+              </div>
+              <div class="mini-canvas-box">
+                <canvas id="chart-fig6y" role="img" aria-label="Histograma de la variable Y con media y banda de desviación típica"></canvas>
+              </div>
+            </div>
+          </article>
+
+          <!-- FIG 7: Diagrama de cajas (Box plot) de X e Y -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 8 · Cuartiles y simetría</span>
+                <h3 class="plate-title">Diagrama de cajas (Box Plot) de X e Y</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig7" data-filename="fig8-boxplot.png" aria-label="Descargar Fig. 8 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
+            </div>
+            <p class="plate-caption">Compara mínimo, Q₁ (25%), mediana Q₂ (50%), Q₃ (75%), máximo y media (rombo) de ambas variables.</p>
+            <div class="plate-canvas-wrap">
+              <canvas id="chart-fig7" role="img" aria-label="Diagrama de cajas y bigotes comparando las variables X e Y"></canvas>
+            </div>
+          </article>
+
+          <!-- FIG 9: Elipse de concentración de covarianza -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 9 · Geometría matricial</span>
+                <h3 class="plate-title">Elipse de concentración (matriz de covarianzas)</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig9" data-filename="fig9-elipse-covarianza.png" aria-label="Descargar Fig. 9 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
+            </div>
+            <p class="plate-caption">Elipses 1σ y 2σ orientadas según los autovectores de [[s²x, s_xy], [s_xy, s²y]]; su inclinación refleja el signo de s_xy.</p>
+            <div class="plate-canvas-wrap">
+              <canvas id="chart-fig9" role="img" aria-label="Elipse de concentración de covarianza sobre la nube de puntos"></canvas>
+            </div>
+          </article>
+
+          <!-- FIG 10: Medidor semicircular de Pearson r -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 10 · Intensidad y sentido</span>
+                <h3 class="plate-title">Medidor semicircular de correlación de Pearson (r)</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig10" data-filename="fig10-medidor-pearson.png" aria-label="Descargar Fig. 10 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
+            </div>
+            <p class="plate-caption">Escala continua entre −1 (inversa total), 0 (nula) y +1 (directa total) con umbrales ±0,3 y ±0,7 del temario.</p>
+            <div class="plate-canvas-wrap plate-canvas-wrap--short">
+              <canvas id="chart-fig10" role="img" aria-label="Medidor semicircular del coeficiente de correlación r de Pearson"></canvas>
+            </div>
+          </article>
+
+          <!-- FIG 11: Comparador de varianza explicada (r² vs 1 - r²) -->
+          <article class="plate-card">
+            <div class="plate-header">
+              <div class="plate-header__info">
+                <span class="plate-fig-tag">Fig. 11 · Bondad de ajuste</span>
+                <h3 class="plate-title">Descomposición de la varianza de Y (r² frente a 1 − r²)</h3>
+              </div>
+              <button type="button" class="btn-dl-png" data-canvas="chart-fig11" data-filename="fig11-varianza-explicada.png" aria-label="Descargar Fig. 11 como PNG">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>PNG
+              </button>
+            </div>
+            <p class="plate-caption">Proporción de la variabilidad de Y explicada por la recta de regresión (r²) frente a la varianza residual (1 − r²).</p>
+            <div class="plate-canvas-wrap plate-canvas-wrap--short">
+              <canvas id="chart-fig11" role="img" aria-label="Gráfico de barra apilada con la proporción de varianza explicada r cuadrado y no explicada"></canvas>
+            </div>
+          </article>
+
+        </div>
+      </section>
 
     </main>
+  </div>
 
-    <footer id="vista-temario-footer" class="bg-white border-t border-slate-200 mt-12 py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center text-slate-500 text-sm">
-            <p>&copy; 2025 CREADO POR MARCO</p>
-        </div>
-    </footer>
+  <footer class="lab-footer">
+    <span>Calculadora de Estadística Bidimensional · Fórmulas poblacionales (divisor n)</span>
+    <span>Diseño editorial de cuaderno de laboratorio · Sin dependencias de servidor</span>
+  </footer>
 
-    <section id="vista-contrato" class="hidden w-full" style="height: calc(100vh - 64px);">
-        <iframe src="contrato_icc.html" class="w-full h-full border-none"></iframe>
-    </section>
+  <script>
+    "use strict";
 
-    <div id="tech-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
-        <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center sticky top-0">
-                <div>
-                    <span id="modal-tag" class="text-xs font-bold tracking-wider text-blue-600 uppercase mb-1 block">Concepto</span>
-                    <h3 id="modal-title" class="text-2xl font-bold text-slate-900">Título</h3>
-                </div>
-                <button onclick="closeModal('tech-modal')" class="text-slate-400 hover:text-red-500 transition-colors p-2">
-                    <i class="fa-solid fa-times text-xl"></i>
-                </button>
-            </div>
-            <div class="p-8 overflow-y-auto custom-scrollbar text-slate-700 space-y-8">
-                <div>
-                    <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Definición General</h4>
-                    <p id="modal-summary" class="text-lg leading-relaxed text-slate-800"></p>
-                </div>
-                <hr class="border-slate-100">
-                <div class="bg-slate-50 rounded-lg p-6 border border-slate-200">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fa-solid fa-scale-balanced text-indigo-600"></i>
-                        <h4 class="text-lg font-bold text-slate-900">Análisis Técnico y Normativa</h4>
-                    </div>
-                    <div id="modal-technical" class="prose prose-slate max-w-none text-sm"></div>
-                </div>
-            </div>
-            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 text-right">
-                <button onclick="closeModal('tech-modal')" class="px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium">Cerrar Referencia</button>
-            </div>
-        </div>
-    </div>
+    /* ==========================================================================
+       1. DATOS INICIALES DEL EJEMPLO Y UTILIDADES DE FORMATO
+       ========================================================================== */
+    const EJEMPLO_INICIAL = [
+      { x: "2", y: "1" },
+      { x: "3", y: "3" },
+      { x: "4", y: "2" },
+      { x: "4", y: "4" },
+      { x: "5", y: "4" },
+      { x: "6", y: "4" },
+      { x: "6", y: "6" },
+      { x: "7", y: "4" },
+      { x: "7", y: "6" }
+    ];
 
-    <div id="fiscal-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
-        <div class="modal-content bg-white w-full max-w-2xl max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-teal-600 px-6 py-4 flex justify-between items-center text-white">
-                <h3 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-calculator"></i> Calculadora de Importación</h3>
-                <button onclick="closeModal('fiscal-modal')" class="text-teal-100 hover:text-white"><i class="fa-solid fa-times text-xl"></i></button>
-            </div>
-            
-            <div class="p-6 overflow-y-auto custom-scrollbar">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-slate-800 border-b pb-2">1. Datos de la Operación</h4>
-                        <div>
-                            <label class="calc-label">Valor FOB Mercancía (€)</label>
-                            <input type="number" id="f_fob" class="calc-input" placeholder="0.00" oninput="calcFiscal()">
-                        </div>
-                        <div>
-                            <label class="calc-label">Flete Internacional (€)</label>
-                            <input type="number" id="f_freight" class="calc-input" placeholder="0.00" oninput="calcFiscal()">
-                        </div>
-                        <div>
-                            <label class="calc-label">Seguro (€)</label>
-                            <input type="number" id="f_insurance" class="calc-input" placeholder="0.00" oninput="calcFiscal()">
-                        </div>
-                        <div>
-                            <label class="calc-label">Otros Gastos hasta Aduana (€)</label>
-                            <input type="number" id="f_other" class="calc-input" placeholder="0.00" oninput="calcFiscal()">
-                        </div>
-                        
-                        <h4 class="font-bold text-slate-800 border-b pb-2 pt-4">2. Tipos Impositivos</h4>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div>
-                                <label class="calc-label">Arancel (%)</label>
-                                <input type="number" id="f_duty_rate" class="calc-input" value="0" oninput="calcFiscal()">
-                            </div>
-                            <div>
-                                <label class="calc-label">Anti-dumping (%)</label>
-                                <input type="number" id="f_ad_rate" class="calc-input" value="0" oninput="calcFiscal()">
-                            </div>
-                            <div>
-                                <label class="calc-label">IVA (%)</label>
-                                <input type="number" id="f_vat_rate" class="calc-input" value="21" oninput="calcFiscal()">
-                            </div>
-                        </div>
-                    </div>
+    const PALETTE = {
+      ink: "#181715",
+      inkMuted: "#57534C",
+      borderSubtle: "#C9C3B4",
+      gridLine: "rgba(24, 23, 21, 0.08)",
+      paper: "#FAF8F2",
+      accent: "#B83A24",
+      accentAlpha: "rgba(184, 58, 36, 0.78)",
+      accentSoft: "rgba(184, 58, 36, 0.16)",
+      secondary: "#3B5956",
+      secondaryAlpha: "rgba(59, 89, 86, 0.78)",
+      secondarySoft: "rgba(59, 89, 86, 0.18)",
+      olive: "#5A6B47"
+    };
 
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-4">
-                        <h4 class="font-bold text-slate-800 border-b pb-2">3. Resultados (Liquidación)</h4>
-                        
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-slate-500">Valor en Aduana (Base Arancel)</span>
-                                <span class="font-mono font-bold" id="r_customs_value">0.00 €</span>
-                            </div>
-                            <div class="w-full bg-slate-200 h-1.5 rounded-full"><div class="bg-blue-500 h-1.5 rounded-full w-full"></div></div>
-                        </div>
+    /**
+     * Convierte una cadena con coma o punto decimal en número flotante.
+     * Devuelve null si está vacía, o NaN si no es un número válido.
+     */
+    function parseNumero(raw) {
+      if (raw === null || raw === undefined) return null;
+      const trimmed = String(raw).trim();
+      if (trimmed === "") return null;
+      const normalized = trimmed.replace(/\s+/g, "").replace(",", ".");
+      if (!/^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/.test(normalized)) {
+        return NaN;
+      }
+      const num = Number(normalized);
+      return Number.isFinite(num) ? num : NaN;
+    }
 
-                        <div class="pl-4 border-l-2 border-slate-200 space-y-2">
-                            <div class="flex justify-between text-sm">
-                                <span>+ Cuota Arancel</span>
-                                <span class="font-mono text-red-600" id="r_duty_amount">0.00 €</span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span>+ Cuota Anti-dumping</span>
-                                <span class="font-mono text-red-600" id="r_ad_amount">0.00 €</span>
-                            </div>
-                        </div>
+    /**
+     * Formatea un número con `decimales` fijos y coma decimal (es-ES).
+     */
+    function fmt(num, decimales = 4) {
+      if (num === null || num === undefined || !Number.isFinite(num)) return "—";
+      const limpio = Math.abs(num) < 1e-12 ? 0 : num;
+      return limpio.toLocaleString("es-ES", {
+        minimumFractionDigits: decimales,
+        maximumFractionDigits: decimales,
+        useGrouping: false
+      });
+    }
 
-                        <div class="border-t border-slate-200 pt-2">
-                            <div class="flex justify-between text-sm mb-1">
-                                <span class="text-slate-500">Base Imponible IVA</span>
-                                <span class="font-mono font-bold" id="r_vat_base">0.00 €</span>
-                            </div>
-                            <div class="flex justify-between text-sm pl-4 border-l-2 border-slate-200">
-                                <span>+ Cuota IVA Importación</span>
-                                <span class="font-mono text-red-600" id="r_vat_amount">0.00 €</span>
-                            </div>
-                        </div>
+    /**
+     * Formatea un número con su precisión completa en coma decimal para inspección.
+     */
+    function fmtFull(num) {
+      if (num === null || num === undefined || !Number.isFinite(num)) return "No definido";
+      const limpio = Math.abs(num) < 1e-14 ? 0 : num;
+      return String(limpio).replace(".", ",");
+    }
 
-                        <div class="bg-slate-900 text-white p-3 rounded-lg mt-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm font-light">TOTAL DEUDA ADUANERA</span>
-                                <span class="text-xl font-bold font-mono" id="r_total_debt">0.00 €</span>
-                            </div>
-                            <div class="flex justify-between items-center mt-1 text-xs text-slate-400 border-t border-slate-700 pt-1">
-                                <span>COSTE TOTAL IMPORTACIÓN</span>
-                                <span class="font-mono" id="r_total_cost">0.00 €</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    /* ==========================================================================
+       2. FUNCIÓN PURA DE CÁLCULO ESTADÍSTICO: calcular(datos)
+       ========================================================================== */
+    /**
+     * Recibe un array de objetos [{ index, x, y }] con números finitos.
+     * Devuelve un objeto inmutable con todos los cálculos poblacionales,
+     * tabla paso a paso, autovalores de la elipse y validaciones algebraicas.
+     */
+    function calcular(datos) {
+      const n = Array.isArray(datos) ? datos.length : 0;
 
-    <div id="incoterm-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
-        <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-purple-700 px-6 py-4 flex justify-between items-center text-white">
-                <h3 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-boxes-packing"></i> Generador de Precios Incoterms® 2020</h3>
-                <button onclick="closeModal('incoterm-modal')" class="text-purple-100 hover:text-white"><i class="fa-solid fa-times text-xl"></i></button>
-            </div>
+      if (n < 2) {
+        return {
+          valido: false,
+          motivo: "Se requieren al menos 2 pares de datos válidos (X, Y) para calcular la covarianza y la recta de regresión.",
+          n
+        };
+      }
 
-            <div class="p-6 overflow-y-auto custom-scrollbar">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    
-                    <div class="space-y-3 lg:col-span-1">
-                        <h4 class="font-bold text-purple-900 border-b pb-2 mb-3">1. Cadena de Costes</h4>
-                        
-                        <div class="grid grid-cols-1 gap-2">
-                            <div><label class="text-xs font-bold text-slate-500">Coste Producto + Embalaje</label><input type="number" id="i_exw" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                            <div><label class="text-xs font-bold text-slate-500">Certificados / Otros (EXW)</label><input type="number" id="i_certs" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                            <div class="bg-yellow-50 p-2 rounded border border-yellow-200">
-                                <label class="text-xs font-bold text-yellow-700">Margen Beneficio (%)</label>
-                                <input type="number" id="i_margin" class="calc-input py-1 border-yellow-300" placeholder="0" oninput="calcIncoterm()">
-                            </div>
-                            <div><label class="text-xs font-bold text-slate-500">Carga en Fábrica / Origen</label><input type="number" id="i_load" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                            <div><label class="text-xs font-bold text-slate-500">Transporte Interior (Origen)</label><input type="number" id="i_inland_org" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                            <div><label class="text-xs font-bold text-slate-500">Aduana Exportación</label><input type="number" id="i_customs_exp" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                            <div><label class="text-xs font-bold text-slate-500">Gastos Terminal Origen (THC)</label><input type="number" id="i_thc_org" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                            <div class="bg-purple-50 p-2 rounded border border-purple-100">
-                                <label class="text-xs font-bold text-purple-700">Flete / Transporte Principal</label><input type="number" id="i_freight" class="calc-input py-1 border-purple-300" placeholder="0" oninput="calcIncoterm()">
-                            </div>
-                            <div class="bg-purple-50 p-2 rounded border border-purple-100">
-                                <label class="text-xs font-bold text-purple-700">Seguro de Transporte</label><input type="number" id="i_insurance" class="calc-input py-1 border-purple-300" placeholder="0" oninput="calcIncoterm()">
-                            </div>
-                            <div><label class="text-xs font-bold text-slate-500">Gastos Terminal Destino (THC)</label><input type="number" id="i_thc_dst" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                            <div><label class="text-xs font-bold text-slate-500">Aduana Importación + Impuestos</label><input type="number" id="i_customs_imp" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                            <div><label class="text-xs font-bold text-slate-500">Transporte Interior (Destino)</label><input type="number" id="i_inland_dst" class="calc-input py-1" placeholder="0" oninput="calcIncoterm()"></div>
-                        </div>
-                    </div>
+      let sumX = 0;
+      let sumY = 0;
+      let sumXY = 0;
+      let sumX2 = 0;
+      let sumY2 = 0;
 
-                    <div class="lg:col-span-2 flex flex-col gap-6">
-                        
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <label class="block font-bold text-slate-800 mb-2">2. Selecciona el Incoterm Objetivo</label>
-                            <select id="incoterm_selector" class="w-full p-3 border border-slate-300 rounded-lg text-lg font-bold text-purple-800 focus:ring-2 focus:ring-purple-500" onchange="calcIncoterm()">
-                                <option value="EXW">EXW - Ex Works (En Fábrica)</option>
-                                <option value="FCA">FCA - Free Carrier (Franco Porteador)</option>
-                                <option value="FAS">FAS - Free Alongside Ship (Franco al Costado)</option>
-                                <option value="FOB">FOB - Free On Board (Franco a Bordo)</option>
-                                <option value="CPT">CPT - Carriage Paid To (Transporte Pagado)</option>
-                                <option value="CFR">CFR - Cost and Freight (Coste y Flete)</option>
-                                <option value="CIP">CIP - Carriage & Insurance Paid (TTE y Seguro Pagado)</option>
-                                <option value="CIF">CIF - Cost, Insurance & Freight (Coste, Seguro, Flete)</option>
-                                <option value="DAP">DAP - Delivered At Place (Entregado en Lugar)</option>
-                                <option value="DPU">DPU - Delivered Place Unloaded (Descargado)</option>
-                                <option value="DDP">DDP - Delivered Duty Paid (Derechos Pagados)</option>
-                            </select>
-                        </div>
+      for (let i = 0; i < n; i++) {
+        const xi = datos[i].x;
+        const yi = datos[i].y;
+        sumX += xi;
+        sumY += yi;
+        sumXY += xi * yi;
+        sumX2 += xi * xi;
+        sumY2 += yi * yi;
+      }
 
-                        <div class="flex-grow bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden flex flex-col">
-                            <div class="bg-slate-900 text-white p-6 text-center">
-                                <div class="text-sm font-light text-slate-400 uppercase tracking-widest mb-1">Precio de Venta Estimado</div>
-                                <div class="text-4xl font-bold font-mono" id="incoterm_price">0.00 €</div>
-                                <div class="text-sm text-purple-300 mt-2 font-bold" id="incoterm_name_display">EXW - Ex Works</div>
-                            </div>
-                            
-                            <div class="p-6 grid grid-cols-2 gap-6 h-full">
-                                <div>
-                                    <h5 class="text-xs font-bold text-green-600 uppercase mb-3 flex items-center gap-2">
-                                        <i class="fa-solid fa-check-circle"></i> Paga Vendedor
-                                    </h5>
-                                    <ul id="seller_responsibilities" class="text-sm space-y-2 text-slate-600">
-                                        </ul>
-                                </div>
-                                <div class="border-l border-slate-100 pl-6">
-                                    <h5 class="text-xs font-bold text-orange-600 uppercase mb-3 flex items-center gap-2">
-                                        <i class="fa-solid fa-user-tag"></i> Paga Comprador
-                                    </h5>
-                                    <ul id="buyer_responsibilities" class="text-sm space-y-2 text-slate-600">
-                                        </ul>
-                                </div>
-                            </div>
-                        </div>
+      const mediaX = sumX / n;
+      const mediaY = sumY / n;
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+      let sumDxDy = 0;
+      let sumDx2 = 0;
+      let sumDy2 = 0;
 
-    <script>
-        // --- LÓGICA DE NAVEGACIÓN (TEMARIO VS CONTRATO) ---
-        function switchView(view) {
-            const header = document.getElementById('vista-temario-header');
-            const main = document.getElementById('vista-temario-main');
-            const footer = document.getElementById('vista-temario-footer');
-            const contrato = document.getElementById('vista-contrato');
-            
-            const tabTemario = document.getElementById('tab-temario');
-            const tabContrato = document.getElementById('tab-contrato');
+      for (let i = 0; i < n; i++) {
+        const dx = datos[i].x - mediaX;
+        const dy = datos[i].y - mediaY;
+        sumDxDy += dx * dy;
+        sumDx2 += dx * dx;
+        sumDy2 += dy * dy;
+      }
 
-            if (view === 'temario') {
-                header.classList.remove('hidden');
-                main.classList.remove('hidden');
-                footer.classList.remove('hidden');
-                contrato.classList.add('hidden');
-                
-                // Estilos del botón
-                tabTemario.className = "px-4 py-1.5 rounded-md text-sm font-bold bg-slate-700 text-white transition-all shadow-sm";
-                tabContrato.className = "px-4 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700 transition-all";
+      // Fórmulas poblacionales (dividiendo entre n)
+      const sxy = sumDxDy / n;
+      const s2x = sumDx2 / n;
+      const s2y = sumDy2 / n;
+      const sx = Math.sqrt(Math.max(0, s2x));
+      const sy = Math.sqrt(Math.max(0, s2y));
+
+      if (s2x < 1e-13) {
+        return {
+          valido: false,
+          motivo: "La varianza de X es cero (todos los valores de X son idénticos). No es posible ajustar la recta de regresión Y sobre X ni dividir por s²x.",
+          n
+        };
+      }
+
+      // Pendiente por fórmula de sumatorios del temario:
+      // b = [n·Σ(xy) − (Σx)(Σy)] / [n·Σ(x²) − (Σx)²]
+      const numeradorB = n * sumXY - sumX * sumY;
+      const denominadorB = n * sumX2 - sumX * sumX;
+      const bSumatorios = numeradorB / denominadorB;
+
+      // Pendiente por cociente covarianza / varianza: b = s_xy / s²x
+      const bCociente = sxy / s2x;
+
+      // Ordenada en el origen por ambas fórmulas del temario:
+      // a = (Σy − b·Σx)/n   y   a = ȳ − b·x̄
+      const b = bSumatorios;
+      const aSumatorios = (sumY - b * sumX) / n;
+      const aMedias = mediaY - b * mediaX;
+      const a = aSumatorios;
+
+      // Comprobación interna de equivalencia algebraica
+      const diffB = Math.abs(bCociente - bSumatorios);
+      const diffA = Math.abs(aMedias - aSumatorios);
+      const coincidenFormulas = diffB < 1e-9 && diffA < 1e-9;
+
+      // Correlación de Pearson r y coeficiente de determinación r²
+      const r = sy < 1e-13 ? 0 : Math.max(-1, Math.min(1, sxy / (sx * sy)));
+      const r2 = r * r;
+
+      // Grado de correlación con la lógica exacta solicitada
+      let gradoCorrelacion = "Prácticamente nula";
+      const rRedondeado = Math.abs(r - 1) < 1e-12 ? 1 : (Math.abs(r + 1) < 1e-12 ? -1 : r);
+
+      if (rRedondeado === 1) {
+        gradoCorrelacion = "Correlación directa total";
+      } else if (rRedondeado === -1) {
+        gradoCorrelacion = "Correlación inversa total";
+      } else if (rRedondeado >= 0.7) {
+        gradoCorrelacion = "Fuerte y directa";
+      } else if (rRedondeado <= -0.7) {
+        gradoCorrelacion = "Fuerte e inversa";
+      } else if (rRedondeado >= 0.3) {
+        gradoCorrelacion = "Débil y directa";
+      } else if (rRedondeado <= -0.3) {
+        gradoCorrelacion = "Débil e inversa";
+      } else {
+        gradoCorrelacion = "Prácticamente nula";
+      }
+
+      // Ecuación de la recta de regresión (formato "y = 0,754·x + 0,089"; usar " - " si a<0)
+      const bStr3 = fmt(b, 3);
+      const aAbsStr3 = fmt(Math.abs(a), 3);
+      const signoA = a < -1e-12 ? " - " : " + ";
+      const ecuacion = `y = ${bStr3}·x${signoA}${aAbsStr3}`;
+
+      // Construcción de filas paso a paso y sumatorios
+      const filasPaso = [];
+      let sumYHat = 0;
+      let sumResiduos = 0;
+
+      for (let i = 0; i < n; i++) {
+        const xi = datos[i].x;
+        const yi = datos[i].y;
+        const dx = xi - mediaX;
+        const dy = yi - mediaY;
+        const dxdy = dx * dy;
+        const dx2 = dx * dx;
+        const dy2 = dy * dy;
+        const xiyi = xi * yi;
+        const xi2 = xi * xi;
+        const yHat = b * xi + a;
+        const residuo = yi - yHat;
+
+        sumYHat += yHat;
+        sumResiduos += residuo;
+
+        filasPaso.push({
+          rowNum: datos[i].rowNum,
+          xi,
+          yi,
+          dx,
+          dy,
+          dxdy,
+          dx2,
+          dy2,
+          xiyi,
+          xi2,
+          yHat,
+          residuo
+        });
+      }
+
+      // Frecuencias de pares repetidos (x, y) para el gráfico de burbujas
+      const mapaFrecuencias = new Map();
+      for (let i = 0; i < n; i++) {
+        const key = `${datos[i].x}__${datos[i].y}`;
+        if (!mapaFrecuencias.has(key)) {
+          mapaFrecuencias.set(key, { x: datos[i].x, y: datos[i].y, count: 0, filas: [] });
+        }
+        const item = mapaFrecuencias.get(key);
+        item.count += 1;
+        item.filas.push(datos[i].rowNum);
+      }
+      const burbujas = Array.from(mapaFrecuencias.values());
+
+      // Autovalores y autovectores de la matriz de covarianzas [[s²x, s_xy], [s_xy, s²y]]
+      const traza = s2x + s2y;
+      const det = s2x * s2y - sxy * sxy;
+      const disc = Math.sqrt(Math.max(0, (traza * traza) / 4 - det));
+      const lambda1 = traza / 2 + disc;
+      const lambda2 = Math.max(0, traza / 2 - disc);
+      const anguloElipse = 0.5 * Math.atan2(2 * sxy, s2x - s2y);
+
+      return {
+        valido: true,
+        n,
+        mediaX,
+        mediaY,
+        sxy,
+        s2x,
+        s2y,
+        sx,
+        sy,
+        r,
+        r2,
+        b,
+        bCociente,
+        bSumatorios,
+        a,
+        aMedias,
+        aSumatorios,
+        numeradorB,
+        denominadorB,
+        coincidenFormulas,
+        diffB,
+        diffA,
+        ecuacion,
+        gradoCorrelacion,
+        sumatorios: {
+          sumX,
+          sumY,
+          sumDx: 0,
+          sumDy: 0,
+          sumDxDy,
+          sumDx2,
+          sumDy2,
+          sumXY,
+          sumX2,
+          sumY2,
+          sumYHat,
+          sumResiduos
+        },
+        filasPaso,
+        burbujas,
+        elipse: {
+          lambda1,
+          lambda2,
+          angulo: anguloElipse
+        }
+      };
+    }
+
+    /* ==========================================================================
+       3. GESTIÓN DE LA TABLA DE ENTRADA Y EVENTOS (TECLADO + PEGAR EXCEL)
+       ========================================================================== */
+    const tbodyDatos = document.getElementById("data-tbody");
+    const contadorParesTag = document.getElementById("contador-pares-tag");
+    let debounceTimer = null;
+    let previousValuesMap = {};
+
+    function crearFilaDOM(valorX = "", valorY = "") {
+      const tr = document.createElement("tr");
+
+      const tdIdx = document.createElement("td");
+      tdIdx.className = "cell-idx";
+
+      const tdX = document.createElement("td");
+      tdX.className = "cell-input-wrap";
+      const inputX = document.createElement("input");
+      inputX.type = "text";
+      inputX.inputMode = "decimal";
+      inputX.className = "cell-input input-x";
+      inputX.value = valorX;
+      inputX.setAttribute("aria-label", "Valor de Variable X");
+      tdX.appendChild(inputX);
+
+      const tdY = document.createElement("td");
+      tdY.className = "cell-input-wrap";
+      const inputY = document.createElement("input");
+      inputY.type = "text";
+      inputY.inputMode = "decimal";
+      inputY.className = "cell-input input-y";
+      inputY.value = valorY;
+      inputY.setAttribute("aria-label", "Valor de Variable Y");
+      tdY.appendChild(inputY);
+
+      const tdAct = document.createElement("td");
+      tdAct.className = "cell-act";
+      const btnQuitar = document.createElement("button");
+      btnQuitar.type = "button";
+      btnQuitar.className = "btn-remove-row";
+      btnQuitar.textContent = "× quitar";
+      btnQuitar.setAttribute("aria-label", "Quitar esta fila");
+      btnQuitar.addEventListener("click", () => {
+        tr.remove();
+        if (tbodyDatos.children.length === 0) {
+          tbodyDatos.appendChild(crearFilaDOM("", ""));
+        }
+        renumerarFilas();
+        programarRecalculo();
+      });
+      tdAct.appendChild(btnQuitar);
+
+      tr.appendChild(tdIdx);
+      tr.appendChild(tdX);
+      tr.appendChild(tdY);
+      tr.appendChild(tdAct);
+
+      return tr;
+    }
+
+    function renumerarFilas() {
+      const filas = tbodyDatos.querySelectorAll("tr");
+      filas.forEach((tr, i) => {
+        const idxCell = tr.querySelector(".cell-idx");
+        if (idxCell) idxCell.textContent = String(i + 1);
+        const inX = tr.querySelector(".input-x");
+        const inY = tr.querySelector(".input-y");
+        if (inX) inX.setAttribute("aria-label", `Fila ${i + 1}, Variable X`);
+        if (inY) inY.setAttribute("aria-label", `Fila ${i + 1}, Variable Y`);
+      });
+    }
+
+    function cargarDatosEnTabla(pares) {
+      tbodyDatos.innerHTML = "";
+      pares.forEach((par) => {
+        tbodyDatos.appendChild(crearFilaDOM(par.x, par.y));
+      });
+      renumerarFilas();
+      ejecutarRecalculo();
+    }
+
+    /**
+     * Lee todas las filas de la tabla, marca en rojo suave las celdas no numéricas,
+     * ignora las filas incompletas y devuelve los pares válidos.
+     */
+    function extraerDatosValidos() {
+      const filas = tbodyDatos.querySelectorAll("tr");
+      const validos = [];
+
+      filas.forEach((tr, idx) => {
+        const inX = tr.querySelector(".input-x");
+        const inY = tr.querySelector(".input-y");
+        const valX = parseNumero(inX.value);
+        const valY = parseNumero(inY.value);
+
+        const xInvalido = Number.isNaN(valX);
+        const yInvalido = Number.isNaN(valY);
+
+        inX.classList.toggle("is-invalid", xInvalido);
+        inY.classList.toggle("is-invalid", yInvalido);
+
+        if (valX !== null && valY !== null && !xInvalido && !yInvalido) {
+          tr.classList.remove("row-incomplete");
+          validos.push({
+            rowNum: idx + 1,
+            x: valX,
+            y: valY
+          });
+        } else {
+          tr.classList.add("row-incomplete");
+        }
+      });
+
+      contadorParesTag.textContent = `n = ${validos.length} ${validos.length === 1 ? "par válido" : "pares válidos"}`;
+      return validos;
+    }
+
+    function programarRecalculo() {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        requestAnimationFrame(ejecutarRecalculo);
+      }, 60);
+    }
+
+    // Eventos delegados en la tabla de datos
+    tbodyDatos.addEventListener("input", (e) => {
+      if (e.target.matches(".cell-input")) {
+        programarRecalculo();
+      }
+    });
+
+    // Al pulsar Enter en la última celda se crea una fila nueva y el foco pasa a ella
+    tbodyDatos.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      const target = e.target;
+      if (!target.matches(".cell-input")) return;
+
+      const trActual = target.closest("tr");
+      const todasFilas = Array.from(tbodyDatos.querySelectorAll("tr"));
+      const esUltimaFila = trActual === todasFilas[todasFilas.length - 1];
+      const esColumnaY = target.classList.contains("input-y");
+
+      if (esUltimaFila && esColumnaY) {
+        e.preventDefault();
+        const nuevaFila = crearFilaDOM("", "");
+        tbodyDatos.appendChild(nuevaFila);
+        renumerarFilas();
+        const primerInputNueva = nuevaFila.querySelector(".input-x");
+        if (primerInputNueva) primerInputNueva.focus();
+      } else if (target.classList.contains("input-x")) {
+        e.preventDefault();
+        const inputY = trActual.querySelector(".input-y");
+        if (inputY) inputY.focus();
+      } else if (esColumnaY && !esUltimaFila) {
+        e.preventDefault();
+        const sigFila = todasFilas[todasFilas.indexOf(trActual) + 1];
+        const sigInputX = sigFila ? sigFila.querySelector(".input-x") : null;
+        if (sigInputX) sigInputX.focus();
+      }
+    });
+
+    // Pegar desde Excel / hojas de cálculo (tabulador y saltos de línea)
+    tbodyDatos.addEventListener("paste", (e) => {
+      const target = e.target;
+      if (!target.matches(".cell-input")) return;
+
+      const textoPegado = (e.clipboardData || window.clipboardData).getData("text");
+      if (!textoPegado) return;
+
+      // Si contiene tabuladores o saltos de línea, procesamos como bloque tabular
+      if (textoPegado.includes("\t") || textoPegado.includes("\n") || textoPegado.includes("\r")) {
+        e.preventDefault();
+        const lineas = textoPegado
+          .replace(/\r\n/g, "\n")
+          .replace(/\r/g, "\n")
+          .split("\n")
+          .map((l) => l.trim())
+          .filter((l) => l.length > 0);
+
+        if (lineas.length === 0) return;
+
+        const trInicial = target.closest("tr");
+        let filaIdx = Array.from(tbodyDatos.querySelectorAll("tr")).indexOf(trInicial);
+        const empiezaEnY = target.classList.contains("input-y");
+
+        lineas.forEach((linea, offset) => {
+          const columnas = linea.split(/\t|;/).map((c) => c.trim());
+          let trDestino = tbodyDatos.querySelectorAll("tr")[filaIdx + offset];
+          if (!trDestino) {
+            trDestino = crearFilaDOM("", "");
+            tbodyDatos.appendChild(trDestino);
+          }
+          const inX = trDestino.querySelector(".input-x");
+          const inY = trDestino.querySelector(".input-y");
+
+          if (columnas.length >= 2) {
+            inX.value = columnas[0];
+            inY.value = columnas[1];
+          } else if (columnas.length === 1) {
+            if (empiezaEnY) {
+              inY.value = columnas[0];
             } else {
-                header.classList.add('hidden');
-                main.classList.add('hidden');
-                footer.classList.add('hidden');
-                contrato.classList.remove('hidden');
-                
-                // Estilos del botón
-                tabContrato.className = "px-4 py-1.5 rounded-md text-sm font-bold bg-slate-700 text-white transition-all shadow-sm";
-                tabTemario.className = "px-4 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-700 transition-all";
+              inX.value = columnas[0];
             }
-        }
-
-        // --- BASE DE DATOS DE CONOCIMIENTO ---
-        const knowledgeBase = [
-            // --- CONCEPTOS CORE (Sección 1) ---
-            {
-                id: 'c1',
-                type: 'concept',
-                title: 'Operaciones Intra-UE vs Import/Export',
-                icon: 'fa-handshake',
-                summary: 'Distinción fundamental entre el Mercado Único (Intra-UE) y el comercio con Terceros Países (Extra-UE).',
-                technical: `
-                    <p><strong>Definiciones Básicas:</strong></p>
-                    <ul class="list-disc ml-5 space-y-1 mb-4">
-                        <li><strong>Importación:</strong> Introducción de mercancías en la UE procedentes de un país tercero.</li>
-                        <li><strong>Exportación:</strong> Envío de mercancías desde la UE hacia un país tercero.</li>
-                        <li><strong>Introducción:</strong> (Adquisición Intracomunitaria) Recepción de mercancías de otro Estado miembro.</li>
-                        <li><strong>Expedición:</strong> (Entrega Intracomunitaria) Envío de mercancías a otro Estado miembro.</li>
-                    </ul>
-                    <p><strong>Diferencias Clave:</strong></p>
-                    <ul class="list-disc ml-5 space-y-1">
-                        <li><strong>Aduanas:</strong> Comercio Extra-UE sujeto a controles y aranceles. Intra-UE libre circulación.</li>
-                        <li><strong>IVA:</strong> Importación liquida IVA en aduana (salvo diferido). Intra-UE aplica inversión del sujeto pasivo en destino.</li>
-                        <li><strong>Documentación:</strong> Extra-UE requiere DUA. Intra-UE requiere factura, transporte e <strong>Intrastat</strong> (si > 400.000€/año en España).</li>
-                    </ul>
-                `
-            },
-            {
-                id: 'c2',
-                type: 'concept',
-                title: 'Incoterms 2020',
-                icon: 'fa-handshake',
-                summary: 'Reglas de la ICC que definen entrega, riesgo y costes en la compraventa internacional.',
-                technical: `
-                    <p>Clasificación por grupos según responsabilidad del vendedor:</p>
-                    <ul class="list-disc ml-5 space-y-1">
-                        <li><strong>Grupo E (Salida):</strong> EXW (Mínima obligación).</li>
-                        <li><strong>Grupo F (Sin pago transporte principal):</strong> FCA, FAS, FOB. Entrega al transportista del comprador.</li>
-                        <li><strong>Grupo C (Con pago transporte principal):</strong> CFR, CIF, CPT, CIP. Vendedor paga flete, riesgo transmite en origen.</li>
-                        <li><strong>Grupo D (Llegada):</strong> DAP, DPU, DDP (Máxima obligación). Vendedor asume riesgos hasta destino.</li>
-                    </ul>
-                `
-            },
-            {
-                id: 'c3',
-                type: 'concept',
-                title: 'Origen de las Mercancías',
-                icon: 'fa-passport',
-                summary: 'La "nacionalidad económica" del producto. Determina aranceles y medidas de política comercial.',
-                technical: `
-                    <p><strong>Criterios de Determinación:</strong></p>
-                    <ol class="list-decimal ml-5 space-y-2 mb-4">
-                        <li><strong>Productos enteramente obtenidos:</strong> 100% de un solo país (ej. minerales, animales nacidos allí).</li>
-                        <li><strong>Transformación sustancial:</strong> Si intervienen varios países, el origen es donde se realizó la última transformación sustancial, económicamente justificada, en empresa equipada, resultando en producto nuevo.</li>
-                    </ol>
-                    <p><strong>Métodos de prueba:</strong></p>
-                    <ul class="list-disc ml-5 space-y-1">
-                        <li>Cambio de partida arancelaria.</li>
-                        <li>Valor añadido (ej. materiales no originarios < 40% precio Ex-Works).</li>
-                        <li>Proceso específico de fabricación (ej. reacción química).</li>
-                    </ul>
-                `
-            },
-            {
-                id: 'c4',
-                type: 'concept',
-                title: 'Arancel y Valoración (TARIC)',
-                icon: 'fa-barcode',
-                summary: 'Clasificación de mercancías y cálculo de la base imponible aduanera.',
-                technical: `
-                    <p><strong>Clasificación Arancelaria (Jerarquía):</strong></p>
-                    <ul class="list-disc ml-5 space-y-1 mb-4">
-                        <li><strong>Sistema Armonizado (SA):</strong> 6 dígitos (Mundial).</li>
-                        <li><strong>Nomenclatura Combinada (NC):</strong> 8 dígitos (UE, define arancel).</li>
-                        <li><strong>TARIC:</strong> 10 dígitos (UE, define medidas como antidumping/suspensiones).</li>
-                    </ul>
-                    <p><strong>Valoración en Aduana:</strong> Base para derechos Ad Valorem. Generalmente es el <strong>Valor de Transacción</strong> (Precio pagado) + Ajustes (Transporte/Seguro hasta frontera UE). Métodos secundarios: Valor idéntico, similar, deductivo.</p>
-                `
-            },
-            {
-                id: 'c5',
-                type: 'concept',
-                title: 'Fiscalidad (IVA y Aranceles)',
-                icon: 'fa-calculator',
-                summary: 'Tributos aplicables en la importación: Aranceles, IVA e Impuestos Especiales.',
-                technical: `
-                    <p><strong>Aranceles:</strong> Impuesto comunitario. Tipos: Ad valorem (%), Específicos (por peso/unidad) o Mixtos.</p>
-                    <p><strong>IVA a la Importación:</strong> Se liquida con modelo 031/032. Opción de <strong>IVA Diferido</strong> para operadores autorizados (inclusión en modelo 303, casilla 77) sin pago previo físico en aduana.</p>
-                    <p><strong>Impuestos Especiales:</strong> Gravan alcohol, tabaco e hidrocarburos.</p>
-                `
-            },
-            // --- DOCUMENTOS (Sección 2) ---
-            {
-                id: 'd1',
-                type: 'doc',
-                title: 'DUA (Documento Único Administrativo)',
-                icon: 'fa-file-contract',
-                summary: 'Declaración aduanera estándar para importaciones, exportaciones y tránsitos en la UE.',
-                technical: `
-                    <p>Soporte papel o electrónico obligatorio.</p>
-                    <p><strong>Casillas Clave:</strong></p>
-                    <ul class="list-disc ml-5 space-y-1">
-                        <li>Casilla 1: Tipo declaración (IM, EX).</li>
-                        <li>Casilla 33: Código de mercancía (TARIC).</li>
-                        <li>Casilla 37: Régimen aduanero.</li>
-                        <li>Casilla 47: Cálculo de tributos (Base x Tipo = Cuota).</li>
-                    </ul>
-                `
-            },
-            {
-                id: 'd2',
-                type: 'doc',
-                title: 'DV1 (Declaración de Valor)',
-                icon: 'fa-coins',
-                summary: 'Documento adjunto al DUA para declarar los elementos del valor en aduana.',
-                technical: `
-                    <p>Detalla la relación comprador-vendedor y ajustes al precio (cánones, royalties, costes transporte).</p>
-                    <p><strong>Exención:</strong> Autoridades pueden no exigirlo si el valor en aduana es inferior a <strong>20.000 €</strong> por envío (si no son fraccionados).</p>
-                `
-            },
-            {
-                id: 'd3',
-                type: 'doc',
-                title: 'Documentos de Transporte',
-                icon: 'fa-ship',
-                summary: 'Prueban la existencia del contrato de transporte y la recepción de la carga.',
-                technical: `
-                    <ul class="list-disc ml-5 space-y-2">
-                        <li><strong>Bill of Lading (B/L):</strong> Marítimo. Es recibo, contrato y <strong>título de propiedad</strong> (negociable/transferible). Permite venta en tránsito.</li>
-                        <li><strong>CMR:</strong> Carretera. Prueba contrato y recepción. NO es título de propiedad.</li>
-                        <li><strong>Air Waybill (AWB):</strong> Aéreo. Recibo y contrato. NO es título de propiedad ni negociable.</li>
-                    </ul>
-                `
-            },
-            {
-                id: 'd4',
-                type: 'doc',
-                title: 'Factura Comercial y Packing List',
-                icon: 'fa-list-check',
-                summary: 'Documentos comerciales esenciales emitidos por el vendedor para el despacho.',
-                technical: `
-                    <p><strong>Factura Comercial:</strong> Documento legal de la transacción. Debe incluir: Vendedor/Comprador, Nº Factura, Descripción detallada, Incoterm, Valor unitario/total, Divisa, Origen.</p>
-                    <p><strong>Packing List:</strong> Detalla contenido físico (peso bruto/neto, dimensiones, marcas, contenido por bulto). Vital para inspección física y logística.</p>
-                `
-            },
-            {
-                id: 'd5',
-                type: 'doc',
-                title: 'Certificados de Origen',
-                icon: 'fa-certificate',
-                summary: 'Acreditan el país de producción de las mercancías.',
-                technical: `
-                    <ul class="list-disc ml-5 space-y-2">
-                        <li><strong>No Preferencial:</strong> Certifica origen para normas generales (estadística, antidumping). Emisor: Cámara de Comercio.</li>
-                        <li><strong>Preferencial:</strong> Para beneficiarse de reducciones arancelarias.
-                            <ul class="ml-5 list-circle">
-                                <li><strong>EUR-1:</strong> Acuerdos bilaterales (Suiza, México...).</li>
-                                <li><strong>Form A:</strong> Histórico para SPG (en sustitución por REX).</li>
-                            </ul>
-                        </li>
-                    </ul>
-                `
-            },
-            // --- NUEVOS CONCEPTOS ADICIONALES (Sección 3) ---
-            {
-                id: 'e1',
-                type: 'extra',
-                title: 'Sistema REX (Registro Exportadores)',
-                icon: 'fa-id-card-clip',
-                summary: 'Sistema de auto-certificación de origen que reemplaza certificados en papel.',
-                technical: `
-                    <p>Permite a exportadores registrados emitir "comunicaciones sobre el origen" directamente en factura.</p>
-                    <p>Es obligatorio para envíos superiores a <strong>6.000 €</strong> en acuerdos como CETA (Canadá), Japón o el SPG. Simplifica trámites al eliminar la necesidad de visar certificados como el Form A o EUR-1 en aduana.</p>
-                `
-            },
-            {
-                id: 'e2',
-                type: 'extra',
-                title: 'IAV (Información Arancelaria Vinculante)',
-                icon: 'fa-gavel',
-                summary: 'Resolución oficial que clasifica una mercancía de forma vinculante para todas las aduanas de la UE.',
-                technical: `
-                    <p>Ofrece seguridad jurídica total frente a cambios de criterio en la clasificación arancelaria.</p>
-                    <p><strong>Validez:</strong> 3 años. Es una herramienta preventiva vital para asegurar costes antes de importar grandes volúmenes.</p>
-                `
-            },
-            {
-                id: 'e3',
-                type: 'extra',
-                title: 'Certificado SOIVRE',
-                icon: 'fa-file-contract',
-                summary: 'Documento específico de España para el control de calidad y seguridad de ciertos productos.',
-                technical: `
-                    <p>Emitido por el Servicio Oficial de Inspección, Vigilancia y Regulación de las Exportaciones.</p>
-                    <p>Obligatorio para el despacho de productos sensibles: agroalimentarios, textiles, calzado, juguetes. Garantiza cumplimiento de normativas de seguridad y calidad antes de entrar/salir.</p>
-                `
-            },
-            {
-                id: 'e4',
-                type: 'extra',
-                title: 'EORI',
-                icon: 'fa-hashtag',
-                summary: 'Número de Registro e Identificación de Operadores Económicos en la UE.',
-                technical: `
-                    <p>Identificador único obligatorio para cualquier empresa o persona que realice actividades aduaneras (import/export) en la UE.</p>
-                    <p>Debe usarse en todas las comunicaciones con autoridades aduaneras (como el DUA). Normalmente vinculado al NIF de la empresa (ej. ES+NIF).</p>
-                `
-            },
-            {
-                id: 'e5',
-                type: 'extra',
-                title: 'OEA (Operador Económico Autorizado)',
-                icon: 'fa-user-check',
-                summary: 'Estatus de confianza otorgado por aduanas a operadores fiables.',
-                technical: `
-                    <p>Ofrece ventajas competitivas operativas:</p>
-                    <ul class="list-disc ml-5 space-y-1">
-                        <li>Menos controles físicos y documentales (Circuitos rojos/naranjas).</li>
-                        <li>Prioridad en inspecciones.</li>
-                        <li>Acceso a procedimientos simplificados (ej. despacho centralizado, exención de garantías o reducción de datos en declaraciones sumarias).</li>
-                    </ul>
-                `
-            }
-        ];
-
-        // --- RENDERIZADO DEL DOM ---
-        const conceptsGrid = document.getElementById('concepts-grid');
-        const docsList = document.getElementById('docs-list');
-        const extraGrid = document.getElementById('extra-grid');
-
-        function renderContent() {
-            // Conceptos
-            const concepts = knowledgeBase.filter(item => item.type === 'concept');
-            concepts.forEach(item => {
-                const card = createCard(item);
-                conceptsGrid.appendChild(card);
-            });
-
-            // Documentación
-            const docs = knowledgeBase.filter(item => item.type === 'doc');
-            docs.forEach(item => {
-                const row = document.createElement('div');
-                row.className = 'p-5 flex items-start md:items-center gap-4 hover:bg-slate-50 cursor-pointer transition-colors group';
-                row.onclick = () => openModal('tech-modal', item.id);
-                row.innerHTML = `
-                    <div class="flex-shrink-0 w-10 h-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center">
-                        <i class="fa-solid ${item.icon}"></i>
-                    </div>
-                    <div class="flex-grow">
-                        <h4 class="text-lg font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">${item.title}</h4>
-                        <p class="text-slate-500 text-sm mt-1">${item.summary}</p>
-                    </div>
-                    <div class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span class="px-3 py-1 bg-white border border-slate-200 text-xs font-medium rounded-full text-slate-600 shadow-sm">Ver Detalle</span>
-                    </div>
-                `;
-                docsList.appendChild(row);
-            });
-
-            // Extras
-            const extras = knowledgeBase.filter(item => item.type === 'extra');
-            extras.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-xl p-6 border border-slate-200 shadow-sm card-hover cursor-pointer group transition-all duration-300 border-l-4 border-l-rose-500';
-                card.onclick = () => openModal('tech-modal', item.id);
-                card.innerHTML = `
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center text-xl">
-                            <i class="fa-solid ${item.icon}"></i>
-                        </div>
-                        <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-rose-500 transition-colors"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-rose-600 transition-colors">${item.title}</h3>
-                    <p class="text-slate-600 text-sm line-clamp-3">${item.summary}</p>
-                `;
-                extraGrid.appendChild(card);
-            });
-        }
-
-        function createCard(item) {
-            const card = document.createElement('div');
-            card.className = 'bg-white rounded-xl p-6 border border-slate-200 shadow-sm card-hover cursor-pointer group transition-all duration-300';
-            card.onclick = () => openModal('tech-modal', item.id);
-            card.innerHTML = `
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xl">
-                        <i class="fa-solid ${item.icon}"></i>
-                    </div>
-                    <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-blue-500 transition-colors"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">${item.title}</h3>
-                <p class="text-slate-600 text-sm line-clamp-3">${item.summary}</p>
-                <div class="mt-4 pt-4 border-t border-slate-100 flex items-center text-xs font-semibold text-blue-600 uppercase tracking-wide">
-                    <span>Ver Análisis Técnico</span>
-                </div>
-            `;
-            return card;
-        }
-
-        // --- LÓGICA DE MODALES GENERAL ---
-        function openModal(modalId, contentId = null) {
-            const modal = document.getElementById(modalId);
-            
-            if (contentId && modalId === 'tech-modal') {
-                const data = knowledgeBase.find(item => item.id === contentId);
-                if (!data) return;
-                document.getElementById('modal-tag').textContent = data.type === 'concept' ? 'Concepto Fundamental' : (data.type === 'doc' ? 'Documento Oficial' : 'Concepto Adicional');
-                document.getElementById('modal-title').textContent = data.title;
-                document.getElementById('modal-summary').textContent = data.summary;
-                document.getElementById('modal-technical').innerHTML = data.technical;
-            }
-
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openTool(type) {
-            if(type === 'fiscal') openModal('fiscal-modal');
-            if(type === 'incoterm') {
-                openModal('incoterm-modal');
-                calcIncoterm(); // Init default
-            }
-        }
-
-        // --- LÓGICA CALCULADORA FISCAL ---
-        function calcFiscal() {
-            // Get inputs
-            const fob = parseFloat(document.getElementById('f_fob').value) || 0;
-            const freight = parseFloat(document.getElementById('f_freight').value) || 0;
-            const insurance = parseFloat(document.getElementById('f_insurance').value) || 0;
-            const other = parseFloat(document.getElementById('f_other').value) || 0;
-            
-            const dutyRate = parseFloat(document.getElementById('f_duty_rate').value) || 0;
-            const adRate = parseFloat(document.getElementById('f_ad_rate').value) || 0;
-            const vatRate = parseFloat(document.getElementById('f_vat_rate').value) || 0;
-
-            // Calculations
-            const customsValue = fob + freight + insurance + other;
-            const dutyAmount = customsValue * (dutyRate / 100);
-            const adAmount = customsValue * (adRate / 100);
-            
-            const vatBase = customsValue + dutyAmount + adAmount;
-            const vatAmount = vatBase * (vatRate / 100);
-            
-            const totalDebt = dutyAmount + adAmount + vatAmount;
-            const totalCost = customsValue + dutyAmount + adAmount;
-
-            // Display
-            document.getElementById('r_customs_value').innerText = customsValue.toFixed(2) + ' €';
-            document.getElementById('r_duty_amount').innerText = dutyAmount.toFixed(2) + ' €';
-            document.getElementById('r_ad_amount').innerText = adAmount.toFixed(2) + ' €';
-            document.getElementById('r_vat_base').innerText = vatBase.toFixed(2) + ' €';
-            document.getElementById('r_vat_amount').innerText = vatAmount.toFixed(2) + ' €';
-            document.getElementById('r_total_debt').innerText = totalDebt.toFixed(2) + ' €';
-            document.getElementById('r_total_cost').innerText = (totalCost + vatAmount).toFixed(2) + ' €';
-        }
-
-        // --- LÓGICA CALCULADORA INCOTERMS ---
-        function calcIncoterm() {
-            const costs = {
-                exw: parseFloat(document.getElementById('i_exw').value) || 0,
-                certs: parseFloat(document.getElementById('i_certs').value) || 0,
-                margin: parseFloat(document.getElementById('i_margin').value) || 0,
-                load: parseFloat(document.getElementById('i_load').value) || 0,
-                inland_org: parseFloat(document.getElementById('i_inland_org').value) || 0,
-                customs_exp: parseFloat(document.getElementById('i_customs_exp').value) || 0,
-                thc_org: parseFloat(document.getElementById('i_thc_org').value) || 0,
-                freight: parseFloat(document.getElementById('i_freight').value) || 0,
-                insurance: parseFloat(document.getElementById('i_insurance').value) || 0,
-                thc_dst: parseFloat(document.getElementById('i_thc_dst').value) || 0,
-                customs_imp: parseFloat(document.getElementById('i_customs_imp').value) || 0,
-                inland_dst: parseFloat(document.getElementById('i_inland_dst').value) || 0
-            };
-
-            const selected = document.getElementById('incoterm_selector').value;
-            let total = 0;
-            let sellerResp = [];
-            let buyerResp = [];
-
-            // 1. Calcular Precio Base EXW (Producto + Certs + Margen)
-            const baseCost = costs.exw + costs.certs;
-            const exwPriceWithMargin = baseCost * (1 + (costs.margin / 100));
-            
-            // 2. Definir cadena logística
-            const logisticCostsList = [
-                { id: 'load', name: 'Carga en Origen' },
-                { id: 'inland_org', name: 'Transporte Interior (Origen)' },
-                { id: 'customs_exp', name: 'Despacho Exportación' },
-                { id: 'thc_org', name: 'Gastos Terminal Origen' },
-                { id: 'freight', name: 'Flete Internacional' },
-                { id: 'insurance', name: 'Seguro de Transporte' },
-                { id: 'thc_dst', name: 'Gastos Terminal Destino' },
-                { id: 'customs_imp', name: 'Despacho Importación + Imptos' },
-                { id: 'inland_dst', name: 'Transporte Interior (Destino)' }
-            ];
-
-            // 3. Configuración de Costes a Cargo del Vendedor por Incoterm
-            // Permite saltar pasos (ej. DAP paga transporte interior pero NO aduana importación)
-            const sellerObligations = {
-                'EXW': [],
-                'FCA': ['load', 'inland_org', 'customs_exp'],
-                'FAS': ['load', 'inland_org', 'customs_exp'],
-                'FOB': ['load', 'inland_org', 'customs_exp', 'thc_org'],
-                'CPT': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'thc_dst'], // Incluye THC destino a veces, simplificado
-                'CFR': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'thc_dst'],
-                'CIP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst'],
-                'CIF': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst'],
-                'DAP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'inland_dst'], // DAP: Todo MENOS Customs Imp
-                'DPU': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'inland_dst'], // Similar a DAP en costes, difiere en descarga
-                'DDP': ['load', 'inland_org', 'customs_exp', 'thc_org', 'freight', 'insurance', 'thc_dst', 'customs_imp', 'inland_dst'] // DDP: Todo incluido
-            };
-
-            const includedCosts = sellerObligations[selected] || [];
-
-            // 4. Calcular Total y Listas
-            sellerResp.push(`Mercancía + Embalaje`);
-            sellerResp.push(`Certificados y Otros`);
-            
-            total = exwPriceWithMargin; // Empezamos con el precio base marginado
-
-            logisticCostsList.forEach(item => {
-                if (includedCosts.includes(item.id)) {
-                    total += costs[item.id];
-                    sellerResp.push(item.name);
-                } else {
-                    buyerResp.push(item.name);
-                }
-            });
-
-            // Update UI
-            document.getElementById('incoterm_price').innerText = total.toFixed(2) + ' €';
-            document.getElementById('incoterm_name_display').innerText = document.getElementById('incoterm_selector').options[document.getElementById('incoterm_selector').selectedIndex].text;
-
-            const sellerList = document.getElementById('seller_responsibilities');
-            sellerList.innerHTML = sellerResp.map(r => `<li><i class="fa-solid fa-check text-green-500 mr-2"></i> ${r}</li>`).join('');
-            
-            const buyerList = document.getElementById('buyer_responsibilities');
-            buyerList.innerHTML = buyerResp.map(r => `<li><i class="fa-solid fa-arrow-right text-orange-400 mr-2"></i> ${r}</li>`).join('');
-        }
-
-        // Event Listeners for Closing
-        document.querySelectorAll('.modal').forEach(m => {
-            m.addEventListener('click', (e) => {
-                if (e.target === m) closeModal(m.id);
-            });
+          }
         });
 
-        // Initialize
-        renderContent();
-    </script>
+        renumerarFilas();
+        programarRecalculo();
+      }
+    });
+
+    // Botones de control de la tabla
+    document.getElementById("btn-add-row").addEventListener("click", () => {
+      const nueva = crearFilaDOM("", "");
+      tbodyDatos.appendChild(nueva);
+      renumerarFilas();
+      const inX = nueva.querySelector(".input-x");
+      if (inX) inX.focus();
+    });
+
+    document.getElementById("btn-calc").addEventListener("click", () => {
+      ejecutarRecalculo();
+    });
+
+    document.getElementById("btn-load-example").addEventListener("click", () => {
+      cargarDatosEnTabla(EJEMPLO_INICIAL);
+    });
+
+    document.getElementById("btn-clear-table").addEventListener("click", () => {
+      tbodyDatos.innerHTML = "";
+      for (let i = 0; i < 5; i++) {
+        tbodyDatos.appendChild(crearFilaDOM("", ""));
+      }
+      renumerarFilas();
+      ejecutarRecalculo();
+    });
+
+    /* ==========================================================================
+       4. RENDERIZADO DE LAS 14 TARJETAS DE RESULTADOS Y TABLA PASO A PASO
+       ========================================================================== */
+    const resultsGrid = document.getElementById("results-grid");
+    const alertBox = document.getElementById("alert-box");
+    const alertMsg = document.getElementById("alert-msg");
+    const verificationStrip = document.getElementById("verification-strip");
+    const verificationStatus = document.getElementById("verification-status");
+    const verificationDetail = document.getElementById("verification-detail");
+    const stepTbody = document.getElementById("step-tbody");
+    const stepTfoot = document.getElementById("step-tfoot");
+
+    function renderKaTeXStaticReferences() {
+      if (typeof window.katex === "undefined") return;
+      document.querySelectorAll(".katex-ref").forEach((el) => {
+        const tex = el.getAttribute("data-tex");
+        if (tex) {
+          window.katex.render(tex, el, { throwOnError: false, displayMode: false });
+        }
+      });
+    }
+
+    function construirDefinicionTarjetas(res) {
+      if (!res.valido) return [];
+      const s = res.sumatorios;
+      return [
+        {
+          id: "n",
+          num: "01",
+          titulo: "Número de datos (n)",
+          valorFormateado: String(res.n),
+          valorCompleto: `${res.n} pares válidos (xᵢ, yᵢ)`,
+          latex: "n = \\text{card}\\{(x_i, y_i)\\}",
+          sustitucion: `n = ${res.n}`,
+          explicacion: "Cantidad total de pares ordenados válidos (X, Y) incluidos en el análisis."
+        },
+        {
+          id: "mediaX",
+          num: "02",
+          titulo: "Media de X (x̄)",
+          valorFormateado: fmt(res.mediaX, 4),
+          valorCompleto: fmtFull(res.mediaX),
+          latex: "\\bar{x} = \\frac{\\sum x_i}{n}",
+          sustitucion: `x̄ = ${fmt(s.sumX, 4)} / ${res.n}`,
+          explicacion: "Valor promedio o centro de gravedad de la variable independiente X."
+        },
+        {
+          id: "mediaY",
+          num: "03",
+          titulo: "Media de Y (ȳ)",
+          valorFormateado: fmt(res.mediaY, 4),
+          valorCompleto: fmtFull(res.mediaY),
+          latex: "\\bar{y} = \\frac{\\sum y_i}{n}",
+          sustitucion: `ȳ = ${fmt(s.sumY, 4)} / ${res.n}`,
+          explicacion: "Valor promedio o centro de gravedad de la variable dependiente Y."
+        },
+        {
+          id: "sxy",
+          num: "04",
+          titulo: "Covarianza (s_xy)",
+          valorFormateado: fmt(res.sxy, 4),
+          valorCompleto: fmtFull(res.sxy),
+          latex: "s_{xy} = \\frac{1}{n}\\sum(x_i - \\bar{x})(y_i - \\bar{y})",
+          sustitucion: `s_xy = ${fmt(s.sumDxDy, 4)} / ${res.n}`,
+          explicacion: "Indica si X e Y suben juntas (+), se mueven al revés (−) o no se relacionan (≈0)."
+        },
+        {
+          id: "s2x",
+          num: "05",
+          titulo: "Varianza de X (s²x)",
+          valorFormateado: fmt(res.s2x, 4),
+          valorCompleto: fmtFull(res.s2x),
+          latex: "s_x^2 = \\frac{1}{n}\\sum(x_i - \\bar{x})^2",
+          sustitucion: `s²x = ${fmt(s.sumDx2, 4)} / ${res.n}`,
+          explicacion: "Mide la dispersión cuadrática media de los datos de X respecto a su media."
+        },
+        {
+          id: "s2y",
+          num: "06",
+          titulo: "Varianza de Y (s²y)",
+          valorFormateado: fmt(res.s2y, 4),
+          valorCompleto: fmtFull(res.s2y),
+          latex: "s_y^2 = \\frac{1}{n}\\sum(y_i - \\bar{y})^2",
+          sustitucion: `s²y = ${fmt(s.sumDy2, 4)} / ${res.n}`,
+          explicacion: "Mide la dispersión cuadrática media de los datos de Y respecto a su media."
+        },
+        {
+          id: "sx",
+          num: "07",
+          titulo: "Desviación típica de X (sx)",
+          valorFormateado: fmt(res.sx, 4),
+          valorCompleto: fmtFull(res.sx),
+          latex: "s_x = \\sqrt{s_x^2}",
+          sustitucion: `sx = √(${fmt(res.s2x, 4)})`,
+          explicacion: "Expresa cuánto se alejan de media los valores de X en sus propias unidades."
+        },
+        {
+          id: "sy",
+          num: "08",
+          titulo: "Desviación típica de Y (sy)",
+          valorFormateado: fmt(res.sy, 4),
+          valorCompleto: fmtFull(res.sy),
+          latex: "s_y = \\sqrt{s_y^2}",
+          sustitucion: `sy = √(${fmt(res.s2y, 4)})`,
+          explicacion: "Expresa cuánto se alejan de media los valores de Y en sus propias unidades."
+        },
+        {
+          id: "r",
+          num: "09",
+          titulo: "Coeficiente de correlación lineal de Pearson (r)",
+          valorFormateado: fmt(res.r, 4),
+          valorCompleto: fmtFull(res.r),
+          latex: "r = \\frac{s_{xy}}{s_x \\cdot s_y}",
+          sustitucion: `r = ${fmt(res.sxy, 4)} / (${fmt(res.sx, 4)} · ${fmt(res.sy, 4)})`,
+          explicacion: "Resume en un número entre −1 y 1 la fuerza y el sentido de la relación lineal."
+        },
+        {
+          id: "r2",
+          num: "10",
+          titulo: "Coeficiente de determinación (r²)",
+          valorFormateado: fmt(res.r2, 4),
+          valorCompleto: `${fmtFull(res.r2)} (${fmt(res.r2 * 100, 2)}% de varianza explicada)`,
+          latex: "r^2 = \\left(\\frac{s_{xy}}{s_x \\cdot s_y}\\right)^2",
+          sustitucion: `r² = (${fmt(res.r, 4)})²`,
+          explicacion: "Proporción de la variación de Y que queda explicada por la recta de regresión."
+        },
+        {
+          id: "b",
+          num: "11",
+          titulo: "Pendiente (b)",
+          valorFormateado: fmt(res.b, 4),
+          valorCompleto: fmtFull(res.b),
+          latex: "b = \\frac{n\\sum x_i y_i - (\\sum x_i)(\\sum y_i)}{n\\sum x_i^2 - (\\sum x_i)^2} = \\frac{s_{xy}}{s_x^2}",
+          sustitucion: `b = [${res.n}·${fmt(s.sumXY, 2)} − ${fmt(s.sumX, 2)}·${fmt(s.sumY, 2)}] / [${res.n}·${fmt(s.sumX2, 2)} − (${fmt(s.sumX, 2)})²] = ${fmt(res.numeradorB, 2)} / ${fmt(res.denominadorB, 2)}`,
+          explicacion: "Cuánto cambia Y de media por cada unidad que aumenta X."
+        },
+        {
+          id: "a",
+          num: "12",
+          titulo: "Ordenada en el origen (a)",
+          valorFormateado: fmt(res.a, 4),
+          valorCompleto: fmtFull(res.a),
+          latex: "a = \\frac{\\sum y_i - b\\sum x_i}{n} = \\bar{y} - b\\cdot\\bar{x}",
+          sustitucion: `a = (${fmt(s.sumY, 4)} − ${fmt(res.b, 4)}·${fmt(s.sumX, 4)}) / ${res.n}`,
+          explicacion: "Valor estimado de Y cuando la variable X vale exactamente cero."
+        },
+        {
+          id: "ecuacion",
+          num: "13",
+          titulo: "Ecuación de la recta de regresión",
+          valorFormateado: res.ecuacion,
+          valorCompleto: `ŷ = ${fmtFull(res.b)}·x ${res.a < 0 ? "-" : "+"} ${fmtFull(Math.abs(res.a))}`,
+          latex: "y - \\bar{y} = \\frac{s_{xy}}{s_x^2}(x - \\bar{x})",
+          sustitucion: `y − ${fmt(res.mediaY, 4)} = (${fmt(res.sxy, 4)} / ${fmt(res.s2x, 4)})·(x − ${fmt(res.mediaX, 4)})`,
+          explicacion: "Fórmula lineal para predecir el valor esperado de Y a partir de cualquier X.",
+          wide: true
+        },
+        {
+          id: "grado",
+          num: "14",
+          titulo: "Grado de correlación",
+          valorFormateado: res.gradoCorrelacion,
+          valorCompleto: `r = ${fmtFull(res.r)} → ${res.gradoCorrelacion}`,
+          latex: "|r| \\in [0,\\, 1] \\implies \\text{Clasificación por umbrales } (0{,}3 \\text{ y } 0{,}7)",
+          sustitucion: `r = ${fmt(res.r, 4)} → "${res.gradoCorrelacion}"`,
+          explicacion: "Interpretación cualitativa directa del sentido y la intensidad del ajuste lineal.",
+          wide: true
+        }
+      ];
+    }
+
+    function renderResultados(res) {
+      if (!res.valido) {
+        alertBox.classList.add("is-visible");
+        alertMsg.textContent = res.motivo;
+        verificationStrip.style.display = "none";
+        resultsGrid.innerHTML = "";
+        stepTbody.innerHTML = "";
+        stepTfoot.innerHTML = "";
+        return;
+      }
+
+      alertBox.classList.remove("is-visible");
+      verificationStrip.style.display = "flex";
+
+      if (res.coincidenFormulas) {
+        verificationStatus.className = "verification-badge";
+        verificationStatus.textContent = "✓ Comprobación algebraica verificada";
+        verificationDetail.textContent =
+          `b = s_xy/s²x (${fmt(res.bCociente, 6)}) coincide con sumatorios (${fmt(res.bSumatorios, 6)}) · a = ȳ − b·x̄ (${fmt(res.aMedias, 6)}) coincide con (Σy − b·Σx)/n (${fmt(res.aSumatorios, 6)})`;
+      } else {
+        verificationStatus.className = "verification-badge is-warn";
+        verificationStatus.textContent = "⚠ Aviso de discrepancia numérica";
+        verificationDetail.textContent =
+          `Diferencia detectada: Δb = ${res.diffB.toExponential(2)}, Δa = ${res.diffA.toExponential(2)}`;
+      }
+
+      const tarjetas = construirDefinicionTarjetas(res);
+      resultsGrid.innerHTML = "";
+
+      tarjetas.forEach((item) => {
+        const card = document.createElement("article");
+        card.className = "result-card" + (item.wide ? " result-card--wide" : "");
+        card.title = `Precisión completa: ${item.valorCompleto} (clic para fijar)`;
+
+        const changed =
+          previousValuesMap[item.id] !== undefined &&
+          previousValuesMap[item.id] !== item.valorFormateado;
+        previousValuesMap[item.id] = item.valorFormateado;
+
+        card.innerHTML = `
+          <div>
+            <div class="result-card__head">
+              <span class="result-card__num">#${item.num}</span>
+              <h3 class="result-card__label">${item.titulo}</h3>
+            </div>
+            <div class="result-card__value-wrap">
+              <span class="result-card__value ${changed ? "value-updated" : ""}" tabindex="0" role="button" aria-label="${item.titulo}: ${item.valorFormateado}. Precisión completa: ${item.valorCompleto}">${item.valorFormateado}</span>
+            </div>
+            <div class="result-card__precision">Precisión completa: ${item.valorCompleto}</div>
+          </div>
+          <div class="result-card__formulas">
+            <div class="result-card__katex"></div>
+            <div class="result-card__subst">${item.sustitucion}</div>
+            <p class="result-card__desc">${item.explicacion}</p>
+          </div>
+        `;
+
+        const katexContainer = card.querySelector(".result-card__katex");
+        if (typeof window.katex !== "undefined") {
+          window.katex.render(item.latex, katexContainer, {
+            throwOnError: false,
+            displayMode: false
+          });
+        } else {
+          katexContainer.textContent = item.latex;
+        }
+
+        const valEl = card.querySelector(".result-card__value");
+        if (changed) {
+          setTimeout(() => {
+            valEl.classList.remove("value-updated");
+          }, 200);
+        }
+
+        const toggleFullPrecision = () => {
+          card.classList.toggle("show-full-precision");
+        };
+        valEl.addEventListener("click", toggleFullPrecision);
+        valEl.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter" || ev.key === " ") {
+            ev.preventDefault();
+            toggleFullPrecision();
+          }
+        });
+
+        resultsGrid.appendChild(card);
+      });
+
+      // Renderizar tabla paso a paso
+      stepTbody.innerHTML = "";
+      res.filasPaso.forEach((f) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${f.rowNum}</td>
+          <td>${fmt(f.xi, 4)}</td>
+          <td>${fmt(f.yi, 4)}</td>
+          <td>${fmt(f.dx, 4)}</td>
+          <td>${fmt(f.dy, 4)}</td>
+          <td>${fmt(f.dxdy, 4)}</td>
+          <td>${fmt(f.dx2, 4)}</td>
+          <td>${fmt(f.dy2, 4)}</td>
+          <td>${fmt(f.xiyi, 4)}</td>
+          <td>${fmt(f.xi2, 4)}</td>
+          <td>${fmt(f.yHat, 4)}</td>
+          <td>${fmt(f.residuo, 4)}</td>
+        `;
+        stepTbody.appendChild(tr);
+      });
+
+      const s = res.sumatorios;
+      stepTfoot.innerHTML = `
+        <tr>
+          <td>Σ</td>
+          <td>${fmt(s.sumX, 4)}</td>
+          <td>${fmt(s.sumY, 4)}</td>
+          <td>${fmt(s.sumDx, 4)}</td>
+          <td>${fmt(s.sumDy, 4)}</td>
+          <td>${fmt(s.sumDxDy, 4)}</td>
+          <td>${fmt(s.sumDx2, 4)}</td>
+          <td>${fmt(s.sumDy2, 4)}</td>
+          <td>${fmt(s.sumXY, 4)}</td>
+          <td>${fmt(s.sumX2, 4)}</td>
+          <td>${fmt(s.sumYHat, 4)}</td>
+          <td>${fmt(s.sumResiduos, 4)}</td>
+        </tr>
+      `;
+    }
+
+    /* ==========================================================================
+       5. SISTEMA DE GRÁFICOS (11 LÁMINAS EN TIEMPO REAL + DESCARGA PNG)
+       ========================================================================== */
+    const charts = {};
+
+    if (typeof window.Chart !== "undefined") {
+      Chart.defaults.font.family = "'IBM Plex Mono', monospace";
+      Chart.defaults.font.size = 11;
+      Chart.defaults.color = PALETTE.ink;
+      Chart.defaults.animation = { duration: 160 };
+    }
+
+    // Plugin universal para pintar un fondo papel cálido en las exportaciones PNG
+    const paperBackgroundPlugin = {
+      id: "paperBackground",
+      beforeDraw(chart) {
+        const { ctx, width, height } = chart;
+        ctx.save();
+        ctx.fillStyle = PALETTE.paper;
+        ctx.fillRect(0, 0, width, height);
+        ctx.restore();
+      }
+    };
+
+    function destroyChartIfExists(key) {
+      if (charts[key]) {
+        charts[key].destroy();
+        delete charts[key];
+      }
+    }
+
+    /**
+     * Calcula los cuartiles Q1, Mediana (Q2) y Q3 de un array numérico.
+     */
+    function calcularCuartiles(valores) {
+      const sorted = [...valores].sort((a, b) => a - b);
+      const len = sorted.length;
+      if (len === 0) return { min: 0, q1: 0, med: 0, q3: 0, max: 0 };
+
+      const percentil = (p) => {
+        const pos = (len - 1) * p;
+        const base = Math.floor(pos);
+        const rest = pos - base;
+        if (sorted[base + 1] !== undefined) {
+          return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+        }
+        return sorted[base];
+      };
+
+      return {
+        min: sorted[0],
+        q1: percentil(0.25),
+        med: percentil(0.5),
+        q3: percentil(0.75),
+        max: sorted[len - 1]
+      };
+    }
+
+    /**
+     * Construye intervalos de histograma para un vector numérico.
+     */
+    function construirBinsHistograma(valores) {
+      const min = Math.min(...valores);
+      const max = Math.max(...valores);
+      if (Math.abs(max - min) < 1e-12) {
+        return {
+          labels: [fmt(min, 2)],
+          counts: [valores.length],
+          centers: [min],
+          binWidth: 1,
+          minEdge: min - 0.5,
+          maxEdge: max + 0.5
+        };
+      }
+      // Valores enteros de rango pequeño: una barra por valor entero
+      const todosEnteros = valores.every((v) => Number.isInteger(v));
+      if (todosEnteros && max - min <= 10) {
+        const labels = [];
+        const counts = [];
+        const centers = [];
+        for (let v = min; v <= max; v++) {
+          labels.push(String(v));
+          centers.push(v);
+          counts.push(valores.filter((x) => x === v).length);
+        }
+        return { labels, counts, centers, binWidth: 1, minEdge: min - 0.5, maxEdge: max + 0.5 };
+      }
+
+      const k = Math.max(4, Math.min(8, Math.ceil(Math.sqrt(valores.length))));
+      const width = (max - min) / k;
+      const counts = new Array(k).fill(0);
+      const labels = [];
+      const centers = [];
+
+      for (let i = 0; i < k; i++) {
+        const low = min + i * width;
+        const high = low + width;
+        labels.push(`[${fmt(low, 1)}; ${fmt(high, 1)}${i === k - 1 ? "]" : ")"}`);
+        centers.push((low + high) / 2);
+      }
+
+      valores.forEach((v) => {
+        let idx = Math.floor((v - min) / width);
+        if (idx >= k) idx = k - 1;
+        counts[idx] += 1;
+      });
+
+      return { labels, counts, centers, binWidth: width, minEdge: min, maxEdge: max };
+    }
+
+    function renderGraficos(res) {
+      if (!res.valido || typeof window.Chart === "undefined") {
+        Object.keys(charts).forEach(destroyChartIfExists);
+        return;
+      }
+
+      const xs = res.filasPaso.map((f) => f.xi);
+      const ys = res.filasPaso.map((f) => f.yi);
+      const minX = Math.min(...xs);
+      const maxX = Math.max(...xs);
+      const padX = Math.max(0.5, (maxX - minX) * 0.12);
+      const xStart = minX - padX;
+      const xEnd = maxX + padX;
+
+      /* ----------------------------------------------------------------------
+         FIG. 1: Nube de puntos + recta de regresión + (x̄, ȳ) + ecuación
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig1");
+      const pluginEcuacionFig1 = {
+        id: "pluginEcuacionFig1",
+        afterDraw(chart) {
+          const { ctx, chartArea } = chart;
+          if (!chartArea) return;
+          ctx.save();
+          ctx.font = "600 12px 'IBM Plex Mono', monospace";
+          const texto = `${res.ecuacion}  |  (x̄=${fmt(res.mediaX, 2)}; ȳ=${fmt(res.mediaY, 2)})`;
+          const tw = ctx.measureText(texto).width;
+          const boxX = chartArea.left + 10;
+          const boxY = chartArea.top + 10;
+          ctx.fillStyle = "rgba(250, 248, 242, 0.92)";
+          ctx.strokeStyle = PALETTE.ink;
+          ctx.lineWidth = 1;
+          ctx.fillRect(boxX, boxY, tw + 16, 24);
+          ctx.strokeRect(boxX, boxY, tw + 16, 24);
+          ctx.fillStyle = PALETTE.accent;
+          ctx.fillText(texto, boxX + 8, boxY + 16);
+          ctx.restore();
+        }
+      };
+
+      charts.fig1 = new Chart(document.getElementById("chart-fig1"), {
+        type: "scatter",
+        plugins: [paperBackgroundPlugin, pluginEcuacionFig1],
+        data: {
+          datasets: [
+            {
+              label: "Observaciones (xᵢ, yᵢ)",
+              data: res.filasPaso.map((f) => ({ x: f.xi, y: f.yi, row: f.rowNum })),
+              backgroundColor: PALETTE.secondaryAlpha,
+              borderColor: PALETTE.ink,
+              borderWidth: 1.2,
+              pointRadius: 5.5,
+              pointHoverRadius: 7.5,
+              order: 2
+            },
+            {
+              label: "Centro de gravedad (x̄, ȳ)",
+              data: [{ x: res.mediaX, y: res.mediaY }],
+              backgroundColor: PALETTE.accent,
+              borderColor: PALETTE.ink,
+              borderWidth: 1.5,
+              pointStyle: "rectRot",
+              pointRadius: 8,
+              pointHoverRadius: 10,
+              order: 1
+            },
+            {
+              label: "Recta de regresión",
+              type: "line",
+              data: [
+                { x: xStart, y: res.b * xStart + res.a },
+                { x: xEnd, y: res.b * xEnd + res.a }
+              ],
+              borderColor: PALETTE.accent,
+              borderWidth: 2,
+              pointRadius: 0,
+              fill: false,
+              order: 3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: "Variable X" },
+              grid: { color: PALETTE.gridLine }
+            },
+            y: {
+              title: { display: true, text: "Variable Y" },
+              grid: { color: PALETTE.gridLine }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  const raw = ctx.raw;
+                  if (ctx.datasetIndex === 0) {
+                    return `Fila #${raw.row}: (${fmt(raw.x, 3)}; ${fmt(raw.y, 3)})`;
+                  }
+                  if (ctx.datasetIndex === 1) {
+                    return `Media (x̄, ȳ): (${fmt(raw.x, 4)}; ${fmt(raw.y, 4)})`;
+                  }
+                  return `${res.ecuacion}`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 2: Cuadrantes de covarianza centrados en (x̄, ȳ)
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig2");
+      const ptsPositivos = [];
+      const ptsNegativos = [];
+      res.filasPaso.forEach((f) => {
+        const pt = { x: f.xi, y: f.yi, prod: f.dxdy, row: f.rowNum };
+        if (f.dxdy >= 0) ptsPositivos.push(pt);
+        else ptsNegativos.push(pt);
+      });
+
+      const pluginEjesMedias = {
+        id: "pluginEjesMedias",
+        beforeDatasetsDraw(chart) {
+          const { ctx, chartArea, scales } = chart;
+          if (!chartArea) return;
+          const px = scales.x.getPixelForValue(res.mediaX);
+          const py = scales.y.getPixelForValue(res.mediaY);
+
+          ctx.save();
+          // Sombreado sutil de cuadrantes I y III
+          ctx.fillStyle = "rgba(184, 58, 36, 0.05)";
+          if (px < chartArea.right && py > chartArea.top) {
+            ctx.fillRect(px, chartArea.top, chartArea.right - px, py - chartArea.top);
+          }
+          if (px > chartArea.left && py < chartArea.bottom) {
+            ctx.fillRect(chartArea.left, py, px - chartArea.left, chartArea.bottom - py);
+          }
+
+          ctx.strokeStyle = PALETTE.ink;
+          ctx.lineWidth = 1.2;
+          ctx.setLineDash([5, 4]);
+          ctx.beginPath();
+          ctx.moveTo(px, chartArea.top);
+          ctx.lineTo(px, chartArea.bottom);
+          ctx.moveTo(chartArea.left, py);
+          ctx.lineTo(chartArea.right, py);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          ctx.font = "600 10px 'IBM Plex Mono', monospace";
+          ctx.fillStyle = PALETTE.accent;
+          ctx.fillText("I (+)", chartArea.right - 38, chartArea.top + 14);
+          ctx.fillText("III (+)", chartArea.left + 6, chartArea.bottom - 8);
+          ctx.fillStyle = PALETTE.secondary;
+          ctx.fillText("II (−)", chartArea.left + 6, chartArea.top + 14);
+          ctx.fillText("IV (−)", chartArea.right - 42, chartArea.bottom - 8);
+          ctx.restore();
+        }
+      };
+
+      charts.fig2 = new Chart(document.getElementById("chart-fig2"), {
+        type: "scatter",
+        plugins: [paperBackgroundPlugin, pluginEjesMedias],
+        data: {
+          datasets: [
+            {
+              label: "Cuadrantes I y III: (xᵢ−x̄)(yᵢ−ȳ) ≥ 0",
+              data: ptsPositivos,
+              backgroundColor: PALETTE.accentAlpha,
+              borderColor: PALETTE.ink,
+              borderWidth: 1.2,
+              pointRadius: 6
+            },
+            {
+              label: "Cuadrantes II y IV: (xᵢ−x̄)(yᵢ−ȳ) < 0",
+              data: ptsNegativos,
+              backgroundColor: PALETTE.secondaryAlpha,
+              borderColor: PALETTE.ink,
+              borderWidth: 1.2,
+              pointRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: `Variable X (eje vertical en x̄ = ${fmt(res.mediaX, 2)})` },
+              grid: { color: PALETTE.gridLine }
+            },
+            y: {
+              title: { display: true, text: `Variable Y (eje horizontal en ȳ = ${fmt(res.mediaY, 2)})` },
+              grid: { color: PALETTE.gridLine }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  const r = ctx.raw;
+                  return `Fila #${r.row}: (${fmt(r.x, 2)}; ${fmt(r.y, 2)}) → Producto = ${fmt(r.prod, 4)}`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 3: Aportación de cada punto a la covarianza (xᵢ−x̄)(yᵢ−ȳ)
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig3");
+      charts.fig3 = new Chart(document.getElementById("chart-fig3"), {
+        type: "bar",
+        plugins: [paperBackgroundPlugin],
+        data: {
+          labels: res.filasPaso.map((f) => `#${f.rowNum} (${fmt(f.xi, 1)};${fmt(f.yi, 1)})`),
+          datasets: [
+            {
+              label: "(xᵢ − x̄)(yᵢ − ȳ)",
+              data: res.filasPaso.map((f) => f.dxdy),
+              backgroundColor: res.filasPaso.map((f) =>
+                f.dxdy >= 0 ? PALETTE.accentAlpha : PALETTE.secondaryAlpha
+              ),
+              borderColor: PALETTE.ink,
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: "Observación # (xᵢ; yᵢ)" },
+              grid: { display: false }
+            },
+            y: {
+              title: { display: true, text: "Producto (xᵢ − x̄)(yᵢ − ȳ)" },
+              grid: { color: PALETTE.gridLine }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  return `Aportación: ${fmt(ctx.parsed.y, 4)}`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 4: Valores observados (yᵢ) vs predichos (ŷᵢ) con diagonal ideal
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig4");
+      const allY = [...ys, ...res.filasPaso.map((f) => f.yHat)];
+      const minY = Math.min(...allY);
+      const maxY = Math.max(...allY);
+      const padY = Math.max(0.4, (maxY - minY) * 0.1);
+
+      charts.fig4 = new Chart(document.getElementById("chart-fig4"), {
+        type: "scatter",
+        plugins: [paperBackgroundPlugin],
+        data: {
+          datasets: [
+            {
+              label: "Pares (ŷᵢ predicho, yᵢ observado)",
+              data: res.filasPaso.map((f) => ({ x: f.yHat, y: f.yi, row: f.rowNum })),
+              backgroundColor: PALETTE.secondaryAlpha,
+              borderColor: PALETTE.ink,
+              borderWidth: 1.2,
+              pointRadius: 5.5
+            },
+            {
+              label: "Diagonal de ajuste perfecto (y = ŷ)",
+              type: "line",
+              data: [
+                { x: minY - padY, y: minY - padY },
+                { x: maxY + padY, y: maxY + padY }
+              ],
+              borderColor: PALETTE.accent,
+              borderDash: [6, 4],
+              borderWidth: 1.8,
+              pointRadius: 0,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: "Valor predicho ŷᵢ" },
+              grid: { color: PALETTE.gridLine }
+            },
+            y: {
+              title: { display: true, text: "Valor observado yᵢ" },
+              grid: { color: PALETTE.gridLine }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  const r = ctx.raw;
+                  if (ctx.datasetIndex === 0) {
+                    return `Fila #${r.row}: ŷᵢ = ${fmt(r.x, 4)} | yᵢ = ${fmt(r.y, 4)}`;
+                  }
+                  return "Ajuste ideal y = ŷ";
+                }
+              }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 5: Residuos (yᵢ − ŷᵢ) frente a X con línea base en 0
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig5");
+      const pluginTallosResiduos = {
+        id: "pluginTallosResiduos",
+        beforeDatasetsDraw(chart) {
+          const { ctx, scales } = chart;
+          const yZero = scales.y.getPixelForValue(0);
+          ctx.save();
+          ctx.strokeStyle = "rgba(24, 23, 21, 0.35)";
+          ctx.lineWidth = 1;
+          res.filasPaso.forEach((f) => {
+            const px = scales.x.getPixelForValue(f.xi);
+            const py = scales.y.getPixelForValue(f.residuo);
+            ctx.beginPath();
+            ctx.moveTo(px, yZero);
+            ctx.lineTo(px, py);
+            ctx.stroke();
+          });
+          ctx.restore();
+        }
+      };
+
+      charts.fig5 = new Chart(document.getElementById("chart-fig5"), {
+        type: "scatter",
+        plugins: [paperBackgroundPlugin, pluginTallosResiduos],
+        data: {
+          datasets: [
+            {
+              label: "Residuo eᵢ = yᵢ − ŷᵢ",
+              data: res.filasPaso.map((f) => ({ x: f.xi, y: f.residuo, row: f.rowNum })),
+              backgroundColor: res.filasPaso.map((f) =>
+                f.residuo >= 0 ? PALETTE.accentAlpha : PALETTE.secondaryAlpha
+              ),
+              borderColor: PALETTE.ink,
+              borderWidth: 1.2,
+              pointRadius: 5.5
+            },
+            {
+              label: "Error cero (e = 0)",
+              type: "line",
+              data: [
+                { x: xStart, y: 0 },
+                { x: xEnd, y: 0 }
+              ],
+              borderColor: PALETTE.ink,
+              borderDash: [4, 4],
+              borderWidth: 1.4,
+              pointRadius: 0,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: "Variable X" },
+              grid: { color: PALETTE.gridLine }
+            },
+            y: {
+              title: { display: true, text: "Residuo (yᵢ − ŷᵢ)" },
+              grid: { color: PALETTE.gridLine }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  const r = ctx.raw;
+                  if (ctx.datasetIndex === 0) {
+                    return `Fila #${r.row} (x=${fmt(r.x, 2)}): residuo = ${fmt(r.y, 4)}`;
+                  }
+                  return "Línea de error nulo";
+                }
+              }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 6 (Lámina 6): Burbujas por frecuencia de pares repetidos (x, y)
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig8");
+      charts.fig8 = new Chart(document.getElementById("chart-fig8"), {
+        type: "bubble",
+        plugins: [paperBackgroundPlugin],
+        data: {
+          datasets: [
+            {
+              label: "Frecuencia de cada par (x, y)",
+              data: res.burbujas.map((b) => ({
+                x: b.x,
+                y: b.y,
+                r: 6 + (b.count - 1) * 5.5,
+                count: b.count,
+                filas: b.filas
+              })),
+              backgroundColor: res.burbujas.map((b) =>
+                b.count > 1 ? PALETTE.accentAlpha : PALETTE.secondaryAlpha
+              ),
+              borderColor: PALETTE.ink,
+              borderWidth: 1.4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: "Variable X" },
+              grid: { color: PALETTE.gridLine }
+            },
+            y: {
+              title: { display: true, text: "Variable Y" },
+              grid: { color: PALETTE.gridLine }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  const raw = ctx.raw;
+                  return `Par (${fmt(raw.x, 2)}; ${fmt(raw.y, 2)}): se repite ${raw.count} ${raw.count === 1 ? "vez" : "veces"} (filas #${raw.filas.join(", #")})`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 7 (Lámina 7): Histogramas de X e Y con media y banda ±1σ
+         ---------------------------------------------------------------------- */
+      function crearHistogramaConBanda(canvasId, chartKey, valores, media, desv, nombreVar, colorBarra) {
+        destroyChartIfExists(chartKey);
+        const hist = construirBinsHistograma(valores);
+
+        const pluginBandaMedia = {
+          id: `banda_${chartKey}`,
+          beforeDatasetsDraw(chart) {
+            const { ctx, chartArea, scales } = chart;
+            if (!chartArea) return;
+            const scaleX = scales.x;
+            // Mapear valor continuo a coordenada de categorías del histograma
+            const valToPixel = (val) => {
+              const ratio = (val - hist.minEdge) / (hist.maxEdge - hist.minEdge);
+              return chartArea.left + ratio * (chartArea.right - chartArea.left);
+            };
+
+            const pxLow = Math.max(chartArea.left, valToPixel(media - desv));
+            const pxHigh = Math.min(chartArea.right, valToPixel(media + desv));
+            const pxMean = valToPixel(media);
+
+            ctx.save();
+            ctx.fillStyle = "rgba(184, 58, 36, 0.12)";
+            ctx.fillRect(pxLow, chartArea.top, Math.max(0, pxHigh - pxLow), chartArea.bottom - chartArea.top);
+
+            ctx.strokeStyle = PALETTE.accent;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(pxMean, chartArea.top);
+            ctx.lineTo(pxMean, chartArea.bottom);
+            ctx.stroke();
+
+            ctx.font = "600 10px 'IBM Plex Mono', monospace";
+            ctx.fillStyle = PALETTE.accent;
+            ctx.fillText(`Media=${fmt(media, 2)} (±1σ)`, Math.min(pxMean + 4, chartArea.right - 105), chartArea.top + 12);
+            ctx.restore();
+          }
+        };
+
+        charts[chartKey] = new Chart(document.getElementById(canvasId), {
+          type: "bar",
+          plugins: [paperBackgroundPlugin, pluginBandaMedia],
+          data: {
+            labels: hist.labels,
+            datasets: [
+              {
+                label: `Frecuencia de ${nombreVar}`,
+                data: hist.counts,
+                backgroundColor: colorBarra,
+                borderColor: PALETTE.ink,
+                borderWidth: 1,
+                categoryPercentage: 0.92,
+                barPercentage: 0.95
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                title: { display: true, text: `${nombreVar} (media ${fmt(media, 2)}, σ=${fmt(desv, 2)})` },
+                grid: { display: false }
+              },
+              y: {
+                beginAtZero: true,
+                ticks: { stepSize: 1 },
+                title: { display: true, text: "Frecuencia" },
+                grid: { color: PALETTE.gridLine }
+              }
+            }
+          }
+        });
+      }
+
+      crearHistogramaConBanda("chart-fig6x", "fig6x", xs, res.mediaX, res.sx, "Variable X", PALETTE.secondaryAlpha);
+      crearHistogramaConBanda("chart-fig6y", "fig6y", ys, res.mediaY, res.sy, "Variable Y", PALETTE.accentAlpha);
+
+      /* ----------------------------------------------------------------------
+         FIG. 8 (Lámina 8): Diagrama de cajas (Box Plot) de X e Y
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig7");
+      const qX = calcularCuartiles(xs);
+      const qY = calcularCuartiles(ys);
+
+      const pluginBigotesBoxPlot = {
+        id: "pluginBigotesBoxPlot",
+        afterDatasetsDraw(chart) {
+          const { ctx, scales } = chart;
+          const stats = [
+            { idx: 0, q: qX, media: res.mediaX },
+            { idx: 1, q: qY, media: res.mediaY }
+          ];
+
+          ctx.save();
+          stats.forEach((st) => {
+            const py = scales.y.getPixelForValue(st.idx);
+            const pxMin = scales.x.getPixelForValue(st.q.min);
+            const pxQ1 = scales.x.getPixelForValue(st.q.q1);
+            const pxMed = scales.x.getPixelForValue(st.q.med);
+            const pxQ3 = scales.x.getPixelForValue(st.q.q3);
+            const pxMax = scales.x.getPixelForValue(st.q.max);
+            const pxMean = scales.x.getPixelForValue(st.media);
+
+            ctx.strokeStyle = PALETTE.ink;
+            ctx.lineWidth = 1.5;
+
+            // Bigote izquierdo (min a Q1) y derecho (Q3 a max)
+            ctx.beginPath();
+            ctx.moveTo(pxMin, py);
+            ctx.lineTo(pxQ1, py);
+            ctx.moveTo(pxQ3, py);
+            ctx.lineTo(pxMax, py);
+            // Topes de bigotes
+            ctx.moveTo(pxMin, py - 8);
+            ctx.lineTo(pxMin, py + 8);
+            ctx.moveTo(pxMax, py - 8);
+            ctx.lineTo(pxMax, py + 8);
+            ctx.stroke();
+
+            // Línea de mediana Q2
+            ctx.strokeStyle = PALETTE.accent;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(pxMed, py - 15);
+            ctx.lineTo(pxMed, py + 15);
+            ctx.stroke();
+
+            // Rombo para la media
+            ctx.fillStyle = PALETTE.ink;
+            ctx.beginPath();
+            ctx.moveTo(pxMean, py - 5);
+            ctx.lineTo(pxMean + 5, py);
+            ctx.lineTo(pxMean, py + 5);
+            ctx.lineTo(pxMean - 5, py);
+            ctx.closePath();
+            ctx.fill();
+          });
+          ctx.restore();
+        }
+      };
+
+      charts.fig7 = new Chart(document.getElementById("chart-fig7"), {
+        type: "bar",
+        plugins: [paperBackgroundPlugin, pluginBigotesBoxPlot],
+        data: {
+          labels: ["Variable X", "Variable Y"],
+          datasets: [
+            {
+              label: "Rango intercuartílico [Q₁, Q₃]",
+              data: [
+                [qX.q1, qX.q3],
+                [qY.q1, qY.q3]
+              ],
+              backgroundColor: [PALETTE.secondarySoft, PALETTE.accentSoft],
+              borderColor: PALETTE.ink,
+              borderWidth: 1.5,
+              barThickness: 30
+            }
+          ]
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              min: Math.min(qX.min, qY.min) - 0.8,
+              max: Math.max(qX.max, qY.max) + 0.8,
+              title: { display: true, text: "Escala de valores (caja: Q₁ a Q₃ · línea roja: mediana · rombo: media)" },
+              grid: { color: PALETTE.gridLine }
+            },
+            y: {
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  const q = ctx.dataIndex === 0 ? qX : qY;
+                  const m = ctx.dataIndex === 0 ? res.mediaX : res.mediaY;
+                  return `Mín=${fmt(q.min, 2)} | Q₁=${fmt(q.q1, 2)} | Med=${fmt(q.med, 2)} | Q₃=${fmt(q.q3, 2)} | Máx=${fmt(q.max, 2)} | Media=${fmt(m, 2)}`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 9: Elipse de concentración de covarianza (1σ y 2σ)
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig9");
+      function generarPuntosElipse(escalaSigma) {
+        const pts = [];
+        const aSemi = Math.sqrt(Math.max(0, res.elipse.lambda1)) * escalaSigma;
+        const bSemi = Math.sqrt(Math.max(0, res.elipse.lambda2)) * escalaSigma;
+        const cosA = Math.cos(res.elipse.angulo);
+        const sinA = Math.sin(res.elipse.angulo);
+        const pasos = 72;
+
+        for (let i = 0; i <= pasos; i++) {
+          const theta = (2 * Math.PI * i) / pasos;
+          const u = aSemi * Math.cos(theta);
+          const v = bSemi * Math.sin(theta);
+          pts.push({
+            x: res.mediaX + u * cosA - v * sinA,
+            y: res.mediaY + u * sinA + v * cosA
+          });
+        }
+        return pts;
+      }
+
+      charts.fig9 = new Chart(document.getElementById("chart-fig9"), {
+        type: "scatter",
+        plugins: [paperBackgroundPlugin],
+        data: {
+          datasets: [
+            {
+              label: "Observaciones (xᵢ, yᵢ)",
+              data: res.filasPaso.map((f) => ({ x: f.xi, y: f.yi })),
+              backgroundColor: PALETTE.secondaryAlpha,
+              borderColor: PALETTE.ink,
+              pointRadius: 5
+            },
+            {
+              label: "Centro (x̄, ȳ)",
+              data: [{ x: res.mediaX, y: res.mediaY }],
+              backgroundColor: PALETTE.accent,
+              borderColor: PALETTE.ink,
+              pointStyle: "crossRot",
+              pointRadius: 7
+            },
+            {
+              label: "Elipse 1σ (matriz de covarianzas)",
+              type: "line",
+              data: generarPuntosElipse(1),
+              borderColor: PALETTE.accent,
+              backgroundColor: "rgba(184, 58, 36, 0.08)",
+              borderWidth: 2,
+              pointRadius: 0,
+              fill: true
+            },
+            {
+              label: "Elipse 2σ",
+              type: "line",
+              data: generarPuntosElipse(2),
+              borderColor: PALETTE.secondary,
+              borderDash: [4, 4],
+              borderWidth: 1.3,
+              pointRadius: 0,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: "Variable X" },
+              grid: { color: PALETTE.gridLine }
+            },
+            y: {
+              title: { display: true, text: "Variable Y" },
+              grid: { color: PALETTE.gridLine }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 10: Medidor semicircular de r (−1 a 1) con aguja
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig10");
+      const pluginAgujaPearson = {
+        id: "pluginAgujaPearson",
+        afterDatasetDraw(chart) {
+          const { ctx } = chart;
+          const meta = chart.getDatasetMeta(0);
+          if (!meta || !meta.data || !meta.data[0]) return;
+
+          const centerX = meta.data[0].x;
+          const centerY = meta.data[0].y;
+          const outerRadius = meta.data[0].outerRadius;
+          const needleLength = outerRadius * 0.82;
+
+          // Mapear r en [-1, 1] a ángulo en [-π, 0]
+          const angulo = -Math.PI + ((res.r + 1) / 2) * Math.PI;
+
+          ctx.save();
+          ctx.translate(centerX, centerY);
+
+          // Etiquetas de escala
+          ctx.font = "600 10px 'IBM Plex Mono', monospace";
+          ctx.fillStyle = PALETTE.inkMuted;
+          ctx.textAlign = "center";
+          ctx.fillText("−1,0", -outerRadius + 14, 14);
+          ctx.fillText("0", 0, -outerRadius - 6);
+          ctx.fillText("+1,0", outerRadius - 14, 14);
+
+          // Aguja
+          ctx.rotate(angulo);
+          ctx.beginPath();
+          ctx.moveTo(0, -4);
+          ctx.lineTo(needleLength, 0);
+          ctx.lineTo(0, 4);
+          ctx.closePath();
+          ctx.fillStyle = PALETTE.ink;
+          ctx.fill();
+
+          // Eje central
+          ctx.beginPath();
+          ctx.arc(0, 0, 6, 0, Math.PI * 2);
+          ctx.fillStyle = PALETTE.accent;
+          ctx.fill();
+          ctx.strokeStyle = PALETTE.ink;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+          ctx.restore();
+
+          // Texto inferior con r y grado de correlación
+          ctx.save();
+          ctx.textAlign = "center";
+          ctx.font = "700 13px 'IBM Plex Mono', monospace";
+          ctx.fillStyle = PALETTE.ink;
+          ctx.fillText(`r = ${fmt(res.r, 4)} · ${res.gradoCorrelacion}`, centerX, centerY + 22);
+          ctx.restore();
+        }
+      };
+
+      charts.fig10 = new Chart(document.getElementById("chart-fig10"), {
+        type: "doughnut",
+        plugins: [paperBackgroundPlugin, pluginAgujaPearson],
+        data: {
+          labels: [
+            "Fuerte inversa [−1; −0,7]",
+            "Débil inversa (−0,7; −0,3]",
+            "Prácticamente nula (−0,3; 0,3)",
+            "Débil directa [0,3; 0,7)",
+            "Fuerte directa [0,7; 1]"
+          ],
+          datasets: [
+            {
+              data: [0.3, 0.4, 0.6, 0.4, 0.3],
+              backgroundColor: [
+                "rgba(59, 89, 86, 0.85)",
+                "rgba(59, 89, 86, 0.42)",
+                "rgba(201, 195, 180, 0.55)",
+                "rgba(184, 58, 36, 0.45)",
+                "rgba(184, 58, 36, 0.85)"
+              ],
+              borderColor: PALETTE.ink,
+              borderWidth: 1,
+              circumference: 180,
+              rotation: 270,
+              cutout: "62%"
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: {
+            padding: { top: 18, bottom: 26 }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  return `${ctx.label} | Valor actual r = ${fmt(res.r, 4)}`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         FIG. 11: Comparador de varianza explicada (r² vs 1 − r²)
+         ---------------------------------------------------------------------- */
+      destroyChartIfExists("fig11");
+      const pctExplicada = res.r2 * 100;
+      const pctNoExplicada = (1 - res.r2) * 100;
+
+      charts.fig11 = new Chart(document.getElementById("chart-fig11"), {
+        type: "bar",
+        plugins: [paperBackgroundPlugin],
+        data: {
+          labels: ["Varianza de Y"],
+          datasets: [
+            {
+              label: `Explicada por X (r² = ${fmt(res.r2, 4)} → ${fmt(pctExplicada, 2)}%)`,
+              data: [pctExplicada],
+              backgroundColor: PALETTE.accentAlpha,
+              borderColor: PALETTE.ink,
+              borderWidth: 1.5,
+              barThickness: 44
+            },
+            {
+              label: `No explicada / residual (1 − r² = ${fmt(1 - res.r2, 4)} → ${fmt(pctNoExplicada, 2)}%)`,
+              data: [pctNoExplicada],
+              backgroundColor: PALETTE.secondarySoft,
+              borderColor: PALETTE.ink,
+              borderWidth: 1.5,
+              barThickness: 44
+            }
+          ]
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              stacked: true,
+              min: 0,
+              max: 100,
+              title: { display: true, text: "Porcentaje de la varianza total de Y (%)" },
+              grid: { color: PALETTE.gridLine }
+            },
+            y: {
+              stacked: true,
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  return `${ctx.dataset.label}`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Exportación de cada gráfico como imagen PNG con fondo papel editorial
+    document.querySelectorAll(".btn-dl-png").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const canvasId = btn.getAttribute("data-canvas");
+        const filename = btn.getAttribute("data-filename") || "grafico-estadistica.png";
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+
+        const enlace = document.createElement("a");
+        enlace.download = filename;
+        enlace.href = canvas.toDataURL("image/png", 1.0);
+        enlace.click();
+      });
+    });
+
+    /* ==========================================================================
+       6. CICLO PRINCIPAL DE EJECUCIÓN E INICIALIZACIÓN
+       ========================================================================== */
+    function ejecutarRecalculo() {
+      const datosValidos = extraerDatosValidos();
+      const resultado = calcular(datosValidos);
+      renderResultados(resultado);
+      renderGraficos(resultado);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderKaTeXStaticReferences();
+      cargarDatosEnTabla(EJEMPLO_INICIAL);
+    });
+  </script>
 </body>
 </html>
